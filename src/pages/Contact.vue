@@ -1,16 +1,280 @@
 <template>
-  <div></div>
+  <div class="home animate__animated animate__fadeIn">
+    <div class="nav">
+      <main-header></main-header>
+    </div>
+
+    <main class="en animate__animated animate__backInLeft" v-if="getLang === 'en'">
+      <div class="container">
+        <div class="contact-content">
+          <h2 class="mt-3">Contact Us</h2>
+          <div class="contact">
+            <div class="contact-form">
+              <h3>Contact Form</h3>
+              <div class="container">
+                <b-form @submit="sendMail">
+                  <b-form-input
+                      class="mt-4"
+                      v-model="contact.mail"
+                      placeholder="Email address"
+                  ></b-form-input>
+                  <b-form-input
+                      class="mt-4"
+                      v-model="contact.subject"
+                      placeholder="Subject"
+                  ></b-form-input>
+                  <b-form-input
+                      class="mt-4"
+                      v-model="contact.message"
+                      placeholder="Message"
+                  ></b-form-input>
+                  <b-button class="mt-4 btn">Submit Message</b-button>
+                </b-form>
+              </div>
+            </div>
+            <div class="contact-data">
+              <div class="container">
+                <div class="data">
+                  <div class="d-flex">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h5>Location :</h5>
+                  </div>
+                  <p>{{ location }}</p>
+                </div>
+                <div class="data">
+                  <div class="d-flex">
+                    <i class="fas fa-phone-alt"></i>
+                    <h5>Phone: </h5>
+                  </div>
+                  <p>{{ phone }}</p>
+                </div>
+                <div class="data">
+                  <div class="d-flex">
+                    <i class="far fa-envelope"></i>
+                    <h5>Email: </h5>
+                  </div>
+                  <p>{{ email }}</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <main class="ar animate__animated animate__backInRight" v-else-if="getLang === 'ar'">
+      <div class="container">
+        <div class="contact-content">
+          <h2 class="mt-3">اتصل بنا</h2>
+          <div class="contact">
+            <div class="contact-form">
+              <h3>نموذج الاتصال</h3>
+              <div class="container">
+                <b-form @submit="sendMail">
+                  <b-form-input
+                      class="mt-4"
+                      v-model="contact.mail"
+                      placeholder="عنوان البريد الإلكتروني"
+                  ></b-form-input>
+                  <b-form-input
+                      class="mt-4"
+                      v-model="contact.subject"
+                      placeholder="موضوع"
+                  ></b-form-input>
+                  <b-form-input
+                      class="mt-4"
+                      v-model="contact.message"
+                      placeholder="رسالة"
+                  ></b-form-input>
+                  <b-button class="btn">تقديم رسالة</b-button>
+                </b-form>
+              </div>
+            </div>
+            <div class="contact-data">
+              <div class="container">
+                <div class="data">
+                  <div class="d-flex">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h5>الموقع :</h5>
+                  </div>
+                  <p>{{ locationAr }}</p>
+                </div>
+                <div class="data">
+                  <div class="d-flex">
+                    <i class="fas fa-phone-alt"></i>
+                    <h5>رقم الهاتف :</h5>
+                  </div>
+                  <p>{{ phone }}</p>
+                </div>
+                <div class="data">
+                  <div class="d-flex">
+                    <i class="far fa-envelope"></i>
+                    <h5>البريد الالكتروني :</h5>
+                  </div>
+                  <p>{{ email }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <div class="footer">
+      <main-footer></main-footer>
+    </div>
+
+  </div>
 </template>
 
 <script>
+import MainHeader from "../components/Main/MainHeader";
+import MainFooter from "../components/Main/MainFooter";
 export default {
   name: "Contact",
   components: {
+    MainFooter,
+    MainHeader
 
+  },
+  data() {
+    return {
+      location: 'Al Khobar, Sadui Arabi',
+      locationAr: 'الخبر ، المملكة العربية السعودية',
+      phone: '015616306',
+      email: 'test@gmail.com',
+      contact: {
+        mail: '',
+        subject: '',
+        message: ''
+      }
+    }
+  },
+  computed: {
+    getLang() {
+      return this.$store.getters['main/getLang'];
+    }
+  },
+  methods: {
+    sendMail() {
+
+    }
   }
 }
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@700&display=swap');
+
+
+.nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+main {
+  margin-top: 80px;
+}
+
+.contact-content {
+  padding: 10px 0;
+}
+
+.contact-content h2 {
+  font-family: 'Bebas Neue', cursive;
+  margin-bottom: 20px;
+}
+
+.contact {
+  display: flex;
+  justify-content: center;
+}
+
+.contact-form {
+  padding: 20px 10px;
+  width: 70%;
+  margin-right: 4%;
+  border: 1px solid #dddddd;
+  background-color: #f3f3f3;
+}
+
+.contact-form h3 {
+  margin-left: 18px;
+  font-family: 'Bebas Neue', cursive;
+}
+
+.contact-data {
+  width: 25%;
+}
+
+.data i {
+  color: #9d55a0;
+  margin: auto 10px auto 0;
+}
+
+.data h5 {
+  margin: auto 0;
+}
+
+.data p {
+  color: #5A5C6C;
+  margin: 10px 0 30px 30px;
+}
+
+.btn {
+  margin-top: 10px;
+  border: none;
+  color: #FFFFFF;
+  background-color: #9d55a0;
+}
+
+.btn:hover {
+  color: #9d55a0;
+  background-color: #dddddd;
+}
+
+.ar .contact-content {
+  text-align: right;
+  direction: rtl;
+
+}
+
+.ar h2, .ar h3 {
+  font-family: 'Cairo', sans-serif;
+}
+
+.ar .contact-data i {
+  margin-left: 10px;
+}
+.ar .contact-data p {
+  margin-left: 0px;
+  margin-right: 30px;
+}
+
+
+
+@media (max-width:1024px) {
+  .contact {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .contact-form,
+  .contact-data {
+    margin-bottom: 40px;
+    width: 99%;
+    padding: 5px 10px;
+  }
+}
 
 </style>

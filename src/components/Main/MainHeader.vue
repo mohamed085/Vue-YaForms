@@ -1,5 +1,5 @@
 <template>
-  <div class="en" v-if="getLang === 'en'">
+  <div class="en animate__animated animate__backInLeft" v-if="getLang === 'en'">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid d-flex">
         <router-link to="/" class="navbar-brand">
@@ -14,7 +14,7 @@
     </nav>
   </div>
 
-  <div class="ar" v-else-if="getLang === 'ar'">
+  <div class="ar animate__animated animate__backInRight" v-else-if="getLang === 'ar'">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid d-flex">
         <router-link to="/" class="navbar-brand">
@@ -47,6 +47,10 @@ export default {
 </script>
 
 <style scoped>
+.en, .ar{
+  width: 100%;
+}
+
 .ar {
   direction: rtl;
 }
@@ -57,7 +61,6 @@ export default {
 
 nav {
   box-shadow: 0 4px 2px -2px rgba(0,0,0,.2);
-  width: 100%;
   padding: 3px 10px;
   background-color: #FFFFFF;
 }

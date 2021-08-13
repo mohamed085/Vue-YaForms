@@ -3,13 +3,14 @@ import VueRouter from 'vue-router'
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import Test from "./pages/Test";
+import Contact from "./pages/Contact";
 
 Vue.use(VueRouter)
 
 const routes = [
     { path: '/', component: Home },
     { path: '/test', component: Test },
-    { path: '/contact', component: null },
+    { path: '/contact', component: Contact },
     { path: '/login', component: null },
     { path: '/forgetPassword', component: null },
     { path: '/register', component: null, children: [

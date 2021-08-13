@@ -1,5 +1,5 @@
 <template>
-  <div class="en" v-if="getLang === 'en'">
+  <div class="en animate__animated animate__backInLeft" v-if="getLang === 'en'">
     <div class="footer">
       <div class="content">
         <div class="copyright">
@@ -19,7 +19,7 @@
     </div>
   </div>
 
-  <div class="ar" v-else-if="getLang === 'ar'">
+  <div class="ar animate__animated animate__backInRight" v-else-if="getLang === 'ar'">
     <div class="footer">
       <div class="content">
         <div class="copyright">
@@ -62,7 +62,6 @@ export default {
 .ar {
   direction: rtl;
 }
-
 
 .footer {
   background: #FFFFFF;
