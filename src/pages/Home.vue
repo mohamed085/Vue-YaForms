@@ -26,7 +26,7 @@
 
     </div>
 
-    <div class="ar animate__animated animate__backInRight" v-if="getLang === 'ar'">
+    <div class="ar animate__animated animate__backInRight" v-else-if="getLang === 'ar'">
 
       <nav class="nav">
         <div class="nav-content">

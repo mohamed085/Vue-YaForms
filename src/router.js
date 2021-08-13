@@ -2,11 +2,13 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
+import Test from "./pages/Test";
 
 Vue.use(VueRouter)
 
 const routes = [
     { path: '/', component: Home },
+    { path: '/test', component: Test },
     { path: '/contact', component: null },
     { path: '/login', component: null },
     { path: '/forgetPassword', component: null },
@@ -16,7 +18,7 @@ const routes = [
             { path: '/register/businessAccount', component: null }
         ]
     },
-    { path: '/:id', component: null },
+    { path: '/profile/:id', component: null },
     { path: '/setting/:id', component: null },
     { path: '/forms', component: null },
     { path: '/createForm', component: null },
