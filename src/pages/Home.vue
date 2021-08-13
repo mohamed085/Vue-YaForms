@@ -1,6 +1,6 @@
 <template>
-  <div class="home animate__animated animate__zoomIn">
-    <div class="en" v-if="getLang === 'en'">
+  <div class="home animate__animated animate__backInDown">
+    <div class="en animate__animated animate__backInLeft" v-if="getLang === 'en'">
 
       <nav class="nav">
         <div class="nav-content">
@@ -25,7 +25,7 @@
 
     </div>
 
-    <div class="ar" v-if="getLang === 'ar'">
+    <div class="ar animate__animated animate__backInRight" v-if="getLang === 'ar'">
 
       <nav class="nav">
         <div class="nav-content">
@@ -189,12 +189,13 @@ export default {
   animation: typewriter 2s steps(44) 1s 1 normal both,
   blinkTextCursor 300ms steps(44) infinite normal;
 }
+
 @keyframes typewriter{
   from{width: 0;}
   to{width: 80%;}
 }
 @keyframes blinkTextCursor{
-  from{border-right-color: rgba(255,255,255,.75);}
+  from{border-right-color: rgb(255, 204, 110);}
   to{border-right-color: transparent;}
 }
 
