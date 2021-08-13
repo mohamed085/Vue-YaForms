@@ -4,36 +4,28 @@
       <router-link to="/" class="img">
         <img src="../../assets/images/ya_logo_lg.png">
       </router-link>
-      <form @submit="login">
+      <form method="POST">
+        <p class="forgetText">Type your E-mail Address and you will receive email message to recover your password            </p>
         <div class="input">
           <span><i class="fas fa-at"></i></span>
-          <input v-model="user.email" type="text" placeholder="Email address">
+          <input type="text" placeholder="Email address">
         </div>
-        <div class="input">
-          <span><i class="fas fa-unlock-alt"></i></span>
-          <input v-model="user.password" type="text" placeholder="Password">
-        </div>
-        <button class="submit" type="submit">Log in</button>
+        <button class="submit" type="submit">Next</button>
       </form>
-      <router-link class="forgetPassword" to="/forget">Forget your password?</router-link>
     </main>
 
     <main class="ar animate__animated animate__backInRight" v-if="getLang === 'ar'">
       <router-link to="/" class="img">
         <img src="../../assets/images/ya_logo_lg.png">
       </router-link>
-      <form @submit="login">
+      <form method="POST">
+        <p class="forgetText">اكتب عنوان بريدك الإلكتروني وستتلقى رسالة بريد إلكتروني لاستعادة كلمة المرور الخاصة بك</p>
         <div class="input">
           <span><i class="fas fa-at"></i></span>
-          <input v-model="user.email" type="text" placeholder="بريدك الالكتروني">
+          <input type="text" placeholder="البريد الالكتروني">
         </div>
-        <div class="input">
-          <span><i class="fas fa-unlock-alt"></i></span>
-          <input v-model="user.password" type="text" placeholder="كلمة المرور">
-        </div>
-        <button class="submit" type="submit">تسجيل دخول</button>
+        <button class="submit" type="submit">التالي</button>
       </form>
-      <router-link class="forgetPassword" to="/forget">هل نسيت كلمة المرور؟</router-link>
     </main>
 
     <div class="footer">
@@ -41,15 +33,14 @@
     </div>
 
   </div>
+
 </template>
 
 <script>
 import MainFooter from "../../components/Main/MainFooter";
 export default {
-  name: "Login",
-  components: {
-    MainFooter
-  },
+  name: "ForgetPassword",
+  components: {MainFooter},
   data() {
     return {
       user: {
@@ -68,10 +59,14 @@ export default {
 
     }
   }
+
 }
 </script>
 
 <style scoped>
+.home {
+  height: 100vh;
+}
 
 .ar {
   direction: rtl;
@@ -84,7 +79,7 @@ export default {
 }
 
 main {
-  margin: 15px 0;
+  margin: 35px 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -152,12 +147,11 @@ form {
   background-color: #e8d4e9;
 }
 
-.forgetPassword {
-  cursor: pointer;
+.forgetText {
+  width: 50%;
+  color: #6c757d!important;
+  text-align: center!important;
   font-weight: 400;
-  color: #007bff;
-  padding: .25rem .5rem;
-  line-height: 1.5;
 }
 
 footer {
