@@ -1,5 +1,6 @@
 <template>
-  <div class="home animate__animated animate__backInDown">
+  <div class="home animate__animated animate__fadeIn">
+
     <div class="en animate__animated animate__backInLeft" v-if="getLang === 'en'">
 
       <nav class="nav">
@@ -19,8 +20,8 @@
 
       <div class="main-content">
         <p class="line-1 anim-typewriter">Welcome to Ya Forms.</p>
-        <router-link to="/register-en"><button>Sign up</button></router-link>
-        <router-link to="/login-en" ><button>Log in</button></router-link>
+        <router-link to="/register"><button>Sign up</button></router-link>
+        <router-link to="/login" ><button>Log in</button></router-link>
       </div>
 
     </div>
@@ -44,8 +45,8 @@
 
       <div class="main-content">
         <p class="line-1 anim-typewriter">مرحبا بكم في يافورمز</p>
-        <router-link to="/register-ar"><button>تسجيل</button></router-link>
-        <router-link to="/login-ar" ><button>دخول</button></router-link>
+        <router-link to="/register"><button>تسجيل</button></router-link>
+        <router-link to="/login" ><button>دخول</button></router-link>
       </div>
 
     </div>
