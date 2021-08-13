@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import Test from "./pages/Test";
 import Contact from "./pages/Contact";
+import Login from "./pages/Auth/Login";
 
 Vue.use(VueRouter)
 
@@ -11,8 +12,8 @@ const routes = [
     { path: '/', component: Home },
     { path: '/test', component: Test },
     { path: '/contact', component: Contact },
-    { path: '/login', component: null },
-    { path: '/forgetPassword', component: null },
+    { path: '/login', component: Login },
+    { path: '/forget', component: null },
     { path: '/register', component: null, children: [
             { path: '/register/', component: null },
             { path: '/register/individualAccount', component: null },

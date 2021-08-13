@@ -17,4 +17,15 @@
   background-color: #FFFFFF;
   color: #9d55a0;
 }
+
+input {
+  border: none;
+}
+
+input:focus {
+  outline: none;
+  border-color: inherit;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
 </style>
