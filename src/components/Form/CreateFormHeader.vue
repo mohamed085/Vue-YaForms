@@ -13,8 +13,8 @@
 
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <div class="navbar-nav">
-              <router-link :to="'/form-en/' + id" class="link" >
-                <i class="far fa-eye"></i>
+              <router-link :to="'/form/' + id" class="link" >
+                  <i class="far fa-eye"></i>
               </router-link>
               <p class="link" @click="them">
                 <i class="fas fa-palette"></i>
@@ -105,11 +105,12 @@
             </div>
 
           </div>
+
         </div>
       </nav>
 
       <div class="mobile-nav-1">
-        <router-link :to="'/form-en/' + id" class="link" >
+        <router-link :to="'/form/' + id" class="link" >
           <i class="far fa-eye"></i>
         </router-link>
         <p class="link" @click="them">
@@ -140,7 +141,7 @@
 
           <div class="collapse navbar-collapse" id="navbarSupportedContentAr">
             <div class="navbar-nav">
-              <router-link :to="'/form-en/' + id" class="link" >
+              <router-link :to="'/form/' + id" class="link" >
                 <i class="far fa-eye"></i>
               </router-link>
               <p class="link" @click="them">
