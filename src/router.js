@@ -10,6 +10,7 @@ import Register from "./pages/Auth/Register";
 import SelectAccount from "./components/Auth/SelectAccount";
 import BusinessAccount from "./components/Auth/BusinessAccount";
 import IndividualAccount from "./components/Auth/IndividualAccount";
+import FormView from "./pages/Forms/FormView";
 
 Vue.use(VueRouter)
 
@@ -23,12 +24,12 @@ const routes = [
             { path: '/register/', component: SelectAccount },
             { path: '/register/businessAccount', component: BusinessAccount },
             { path: '/register/individualAccount', component: IndividualAccount },
-        ]
-    },
+        ]},
     { path: '/profile/:id', component: null },
     { path: '/setting/:id', component: null },
     { path: '/forms', component: null },
     { path: '/createForm', component: null },
+    { path: '/form/:id', component: FormView },
     { path: '/:notFound(.*)', component: NotFound }
 ]
 
