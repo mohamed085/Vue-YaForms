@@ -1,13 +1,9 @@
 <template>
-
+  <div></div>
 </template>
 
 <script>
 export default {
-  name: "ProfileIndex"
+  name: "ProfileIndex",
 }
 </script>
-
-<style scoped>
-
-</style>

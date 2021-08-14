@@ -39,7 +39,7 @@
                   </router-link>
                 </li>
                 <li>
-                  <router-link to="/">
+                  <router-link :to="'/setting/'+id">
                     <div class="d-flex">
                       <i class="fas fa-cog"></i>
                       <div class="dropdown-content">
@@ -66,7 +66,7 @@
               <template #button-content>
                 <b-avatar :src="avatar"></b-avatar>
               </template>
-              <b-dropdown-item class="link" :to="'/profile-en/'+id">
+              <b-dropdown-item class="link" :to="'/profile/'+id">
                 <div class="profile d-flex">
                   <b-avatar :src="avatar" size="3rem"></b-avatar>
                   <div class="dropdown-content">
@@ -75,7 +75,7 @@
                   </div>
                 </div>
               </b-dropdown-item>
-              <b-dropdown-item :to="'/edit-profile-en/'+id">
+              <b-dropdown-item :to="'/setting/'+id">
                 <div class="d-flex">
                   <i class="fas fa-cog"></i>
                   <div class="dropdown-content">
@@ -167,7 +167,7 @@
                   </router-link>
                 </li>
                 <li>
-                  <router-link to="/">
+                  <router-link :to="'/setting/'+id">
                     <div class="d-flex">
                       <i class="fas fa-cog"></i>
                       <div class="dropdown-content">
@@ -203,7 +203,7 @@
                   </div>
                 </div>
               </b-dropdown-item>
-              <b-dropdown-item :to="'/edit-profile-en/'+id">
+              <b-dropdown-item :to="'/setting/'+id">
                 <div class="d-flex">
                   <i class="fas fa-cog"></i>
                   <div class="dropdown-content">

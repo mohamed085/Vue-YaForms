@@ -12,6 +12,9 @@ import BusinessAccount from "./components/Auth/BusinessAccount";
 import IndividualAccount from "./components/Auth/IndividualAccount";
 import FormView from "./pages/Forms/FormView";
 import CreateForm from "./pages/Forms/CreateForm";
+import Forms from "./pages/Forms/Forms";
+import ProfileIndex from "./pages/Profile/ProfileIndex";
+import ProfileEdit from "./pages/Profile/ProfileEdit";
 
 Vue.use(VueRouter)
 
@@ -26,9 +29,9 @@ const routes = [
             { path: '/register/businessAccount', component: BusinessAccount },
             { path: '/register/individualAccount', component: IndividualAccount },
         ]},
-    { path: '/profile/:id', component: null },
-    { path: '/setting/:id', component: null },
-    { path: '/forms', component: null },
+    { path: '/profile/:id', component: ProfileIndex },
+    { path: '/setting/:id', component: ProfileEdit },
+    { path: '/forms', component: Forms },
     { path: '/createForm', component: CreateForm },
     { path: '/responses', component: null },
     { path: '/form/:id', component: FormView },
