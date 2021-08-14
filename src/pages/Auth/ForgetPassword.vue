@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="home animate__animated animate__fadeIn">
     <main class="en animate__animated animate__backInLeft" v-if="getLang === 'en'">
       <router-link to="/" class="img">
         <img src="../../assets/images/ya_logo_lg.png">

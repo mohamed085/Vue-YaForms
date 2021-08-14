@@ -92,6 +92,10 @@ nav {
   margin-right: 5px;
 }
 
+.ar i {
+  margin-right: 0;
+  margin-left: 5px;
+}
 @media (max-width:1024px) {
   .navbar-nav a {
     font-size: 70%;

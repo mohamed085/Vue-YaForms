@@ -6,6 +6,10 @@ import Test from "./pages/Test";
 import Contact from "./pages/Contact";
 import Login from "./pages/Auth/Login";
 import ForgetPassword from "./pages/Auth/ForgetPassword";
+import Register from "./pages/Auth/Register";
+import SelectAccount from "./components/Auth/SelectAccount";
+import BusinessAccount from "./components/Auth/BusinessAccount";
+import IndividualAccount from "./components/Auth/IndividualAccount";
 
 Vue.use(VueRouter)
 
@@ -15,10 +19,10 @@ const routes = [
     { path: '/contact', component: Contact },
     { path: '/login', component: Login },
     { path: '/forget', component: ForgetPassword },
-    { path: '/register', component: null, children: [
-            { path: '/register/', component: null },
-            { path: '/register/individualAccount', component: null },
-            { path: '/register/businessAccount', component: null }
+    { path: '/register', component: Register, children: [
+            { path: '/register/', component: SelectAccount },
+            { path: '/register/businessAccount', component: BusinessAccount },
+            { path: '/register/individualAccount', component: IndividualAccount },
         ]
     },
     { path: '/profile/:id', component: null },
