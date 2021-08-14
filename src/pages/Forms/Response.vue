@@ -4,14 +4,10 @@
 
 <script>
 export default {
-  name: "Test",
-  components: {
-
-  },
+  name: "Response"
 }
 </script>
 
 <style scoped>
-
 
 </style>

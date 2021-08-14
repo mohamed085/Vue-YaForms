@@ -1,7 +1,7 @@
 <template>
-  <div :class="'home animate__animated animate__backInRight ' + form.styleTheme + ' ' + form.fontFamily ">
+  <div :class="'home animate__animated animate__fadeIn ' + form.styleTheme + ' ' + form.fontFamily ">
 
-    <div v-if="getLang === 'en'" class="form-view en">
+    <div v-if="getLang === 'en'" class="form-view en animate__animated animate__backInLeft">
 
       <div v-if="form.imageHeader" class="form-image-header section">
         <img :src="form.imageHeader">
@@ -113,7 +113,7 @@
 
     </div>
 
-    <div v-if="getLang === 'ar'" class="form-view ar">
+    <div v-if="getLang === 'ar'" class="form-view ar animate__animated animate__backInRight">
 
       <div v-if="form.imageHeader" class="form-image-header section">
         <img :src="form.imageHeader">
