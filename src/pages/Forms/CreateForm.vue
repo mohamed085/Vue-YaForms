@@ -18,7 +18,256 @@
         :theme="form.styleTheme"
     ></send-form>
 
-    <div class="main-content">
+    <div class="main-content en animate__animated animate__backInLeft" v-if="getLang === 'en'">
+
+      <div class="container">
+
+        <div class="create-form">
+
+          <div class="form-image-header" v-if="form.imageHeader">
+            <img :src="form.imageHeader">
+          </div>
+
+          <div class="form-header">
+            <div class="form-title">
+              <b-form-input class="input-title" type="text" v-model="form.header" placeholder="Untitle form"></b-form-input>
+              <b-form-input class="input-description" type="text" v-model="form.description" placeholder="Form description"></b-form-input>
+            </div>
+            <div class="form-logo">
+              <img :src="form.logo">
+            </div>
+          </div>
+
+          <div @click="divFocus(question)" v-for="question in form.questions" :key="question.id" :class="'form-question ' + question.focus ">
+
+            <div v-if="question.type === 'question'" class="question-type">
+
+              <div class="form-question-row-1">
+                <b-form-input class="input-question" type="text" v-model="question.question" placeholder="Question"></b-form-input>
+                <b-form-select class="select-answer" v-model="question.questionType">
+                  <b-form-select-option :value="null">Please select a question type</b-form-select-option>
+                  <b-form-select-option value="Short answer">Short answer</b-form-select-option>
+                  <b-form-select-option value="Paragraph">Paragraph</b-form-select-option>
+                  <b-form-select-option value="Multiple choice">Multiple choice</b-form-select-option>
+                  <b-form-select-option value="Checkboxes">Checkboxes</b-form-select-option>
+                  <b-form-select-option value="Dropdown">Dropdown</b-form-select-option>
+                  <b-form-select-option value="Date">Date</b-form-select-option>
+                  <b-form-select-option value="Time">Time</b-form-select-option>
+                </b-form-select>
+              </div>
+
+              <div v-if="question.questionType == 'null'" class="form-question-row-2"></div>
+
+              <div v-else-if="question.questionType == 'Short answer'" class="form-question-row-2 short-answer-row">
+                <b-form-input
+                    type="text"
+                    class="input-answer"
+                    placeholder="Short answer text"
+                    disabled
+                ></b-form-input>
+              </div>
+
+              <div v-else-if="question.questionType == 'Paragraph'" class="form-question-row-2 paragraph-row">
+                <b-form-textarea
+                    type="text"
+                    class="input-paragraph"
+                    placeholder="Paragraph text"
+                    disabled
+                ></b-form-textarea>
+              </div>
+
+              <div v-else-if="question.questionType == 'Multiple choice'" class="form-question-row-2 choice-row">
+                <div class="multiple-choice-row" v-for="option in question.options" :key="option.id">
+                  <i class="far fa-circle"></i>
+                  <b-form-input class="multiple-choice-input" type="text" v-model="option.value"></b-form-input>
+                  <i class="fas fa-times close" @click="removeChoice(option, question)"></i>
+                </div>
+                <h6 @click="addOtherOption(question)">Add other option</h6>
+              </div>
+
+              <div v-else-if="question.questionType == 'Checkboxes'" class="form-question-row-2 choice-row">
+                <div class="multiple-choice-row" v-for="option in question.options" :key="option.id">
+                  <i class="far fa-square"></i>
+                  <b-form-input class="multiple-choice-input" type="text" v-model="option.value"></b-form-input>
+                  <i class="fas fa-times close" @click="removeChoice(option, question)"></i>
+                </div>
+                <h6 @click="addOtherOption(question)">Add other option</h6>
+              </div>
+
+              <div v-else-if="question.questionType == 'Dropdown'" class="form-question-row-2 choice-row">
+                <div class="multiple-choice-row" v-for="option in question.options" :key="option.id">
+                  <b-form-input class="multiple-choice-input" type="text" v-model="option.value"></b-form-input>
+                  <i class="fas fa-times close" @click="removeChoice(option, question)"></i>
+                </div>
+                <h6 @click="addOtherOption(question)">Add other option</h6>
+              </div>
+
+              <div v-else-if="question.questionType == 'Date'" class="form-question-row-2 date-row">
+                <b-form-input
+                    type="date"
+                    disabled
+                ></b-form-input>
+              </div>
+
+              <div v-else-if="question.questionType == 'Time'" class="form-question-row-2 time-row">
+                <b-form-input
+                    type="time"
+                    disabled
+                ></b-form-input>
+              </div>
+
+              <div v-else class="form-question-row-2"></div>
+
+              <div class="question-footer">
+                <div class="hidden-class"></div>
+                <div class="question-footer-content">
+                  <i class="far fa-copy duplicate" @click="duplicate(question)"></i>
+                  <i class="fas fa-trash-alt remove" @click="remove(question)"></i>
+                  <div class="required d-flex">
+                    <p>Required</p>
+                    <label class="switch mt-auto mb-auto">
+                      <input type="checkbox" v-model="question.required">
+                      <span class="slider round"></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <div v-else class="else-type-content">
+
+              <div class="else-type-header">
+                <b-form-input class="else-type-header-input" type="text" v-model="question.question" placeholder="Title"></b-form-input>
+                <div class="else-type-header-icons">
+                  <i class="far fa-copy duplicate" @click="duplicate(question)"></i>
+                  <i class="fas fa-trash-alt remove" @click="remove(question)"></i>
+                </div>
+              </div>
+
+              <div v-if="question.type === 'title'" class="title-type-content">
+                <b-form-input
+                    class="title-description-input"
+                    type="text"
+                    v-model="question.description"
+                    placeholder="Add description"></b-form-input>
+              </div>
+
+              <div v-if="question.type === 'image'" class="image-type-content">
+
+                <img :src="question.description">
+
+              </div>
+
+              <div v-if="question.type === 'video'" class="video-type-content">
+
+                <div v-if="question.displayVideo" class="video">
+                  <iframe class="m-4" src="https://www.youtube.com/embed/tgbNymZ7vqY?controls=0"></iframe>
+                </div>
+
+                <div v-else class="video-url d-flex">
+                  <b-form-input
+                      class="title-description-input"
+                      type="text"
+                      v-model="question.description"
+                      placeholder="Add youtube video url"
+                  ></b-form-input>
+                  <b-button @click="addVideo(question.id)" type="reset">Add video</b-button>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <b-button class="btn" @click="addForm">Add Form</b-button>
+        </div>
+
+        <div class="right-elements">
+          <div class="top">
+            <input type="file" accept="image/" class="hidden" ref="logoFile" @change="addLogo">
+            <div v-b-popover.hover.right="'Add logo'" class="add-logo">
+              <button type="reset" class="add-logo-btn" @click="browse">
+                <i class="fas fa-plus-circle"></i>Logo
+              </button>
+            </div>
+          </div>
+          <div class="bottom">
+            <i @click="addNewQuestion" class="fas fa-plus-circle" v-b-popover.hover.right="'Add new question'"></i>
+            <i @click="addNewTitle" v-b-popover.hover.right="'Add new title and description'" class="fas fa-heading"></i>
+            <input type="file" accept="image/" class="hidden" ref="imageFile" @change="addImage">
+            <i @click="addNewImage" v-b-popover.hover.right="'Add new image'" class="far fa-image"></i>
+            <i @click="addNewVideo" v-b-popover.hover.right="'Add new video'" class="fas fa-video"></i>
+          </div>
+        </div>
+
+      </div>
+
+      <div v-if="displayTheme" class="theme">
+
+        <div class="theme-header">
+          <i class="fas fa-palette"></i>
+          <p>Theme options</p>
+          <i @click="closeTheme" class="fas fa-times close"></i>
+        </div>
+
+        <div class="image-header">
+          <p class="p-header">HEADER</p>
+          <div class="image-header-content">
+            <div v-if="form.imageHeader === ''">
+              <input type="file" accept="image/" class="hidden" ref="file" @change="changeFormHeaderImage">
+              <button type="reset" @click="browseFormHeaderImage" class="btn-image-header d-flex">
+                <i class="fas fa-image"></i>
+                <p>Choose image</p>
+              </button>
+            </div>
+            <div v-else>
+              <button type="reset" class="btn-remove-image-header d-flex">
+                <i class="fas fa-image"></i>
+                <p>Image uploaded</p>
+                <i @click="removeFormHeaderImage" class="fas fa-times"></i>
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="theme-color">
+          <p class="p-header">THEME COLOR</p>
+          <div class="theme-color-content">
+            <i @click="editTheme('default')" v-b-popover.hover.top="'Default #9d55a0'" class="fas fa-circle color-1"></i>
+            <i @click="editTheme('theme-1')" v-b-popover.hover.top="'Red #db4437'" class="fas fa-circle color-2"></i>
+            <i @click="editTheme('theme-2')" v-b-popover.hover.top="'Purple #673ab7'" class="fas fa-circle color-3"></i>
+            <i @click="editTheme('theme-3')" v-b-popover.hover.top="'Indigo #3f51b5'" class="fas fa-circle color-4"></i>
+            <i @click="editTheme('theme-4')" v-b-popover.hover.top="'Blue #4285f4'" class="fas fa-circle color-5"></i>
+            <i @click="editTheme('theme-5')" v-b-popover.hover.top="'Light Blue #03a9f4'" class="fas fa-circle color-6"></i>
+            <i @click="editTheme('theme-6')" v-b-popover.hover.top="'Red Orange #ff5722'" class="fas fa-circle color-7"></i>
+            <i @click="editTheme('theme-7')" v-b-popover.hover.top="'Orange #ff9800'" class="fas fa-circle color-8"></i>
+            <i @click="editTheme('theme-8')" v-b-popover.hover.top="'Teal #009688'" class="fas fa-circle color-9"></i>
+            <i @click="editTheme('theme-9')" v-b-popover.hover.top="'Green #4caf50'" class="fas fa-circle color-10"></i>
+            <i @click="editTheme('theme-10')" v-b-popover.hover.top="'Blue Gray #607d8b'" class="fas fa-circle color-11"></i>
+            <i @click="editTheme('theme-11')" v-b-popover.hover.top="'Gray #9e9e9e'" class="fas fa-circle color-12"></i>
+          </div>
+        </div>
+
+        <div class="text-font">
+          <p class="p-header">FONT STYLE</p>
+          <div class="text-font-content">
+            <b-form-select v-model="form.fontFamily" class="mb-3">
+              <b-form-select-option value="default-font">Basic</b-form-select-option>
+              <b-form-select-option value="Playful">Playful</b-form-select-option>
+              <b-form-select-option value="Roboto-Mono">Roboto Mono</b-form-select-option>
+            </b-form-select>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="main-content ar animate__animated animate__backInRight" v-if="getLang === 'ar'">
 
       <div class="container">
 
@@ -282,7 +531,6 @@
       </div>
     </div>
 
-
   </div>
 </template>
 
@@ -294,6 +542,11 @@ export default {
   components: {
     SendForm,
     CreateFormHeader
+  },
+  computed: {
+    getLang() {
+      return this.$store.getters['main/getLang'];
+    }
   },
   data() {
     return {
@@ -584,6 +837,10 @@ export default {
   min-height: 100vh;
 }
 
+.ar {
+  direction: rtl;
+  text-align: right;
+}
 
 .mobile-add {
   display: none;
@@ -603,6 +860,10 @@ export default {
   margin-right: 2%;
 }
 
+.ar .create-form {
+  margin-left: 2%;
+  margin-right: 0;
+}
 
 .form-image-header {
   display: flex;
@@ -677,7 +938,6 @@ export default {
   color: var(--var-main-color);
   cursor: pointer;
 }
-
 
 .form-header {
   padding: 15px;
@@ -898,9 +1158,9 @@ export default {
 }
 
 .required {
-  margin-left: 20px;
-  padding-left: 20px;
-  border-left: 2px solid #c4c4c4;
+  margin-right: 20px;
+  padding-right: 20px;
+  border-right: 2px solid #c4c4c4;
 }
 
 .required p {

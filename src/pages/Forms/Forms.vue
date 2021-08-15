@@ -41,6 +41,38 @@
       </div>
     </main>
 
+    <main class="ar animate__animated animate__backInLeft" v-if="getLang === 'ar'">
+      <div class="container">
+        <div class="start-form">
+          <div class="header d-flex justify-content-between">
+            <div>
+              <h4>ابدأ الفورم الخاص بك</h4>
+            </div>
+            <router-link to="/" class="d-flex">
+              <h4>إظهار كل الفورمز</h4>
+              <i class="fas fa-arrow-alt-circle-left"></i>
+            </router-link>
+          </div>
+          <div class="forms">
+            <Form class="form" add-form="true"></Form>
+            <Form class="form" contact-form="true"></Form>
+            <Form class="form"  hiring-form="true"></Form>
+            <Form class="form" order-form="true"></Form>
+          </div>
+          <div class="recent-form mt-5">
+            <div class="header d-flex justify-content-between">
+              <div>
+                <h4>الفورمز الجديده</h4>
+              </div>
+            </div>
+            <div class="forms">
+              <p class="no-form">لم يتم تحديد أي فورم حتى الآن</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
 
   </div>
 </template>
@@ -69,6 +101,11 @@ export default {
 
 main {
   margin-top: 80px;
+}
+
+.ar {
+  direction: rtl;
+  text-align: right;
 }
 
 .nav {

@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div>
     <div class="create-form-header en animate__animated animate__backInLeft" v-if="getLang === 'en'">
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
@@ -355,7 +355,6 @@ export default {
   --var-main-color: #9e9e9e;
   --var-second-color: #ddd;
 }
-
 
 .create-form-header {
   background-color: #FFFFFF !important;
