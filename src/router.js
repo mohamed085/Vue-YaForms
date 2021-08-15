@@ -15,6 +15,7 @@ import CreateForm from "./pages/Forms/CreateForm";
 import Forms from "./pages/Forms/Forms";
 import ProfileIndex from "./pages/Profile/ProfileIndex";
 import ProfileEdit from "./pages/Profile/ProfileEdit";
+import Response from "./pages/Forms/Response";
 
 Vue.use(VueRouter)
 
@@ -33,7 +34,10 @@ const routes = [
     { path: '/setting/:id', component: ProfileEdit },
     { path: '/forms', component: Forms },
     { path: '/createForm', component: CreateForm },
-    { path: '/responses', component: null },
+    { path: '/createContactForm', component: null },
+    { path: '/createHiringForm', component: null },
+    { path: '/createOrderForm', component: null },
+    { path: '/responses', component: Response },
     { path: '/form/:id', component: FormView },
     { path: '/:notFound(.*)', component: NotFound }
 ]

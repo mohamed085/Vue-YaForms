@@ -7,8 +7,7 @@
         avatar="https://pbs.twimg.com/media/E7yILDuVoAEOzoE?format=jpg&name=medium"
         name="Mohamed Emad"
         id="asdasd132"
-        en="#"
-        ar="/home-ar"
+        show="true"
     >
     </create-form-header>
 

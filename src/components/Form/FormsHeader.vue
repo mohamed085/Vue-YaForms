@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <div class="create-form-header en animate__animated animate__backInLeft" v-if="getLang === 'en'">
+    <div class="form-header en animate__animated animate__backInLeft" v-if="getLang === 'en'">
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
           <router-link to="/" class="navbar-brand">
@@ -13,16 +13,10 @@
 
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <div class="navbar-nav">
-              <router-link :to="'/form/' + id" class="link" >
-                  <i class="far fa-eye"></i>
-              </router-link>
-              <p class="link" @click="them">
-                <i class="fas fa-palette"></i>
-              </p>
-              <p class="send" @click="send">
-                <i class="fas fa-share-alt"></i>
-                Send
-              </p>
+              <form class="d-flex" @submit="search">
+                <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn" type="submit"><i class="fas fa-search"></i></button>
+              </form>
             </div>
 
             <div class="mobile-nav">
@@ -58,7 +52,6 @@
                     </div>
                   </router-link>
                 </li>
-
               </ul>
             </div>
 
@@ -105,30 +98,11 @@
             </div>
 
           </div>
-
         </div>
       </nav>
-
-      <div class="mobile-nav-1">
-        <router-link :to="'/form/' + id" class="link" >
-          <i class="far fa-eye"></i>
-        </router-link>
-        <p class="link" @click="them">
-          <i class="fas fa-palette"></i>
-        </p>
-        <p class="send" @click="send">
-          <i class="fas fa-share-alt"></i>
-          Send
-        </p>
-      </div>
-
-      <div class="nav-2">
-        <router-link to="/createForm" exact>Questions</router-link>
-        <router-link to="/responses">Responses</router-link>
-      </div>
     </div>
 
-    <div class="create-form-header ar animate__animated animate__backInRight" v-if="getLang === 'ar'">
+    <div class="form-header ar animate__animated animate__backInRight" v-if="getLang === 'ar'">
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
           <router-link to="/" class="navbar-brand">
@@ -141,16 +115,10 @@
 
           <div class="collapse navbar-collapse" id="navbarSupportedContentAr">
             <div class="navbar-nav">
-              <router-link :to="'/form/' + id" class="link" >
-                <i class="far fa-eye"></i>
-              </router-link>
-              <p class="link" @click="them">
-                <i class="fas fa-palette"></i>
-              </p>
-              <p class="send" @click="send">
-                <i class="fas fa-share-alt"></i>
-                إرسال
-              </p>
+              <form class="d-flex" @submit="search">
+                <input class="form-control" type="search" placeholder="بحث" aria-label="Search">
+                <button class="btn" type="submit"><i class="fas fa-search"></i></button>
+              </form>
             </div>
 
             <div class="mobile-nav">
@@ -222,7 +190,7 @@
             </b-dropdown>
 
             <div class="languages">
-            <span @click="setLang('en')" class="lang d-flex">
+              <span @click="setLang('en')" class="lang d-flex">
             <img src="../../assets/images/en-logo.png">
             <p>English</p>
           </span>
@@ -235,37 +203,19 @@
           </div>
         </div>
       </nav>
-
-      <div class="mobile-nav-1">
-        <router-link :to="'/form-en/' + id" class="link" >
-          <i class="far fa-eye"></i>
-        </router-link>
-        <p class="link" @click="them">
-          <i class="fas fa-palette"></i>
-        </p>
-        <p class="send" @click="send">
-          <i class="fas fa-share-alt"></i>
-          ارسال
-        </p>
-      </div>
-
-      <div class="nav-2">
-        <router-link to="/createForm" exact>الاسئلة</router-link>
-        <router-link to="/responses">الردود</router-link>
-      </div>
     </div>
   </div>
 </template>
 
 <script>
 import Logo from "../Ui/Logo";
+
 export default {
-  name: "CreateFormHeader",
+  name: "FormsHeader",
   components: {
     Logo
   },
-  props: ['avatar', 'name', 'id', 'en', 'ar', 'theme', 'show'],
-  emits: ['show-theme', 'show-send'],
+  props: ['avatar', 'name', 'id'],
   data() {
     return {
       showTheme: false,
@@ -285,95 +235,32 @@ export default {
     search() {
 
     },
-    them() {
-      this.showTheme = !this.showTheme;
-      this.$emit('show-theme', this.showTheme);
-    },
-    send() {
-      this.showSend = !this.showSend;
-      this.$emit('show-send', this.showSend);
-    }
   }
 }
 </script>
 
 <style scoped>
-.default {
-  --var-main-color: #9d55a0;
-  --var-second-color: #dddddd;
-}
-.theme-1 {
-  --var-main-color: #db4437;
-  --var-second-color: #fae3e1;
-}
-.theme-2 {
-  --var-main-color: #673ab7;
-  --var-second-color: #c2c0c6;
-}
-
-.theme-3 {
-  --var-main-color: #3f51b5;
-  --var-second-color: #c2c0c6;
-}
-
-.theme-4 {
-  --var-main-color: #4285f4;
-  --var-second-color: #c2c0c6;
-}
-
-.theme-5 {
-  --var-main-color: #03a9f4;
-  --var-second-color: #d5ebf5;
-}
-
-.theme-6 {
-  --var-main-color: #ff5722;
-  --var-second-color: #ffeee0;
-}
-
-.theme-7 {
-  --var-main-color: #ff9800;
-  --var-second-color: #ffdcab;
-}
-
-.theme-8 {
-  --var-main-color: #009688;
-  --var-second-color: #cefcf9;
-}
-
-.theme-9 {
-  --var-main-color: #4caf50;
-  --var-second-color: #9fb89f;
-}
-
-.theme-10 {
-  --var-main-color: #607d8b;
-  --var-second-color: #ddd;
-}
-
-.theme-11 {
-  --var-main-color: #9e9e9e;
-  --var-second-color: #ddd;
-}
-
-
-.create-form-header {
-  background-color: #FFFFFF !important;
-  z-index: 1000;
+.form-header, .home {
+  width: 100%;
 }
 
 nav {
+  box-shadow: 0 4px 2px -2px rgba(0,0,0,.2);
   width: 100%;
   padding: 0 10px;
 }
 
-.btn:hover {
-  color: var(--var-main-color);
-  background-color: #fff;
+.ar nav {
+  direction: rtl;
 }
 
 .navbar-brand:hover {
-  color: var(--var-main-color);
+  color: #9d55a0;
+}
+
+.btn:hover {
+  color: #9d55a0;
+  background-color: #fff;
 }
 
 form {
@@ -388,75 +275,29 @@ form input {
 }
 
 .navbar-nav {
-  margin: 0 auto 0 80px;
-}
-
-.navbar-nav .link {
-  color: #111111;
-  text-decoration: none;
-  margin: auto 10px;
-}
-
-.navbar-nav i:hover {
-  color: var(--var-main-color);
-  cursor: pointer;
-}
-
-.send {
-  color: #FFFFFF;
-  margin: auto 10px;
-  background-color: var(--var-main-color);
-  padding: 5px 10px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.send i {
-  margin: 0 5px 0 0;
-}
-
-.send:hover {
-  color: var(--var-main-color);
-  background-color: #dddddd;
-  text-decoration: none;
+  margin: 0 auto;
 }
 
 .dropdown-content {
-  margin: auto 0 auto 10px;
+  margin: auto 10px auto;
 }
 
 .dropdown-content h5 ,
 .dropdown-content p {
-  margin: auto 0;
+  margin: auto;
+}
+
+.ar .dropdown-content p {
+  text-align: right;
 }
 
 .profile {
   border-bottom: 1px solid #bbbbbb;
-  padding-bottom: 10px;
-  margin-bottom: 10px;
+  padding-bottom: 5px;
 }
 
 .mobile-nav {
   display: none;
-}
-
-.languages span {
-  font-size: 14px;
-  color: #111111;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.languages span:hover {
-  color: var(--var-main-color);
-}
-
-.lang img {
-  margin: auto 5px;
-}
-
-.lang p {
-  margin: auto 0;
 }
 
 .languages {
@@ -464,14 +305,15 @@ form input {
   margin: auto 0;
 }
 
-.languages a {
+.languages .lang {
   font-size: 14px;
   color: #111111;
   text-decoration: none;
+  cursor: pointer;
 }
 
-.languages a:hover {
-  color: var(--var-main-color);
+.languages .lang:hover {
+  color: #9d55a0;
 }
 
 .lang img {
@@ -482,53 +324,13 @@ form input {
   margin: auto 0;
 }
 
-.mobile-nav-1 {
-  display: none;
-}
-
-.nav-2 {
-  display: flex;
-  justify-content: center;
-  margin: 20px 0;
-  box-shadow: 0 4px 2px -2px rgba(0,0,0,.2);
-}
-
-.nav-2 a {
-  color: #111111;
-  font-family: 'Google Sans',Roboto,Arial,sans-serif;
-  margin: 0 10px;
-  padding-bottom: 5px;
-}
-
-
-.nav-2 a.active,
-.nav-2 a:hover,
-.nav-2 a.router-link-active {
-  text-decoration: none;
-  color: var(--var-main-color);
-  border-bottom: 4px solid var(--var-main-color);
-}
-
-.ar nav {
-  direction: rtl;
-  text-align: right;
-}
-
-.ar .dropdown p, .ar .dropdown h6, .ar .mobile-nav p, .ar .mobile-nav h6 {
+.ar .dropdown p, .ar .dropdown h6 {
   text-align: right;
   margin-right: 5px;
 }
 
-.ar .nav-2 {
-  direction: rtl;
-  text-align: right;
-}
 @media (max-width:1024px) {
   .dropdown {
-    display: none;
-  }
-
-  .navbar-nav {
     display: none;
   }
 
@@ -547,43 +349,6 @@ form input {
 
   .mobile-nav a:hover {
     background-color: #dddddd;
-  }
-
-  .mobile-nav-1 {
-    display: flex;
-    justify-content: center;
-    margin: 10px 0;
-    align-items: center;
-  }
-
-
-  .mobile-nav-1 .link {
-    color: #111111;
-    text-decoration: none;
-    margin: auto 10px;
-  }
-
-  .mobile-nav-1 i:hover {
-    color: var(--var-main-color);
-    cursor: pointer;
-  }
-
-  .mobile-nav-1 .send {
-    color: #FFFFFF;
-    margin: auto 10px;
-    background-color: var(--var-main-color);
-    padding: 5px 10px;
-    border-radius: 5px;
-  }
-
-  .mobile-nav-1 .send i {
-    margin: 0 5px 0 0;
-  }
-
-  .mobile-nav-1 .send:hover {
-    color: var(--var-main-color);
-    background-color: #dddddd;
-    text-decoration: none;
   }
 }
 </style>
