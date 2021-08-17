@@ -123,8 +123,8 @@
       </div>
 
       <div class="nav-2">
-        <router-link to="/createForm" exact>Questions</router-link>
-        <router-link to="/responses">Responses</router-link>
+        <router-link to="/create-form" exact>Questions</router-link>
+        <router-link :to="'/form/response/' + id">Responses <span v-if="responseNum" class="responseNum">{{ responseNum }}</span></router-link>
       </div>
     </div>
 
@@ -250,8 +250,8 @@
       </div>
 
       <div class="nav-2">
-        <router-link to="/createForm" exact>الاسئلة</router-link>
-        <router-link to="/responses">الردود</router-link>
+        <router-link to="/create-form" exact>الاسئلة</router-link>
+        <router-link :to="'/form/response/' + id">الردود <span v-if="responseNum" class="responseNum">{{ responseNum }}</span></router-link>
       </div>
     </div>
   </div>
@@ -264,7 +264,7 @@ export default {
   components: {
     Logo
   },
-  props: ['avatar', 'name', 'id', 'en', 'ar', 'theme', 'show'],
+  props: ['avatar', 'name', 'id', 'en', 'ar', 'theme', 'show', 'responseNum'],
   emits: ['show-theme', 'show-send'],
   data() {
     return {
@@ -522,6 +522,15 @@ form input {
   direction: rtl;
   text-align: right;
 }
+
+.responseNum {
+  color: #FFFFFF;
+  background-color: var(--var-main-color);
+  padding: 3px 7px;
+  border-radius: 50%;
+  margin: 0 5px;
+}
+
 @media (max-width:1024px) {
   .dropdown {
     display: none;

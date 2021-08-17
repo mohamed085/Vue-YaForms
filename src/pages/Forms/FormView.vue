@@ -340,7 +340,6 @@ export default {
       return this.$store.getters['main/getLang'];
     }
   },
-
 }
 </script>
 

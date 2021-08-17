@@ -46,7 +46,7 @@
           :theme="form.styleTheme"
           avatar="https://pbs.twimg.com/media/E7yILDuVoAEOzoE?format=jpg&name=medium"
           name="Mohamed Emad"
-          id="asdasd132"
+          id="132165sda"
           show="true"
       >
       </create-form-header>
@@ -1302,10 +1302,16 @@ export default {
   color: var(--var-main-color);
 }
 
-.required {
+.ar .required {
   margin-right: 20px;
   padding-right: 20px;
   border-right: 2px solid #c4c4c4;
+}
+
+.en .required {
+  margin-left: 20px;
+  padding-left: 20px;
+  border-left: 2px solid #c4c4c4;
 }
 
 .required p {
@@ -1320,7 +1326,6 @@ export default {
   height: 24px;
   margin: 0 18px;
 }
-
 
 .switch input {
   opacity: 0;
