@@ -21,10 +21,10 @@
             </router-link>
           </div>
           <div class="forms">
-            <Form class="form" add-form="true"></Form>
-            <Form class="form" contact-form="true"></Form>
-            <Form class="form"  hiring-form="true"></Form>
-            <Form class="form" order-form="true"></Form>
+            <Form add-form="true"></Form>
+            <Form contact-form="true"></Form>
+            <Form hiring-form="true"></Form>
+            <Form order-form="true"></Form>
           </div>
           <div class="recent-form mt-5">
             <div class="header d-flex justify-content-between">
@@ -112,6 +112,7 @@ main {
   position: fixed;
   top: 0;
   width: 100%;
+  z-index: 1000;
 }
 
 .footer {
@@ -145,7 +146,6 @@ main {
 .forms {
   display: flex;
   flex-wrap: wrap;
-  padding: 10px 0;
   justify-content: center;
   align-items: center;
 }

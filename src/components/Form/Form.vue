@@ -1,44 +1,48 @@
 <template>
-  <div v-if="addForm" class="form-content">
-    <div class="form">
-      <router-link to="/createForm">
+  <router-link v-if="addForm" class="form-content" to="/create-form">
+    <div class="form-content">
+      <div class="form-img">
         <i class="fas fa-plus"></i>
-      </router-link>
+      </div>
+      <div class="form-footer">
+        <p>Blank</p>
+      </div>
+
     </div>
-    <div class="title">
-      <router-link to="/createForm">Blank form</router-link>
-    </div>
-  </div>
-  <div v-else-if="contactForm" class="form-content">
-    <div class="form">
-      <router-link to="/createContactForm">
+  </router-link>
+  <router-link v-else-if="contactForm" class="form-content" to="/create-form">
+    <div class="form-content">
+      <div class="form-img">
         <img src="../../assets/images/form-1.png">
-      </router-link>
+      </div>
+      <div class="form-footer">
+        <p>Contact Form</p>
+      </div>
+
     </div>
-    <div class="title">
-      <router-link to="/createContactForm">Contact form</router-link>
-    </div>
-  </div>
-  <div v-else-if="hiringForm" class="form-content">
-    <div class="form">
-      <router-link to="/createHiringForm">
+  </router-link>
+  <router-link v-else-if="hiringForm" class="form-content" to="/create-form">
+    <div class="form-content">
+      <div class="form-img">
         <img src="../../assets/images/form-1.png">
-      </router-link>
+      </div>
+      <div class="form-footer">
+        <p>Hiring Form</p>
+      </div>
+
     </div>
-    <div class="title">
-      <router-link to="/createHiringForm">Hiring form</router-link>
-    </div>
-  </div>
-  <div v-else-if="orderForm" class="form-content">
-    <div class="form">
-      <router-link to="/createOrderForm">
+  </router-link>
+  <router-link v-else-if="orderForm" class="form-content" to="/create-form">
+    <div class="form-content">
+      <div class="form-img">
         <img src="../../assets/images/form-1.png">
-      </router-link>
+      </div>
+      <div class="form-footer">
+        <p>Order Form</p>
+      </div>
+
     </div>
-    <div class="title">
-      <router-link to="/createOrderForm">Order form</router-link>
-    </div>
-  </div>
+  </router-link>
 </template>
 
 <script>
@@ -67,47 +71,64 @@ export default {
 </script>
 
 <style scoped>
-.form-content {
-  width: 24%;
-  margin-right: 1%;
-  height: 250px;
-  display: flex;
-  flex-direction: column;
-  background-color: #dddddd;
-  margin-bottom: 20px;
-}
-
-.form-content .form {
-  height: 88%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 2px -2px rgba(0,0,0,.2);
-}
-
-.form-content .form i {
-  font-size: 300%;
-  font-weight: 600;
-  color: #9d55a0;
-}
-
-.form-content .form img {
-  height: 200px;
-}
-
-.form-content .title {
-  margin-top: 2%;
-  height: 10%;
-  padding: 0 10px;
-}
-
-.form-content .title a {
-  text-decoration: none;
+a {
   color: #111111;
-  font-weight: 600;
+  text-decoration: none;
+  height: 123px;
+  width: 164px;
+  margin: 0;
+  padding: 0;
 }
 
-.form-content .title a:hover {
+a:hover {
+  color: #9d55a0;
+  text-decoration: none;
+}
+
+a:hover .form-img {
+  border: 1px solid #9d55a0;
+}
+
+a:hover .form-footer p {
   color: #9d55a0;
 }
+
+.form-content {
+  height: 153px;
+  width: 174px;
+  margin: 10px;
+}
+
+.form-img {
+  padding: 5px;
+  width: 95%;
+  height: 95%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #dddddd;
+}
+
+.form-img i {
+  font-size: 200%;
+  color: #9d55a0;
+}
+
+.form-img img {
+  width: 100%;
+  height: 100%;
+}
+
+.form-footer p {
+  font-weight: 500;
+  color: #202124;
+  font-family: "Google Sans",Roboto,Arial,sans-serif;
+  font-size: 14px;
+  height: 19px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin: 5px 10px;
+}
+
 </style>
