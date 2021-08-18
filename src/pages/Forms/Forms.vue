@@ -41,7 +41,7 @@
       </div>
     </main>
 
-    <main class="ar animate__animated animate__backInLeft" v-if="getLang === 'ar'">
+    <main class="ar animate__animated animate__backInRight" v-if="getLang === 'ar'">
       <div class="container">
         <div class="start-form">
           <div class="header d-flex justify-content-between">
@@ -54,10 +54,10 @@
             </router-link>
           </div>
           <div class="forms">
-            <Form class="form" add-form="true"></Form>
-            <Form class="form" contact-form="true"></Form>
-            <Form class="form"  hiring-form="true"></Form>
-            <Form class="form" order-form="true"></Form>
+            <Form add-form="true"></Form>
+            <Form contact-form="true"></Form>
+            <Form hiring-form="true"></Form>
+            <Form order-form="true"></Form>
           </div>
           <div class="recent-form mt-5">
             <div class="header d-flex justify-content-between">

@@ -5,7 +5,8 @@
         <i class="fas fa-plus"></i>
       </div>
       <div class="form-footer">
-        <p>Blank</p>
+        <p v-if="getLang === 'en'">Blank</p>
+        <p v-if="getLang === 'ar'">فارغ</p>
       </div>
 
     </div>
@@ -13,21 +14,22 @@
   <router-link v-else-if="contactForm" class="form-content" to="/create-form">
     <div class="form-content">
       <div class="form-img">
-        <img src="../../assets/images/form-1.png">
+        <img src="../../assets/images/form-3.png">
       </div>
       <div class="form-footer">
-        <p>Contact Form</p>
+        <p v-if="getLang === 'en'">Contact Form</p>
+        <p v-if="getLang === 'ar'">نموذج الاتصال</p>
       </div>
-
     </div>
   </router-link>
   <router-link v-else-if="hiringForm" class="form-content" to="/create-form">
     <div class="form-content">
       <div class="form-img">
-        <img src="../../assets/images/form-1.png">
+        <img src="../../assets/images/form-4.png">
       </div>
       <div class="form-footer">
-        <p>Hiring Form</p>
+        <p v-if="getLang === 'en'">Hiring Form</p>
+        <p v-if="getLang === 'ar'">نموذج التوظيف</p>
       </div>
 
     </div>
@@ -35,10 +37,11 @@
   <router-link v-else-if="orderForm" class="form-content" to="/create-form">
     <div class="form-content">
       <div class="form-img">
-        <img src="../../assets/images/form-1.png">
+        <img src="../../assets/images/form-2.png">
       </div>
       <div class="form-footer">
-        <p>Order Form</p>
+        <p v-if="getLang === 'en'">Order Form</p>
+        <p v-if="getLang === 'ar'">نموذج الطلب</p>
       </div>
 
     </div>
@@ -66,7 +69,12 @@ export default {
       required: false,
     },
 
-  }
+  },
+  computed: {
+    getLang() {
+      return this.$store.getters['main/getLang'];
+    }
+  },
 }
 </script>
 

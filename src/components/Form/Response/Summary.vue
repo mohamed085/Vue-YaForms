@@ -4,7 +4,6 @@
     <div v-if="getLang === 'en'" class="form-view en animate__animated animate__backInLeft">
       <div class="form-content">
 
-
         <div v-for="question in form.questions" :key="question.id">
 
           <div v-if="question.type === 'question'">
@@ -66,6 +65,9 @@
 
           </div>
 
+          <div v-if="question.type === 'title'" class="section question-section">
+            <p class="question-title">{{ question.question }}</p>
+          </div>
 
         </div>
 
@@ -73,7 +75,76 @@
     </div>
 
     <div v-if="getLang === 'ar'" class="form-view ar animate__animated animate__backInRight">
+      <div class="form-content">
 
+        <div v-for="question in form.questions" :key="question.id">
+
+          <div v-if="question.type === 'question'">
+
+            <div class="section question-section" v-if="question.questionType === 'Short answer'">
+              <p class="question-title">{{ question.question }} ؟</p>
+              <p class="response-num">{{ question.responses.num }} ردود</p>
+              <p class="answers">الاجابات</p>
+              <p class="answer short-answer" v-for="answer in question.responses.responseAnswer" :key="answer.id">
+                {{ answer.answer }} <span style="color: var(--var-main-color)" v-if="answer.repeat"> - عدد تكرار الاجابة {{ answer.repeat }}</span>
+              </p>
+            </div>
+
+            <div class="section question-section" v-if="question.questionType === 'Paragraph'">
+              <p class="question-title">{{ question.question }} ؟</p>
+              <p class="response-num">{{ question.responses.num }} ردود</p>
+              <p class="answers">الاجابات</p>
+              <p class="answer short-answer" v-for="answer in question.responses.responseAnswer" :key="answer.id">
+                {{ answer.answer }}  <span style="color: var(--var-main-color)" v-if="answer.repeat"> - عدد تكرار الاجابة {{ answer.repeat }}</span>
+              </p>
+            </div>
+
+            <div class="section question-section" v-if="question.questionType === 'Multiple choice'">
+              <p class="question-title">{{ question.question }} ؟</p>
+              <p class="response-num">{{ question.responses.num }} ردود</p>
+              <v-chart class="chart" :option="question.option" />
+            </div>
+
+            <div class="section question-section" v-if="question.questionType === 'Checkboxes'">
+              <p class="question-title">{{ question.question }} ؟</p>
+              <p class="response-num">{{ question.responses.num }} ردود</p>
+              <v-chart class="chart" :option="question.option" />
+            </div>
+
+            <div class="section question-section" v-if="question.questionType === 'Dropdown'">
+              <p class="question-title">{{ question.question }} ؟</p>
+              <p class="response-num">{{ question.responses.num }} ردود</p>
+              <v-chart class="chart" :option="question.option" />
+            </div>
+
+            <div class="section question-section" v-if="question.questionType === 'Date'">
+              <p class="question-title">{{ question.question }} ؟</p>
+              <p class="response-num">{{ question.responses.num }} ردود</p>
+              <p class="answers">الاجابات</p>
+              <p class="answer short-answer" v-for="answer in question.responses.responseAnswer" :key="answer.id">
+                {{ answer.answer }} <span style="color: var(--var-main-color)" v-if="answer.repeat"> - عدد تكرار الاجابة {{ answer.repeat }}</span>
+              </p>
+            </div>
+
+            <div class="section question-section" v-if="question.questionType === 'Time'">
+              <p class="question-title">{{ question.question }} ؟</p>
+              <p class="response-num">{{ question.responses.num }} ردود</p>
+              <p class="answers">الاجابات</p>
+              <p class="answer short-answer" v-for="answer in question.responses.responseAnswer" :key="answer.id">
+                {{ answer.answer }} <span style="color: var(--var-main-color)" v-if="answer.repeat"> - عدد تكرار الاجابة {{ answer.repeat }}</span>
+              </p>
+            </div>
+
+
+          </div>
+
+          <div v-if="question.type === 'title'" class="section question-section">
+            <p class="question-title">{{ question.question }}</p>
+          </div>
+
+        </div>
+
+      </div>
     </div>
 
   </div>
@@ -150,6 +221,7 @@ export default {
             required: 'true',
             responses: {
               num: 5,
+
             },
             option: {
               title: {
@@ -327,19 +399,21 @@ export default {
               ]
             }
           },
+          {
+            id: '16157sad',
+            question: 'Untitled Title',
+            type: 'title',
+          },
+        ],
 
-        ]
       },
-
     }
   },
-
   computed: {
     getLang() {
       return this.$store.getters['main/getLang'];
     },
   },
-
 }
 </script>
 
@@ -465,7 +539,10 @@ export default {
   width: 95%;
   height: 400px;
   margin: 10px auto;
-
 }
 
+.ar {
+  direction: rtl;
+  text-align: right;
+}
 </style>

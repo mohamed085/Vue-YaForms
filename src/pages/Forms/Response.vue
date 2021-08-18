@@ -61,7 +61,7 @@
         <div class="section responseNum-section">
           <div class="responseNum-section-row1">
             <div class="responseCount">
-              0 ردود
+              {{ form.responseNum }} ردود
             </div>
           </div>
           <div class="responseNum-section-row2">
@@ -73,8 +73,25 @@
               </label>
             </div>
           </div>
+          <div v-if="form.responseNum !== 0" class="responseNum-section-row3">
+            <div class="response-type">
+              <router-link exact :to="'/form/response/' + form.id  ">ملخص</router-link>
+            </div>
+            <div class="response-type">
+              <router-link :to="'/form/response/' + form.id + '/question' ">الأسئلة</router-link>
+            </div>
+            <div class="response-type">
+              <router-link :to="'/form/response/' + form.id + '/individual' ">الفورمز</router-link>
+            </div>
+          </div>
+        </div>
+
+        <div v-if="form.responseNum !== 0" class="response-content">
+
+          <router-view></router-view>
 
         </div>
+
 
         <div v-if="form.responseNum === 0" >
           <div class="section no-response-section">
