@@ -1,7 +1,6 @@
 <template>
   <div :class="'home animate__animated animate__fadeIn ' + form.styleTheme + ' ' + form.fontFamily ">
-
-    <div v-if="getLang === 'en'" class="form-view en animate__animated animate__backInLeft">
+    <div v-if="form.formType === 'classic form' && getLang === 'en'" class="form-view en animate__animated animate__backInLeft">
 
       <div v-if="form.imageHeader" class="form-image-header section">
         <img :src="form.imageHeader">
@@ -65,8 +64,6 @@
                   class="dropdown-select"
                   :options="question.options"
               ></b-form-select>
-
-
             </div>
 
             <div class="section question " v-if="question.questionType === 'Date'">
@@ -109,11 +106,11 @@
 
       </div>
 
-      <b-button type="submit" class="submit">Submit form</b-button>
+      <b-button @click="submit" type="submit" class="submit">Submit form</b-button>
 
     </div>
 
-    <div v-if="getLang === 'ar'" class="form-view ar animate__animated animate__backInRight">
+    <div v-if="form.formType === 'classic form' && getLang === 'ar'" class="form-view ar animate__animated animate__backInRight">
 
       <div v-if="form.imageHeader" class="form-image-header section">
         <img :src="form.imageHeader">
@@ -225,7 +222,185 @@
 
     </div>
 
+    <div class="en animate__animated animate__backInLeft" v-if="form.formType === 'card form' && getLang === 'en'">
+
+      <div v-if="form.imageHeader" class="form-image-header section">
+        <img :src="form.imageHeader">
+      </div>
+
+      <div class="form-title section">
+        <div class="titles">
+          <p class="title">{{ form.header }}</p>
+          <p class="description">{{ form.description }}</p>
+        </div>
+        <div class="logo">
+          <img :src="form.logo">
+        </div>
+      </div>
+
+      <div class="section question">
+        <p class="question-title short-answer-title">{{ form.questions[currentQuestion - 1].question }} ?</p>
+
+        <div v-if="form.questions[currentQuestion - 1].type === 'question'">
+          <b-form-input
+              v-if="form.questions[currentQuestion - 1].questionType === 'Short answer'"
+              class="input question-short-answer"
+              type="text"
+              placeholder="Your answer"
+          ></b-form-input>
+
+          <b-form-input
+              v-if="form.questions[currentQuestion - 1].questionType === 'Paragraph'"
+              class="input paragraph-answer"
+              type="text"
+              placeholder="Your answer"
+          ></b-form-input>
+
+          <b-form-radio-group
+              v-if="form.questions[currentQuestion - 1].questionType === 'Multiple choice'"
+              :options="form.questions[currentQuestion - 1].options"
+              stacked
+          ></b-form-radio-group>
+
+          <b-form-checkbox-group
+              v-if="form.questions[currentQuestion - 1].questionType === 'Checkboxes'"
+              class="checkbox-select"
+              :options="form.questions[currentQuestion - 1].options"
+              stacked
+          ></b-form-checkbox-group>
+
+          <b-form-select
+              v-if="form.questions[currentQuestion - 1].questionType === 'Dropdown'"
+              class="dropdown-select"
+              :options="form.questions[currentQuestion - 1].options"
+          ></b-form-select>
+
+          <b-form-input
+              v-if="form.questions[currentQuestion - 1].questionType === 'Date'"
+              class="input date-answer"
+              type="date"
+          ></b-form-input>
+
+          <b-form-input
+              v-if="form.questions[currentQuestion - 1].questionType === 'Time'"
+              class="input date-answer"
+              type="time"
+          ></b-form-input>
+
+        </div>
+
+        <div v-if="form.questions[currentQuestion - 1].type === 'title'" class="title-description">
+          <p class="description">{{ form.questions[currentQuestion - 1].description }}</p>
+        </div>
+
+        <div v-if="form.questions[currentQuestion - 1].type === 'image'" class="image">
+          <img :src="form.questions[currentQuestion - 1].description">
+        </div>
+
+        <div v-if="form.questions[currentQuestion - 1].type === 'video'" class="video">
+          <iframe class="p-3" :src="form.questions[currentQuestion - 1].description"></iframe>
+        </div>
+
+        <div v-else></div>
+
+
+
+
+      </div>
+
+      <b-pagination-nav v-model="currentQuestion" :link-gen="linkGen" :number-of-pages="form.questions.length" use-router></b-pagination-nav>
     </div>
+
+    <div class="ar animate__animated animate__backInRight" v-if="form.formType === 'card form' && getLang === 'ar'">
+      <div v-if="form.imageHeader" class="form-image-header section">
+        <img :src="form.imageHeader">
+      </div>
+
+      <div class="form-title section">
+        <div class="titles">
+          <p class="title">{{ form.header }}</p>
+          <p class="description">{{ form.description }}</p>
+        </div>
+        <div class="logo">
+          <img :src="form.logo">
+        </div>
+      </div>
+
+      <div class="section question">
+        <p class="question-title short-answer-title">{{ form.questions[currentQuestion - 1].question }} ؟ </p>
+
+        <div v-if="form.questions[currentQuestion - 1].type === 'question'">
+          <b-form-input
+              v-if="form.questions[currentQuestion - 1].questionType === 'Short answer'"
+              class="input question-short-answer"
+              type="text"
+              placeholder="Your answer"
+          ></b-form-input>
+
+          <b-form-input
+              v-if="form.questions[currentQuestion - 1].questionType === 'Paragraph'"
+              class="input paragraph-answer"
+              type="text"
+              placeholder="Your answer"
+          ></b-form-input>
+
+          <b-form-radio-group
+              v-if="form.questions[currentQuestion - 1].questionType === 'Multiple choice'"
+              :options="form.questions[currentQuestion - 1].options"
+              stacked
+          ></b-form-radio-group>
+
+          <b-form-checkbox-group
+              v-if="form.questions[currentQuestion - 1].questionType === 'Checkboxes'"
+              class="checkbox-select"
+              :options="form.questions[currentQuestion - 1].options"
+              stacked
+          ></b-form-checkbox-group>
+
+          <b-form-select
+              v-if="form.questions[currentQuestion - 1].questionType === 'Dropdown'"
+              class="dropdown-select"
+              :options="form.questions[currentQuestion - 1].options"
+          ></b-form-select>
+
+          <b-form-input
+              v-if="form.questions[currentQuestion - 1].questionType === 'Date'"
+              class="input date-answer"
+              type="date"
+          ></b-form-input>
+
+          <b-form-input
+              v-if="form.questions[currentQuestion - 1].questionType === 'Time'"
+              class="input date-answer"
+              type="time"
+          ></b-form-input>
+
+        </div>
+
+        <div v-if="form.questions[currentQuestion - 1].type === 'title'" class="title-description">
+          <p class="description">{{ form.questions[currentQuestion - 1].description }}</p>
+        </div>
+
+        <div v-if="form.questions[currentQuestion - 1].type === 'image'" class="image">
+          <img :src="form.questions[currentQuestion - 1].description">
+        </div>
+
+        <div v-if="form.questions[currentQuestion - 1].type === 'video'" class="video">
+          <iframe class="p-3" :src="form.questions[currentQuestion - 1].description"></iframe>
+        </div>
+
+        <div v-else></div>
+
+
+
+
+      </div>
+
+      <b-pagination-nav v-model="currentQuestion" :link-gen="linkGen" :number-of-pages="form.questions.length" use-router></b-pagination-nav>
+
+    </div>
+
+  </div>
 </template>
 
 <script>
@@ -235,6 +410,7 @@ export default {
     return {
       form: {
         id: '15648964',
+        formType: 'card form',
         imageHeader: 'https://lh3.googleusercontent.com/-QdAIymxsJlwHVBm6SqFSAi0aJK57Qy2JBB0wAQ8yXI3adtbAn5Ng2S-fqShC8STrgDEHWRElyC9DKlEwEZn49_3_rtEtOosQdPfqQk02ymnNVkeJs9XoGtPdasRUrJVI7bZQj9P1gt6cS2S',
         header: 'Untitled form',
         description: 'Form description',
@@ -304,12 +480,14 @@ export default {
             description: '',
             questionType: 'Date',
             required: 'true',
+            date: null,
           },
           {
             id: '16157sad',
             type: 'question',
             question: 'Time Question',
             description: '',
+            date: null,
             questionType: 'Time',
             required: 'true',
           },
@@ -333,6 +511,7 @@ export default {
           },
         ]
       },
+      currentQuestion: '1',
     }
   },
   computed: {
@@ -340,6 +519,15 @@ export default {
       return this.$store.getters['main/getLang'];
     }
   },
+  methods: {
+    submit() {
+      console.log(this.form)
+    },
+    linkGen(pageNum) {
+      return `?question=${pageNum}`
+    },
+
+  }
 }
 </script>
 

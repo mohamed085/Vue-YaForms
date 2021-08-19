@@ -5,13 +5,13 @@
         <h1>Account Scope</h1>
       </div>
       <div class="accounts">
-        <router-link to="/register/individualAccount">
+        <router-link to="/register/individual-account">
           <div class="accountType">
             <i class="fas fa-male"></i>
             <span>Individual Account</span>
           </div>
         </router-link>
-        <router-link to="/register/businessAccount">
+        <router-link to="/register/business-account">
           <div class="accountType">
             <i class="fas fa-building"></i>
             <span>Business Account</span>
@@ -25,13 +25,13 @@
         <h1>نطاق الحساب</h1>
       </div>
       <div class="accounts">
-        <router-link to="/register/individualAccount">
+        <router-link to="/register/individual-account">
           <div class="accountType">
             <i class="fas fa-male"></i>
             <span>حساب فرد</span>
           </div>
         </router-link>
-        <router-link to="/register/businessAccount">
+        <router-link to="/register/business-account">
           <div class="accountType">
             <i class="fas fa-building"></i>
             <span>حساب شركة</span>

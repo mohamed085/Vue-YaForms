@@ -1,40 +1,86 @@
 <template>
-  <div :class="'home animate__animated animate__backInRight ' + form.styleTheme + ' ' + form.fontFamily ">
+  <div :class="'home animate__animated animate__fadeIn ' + form.styleTheme + ' ' + form.fontFamily ">
 
     <div class="select-form-type" v-if="form.formType === ''">
 
-      <main-header></main-header>
+      <div class="animate__animated animate__backInLeft" v-if="getLang === 'en'">
 
-      <div class="container">
-        <div class="select-form-type-header">
-          <h1>Select your form layout</h1>
-          <p>Choose a layout according to your needs</p>
-        </div>
+        <main-header></main-header>
 
-        <div class="select-form-type-content">
-          <div @click="setFormType('classic form')" class="select-form-type-classic">
-            <div class="classic-form">
-              <div class="svg">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 121 125" class="jfWizard-list-item-icon-svg" width="187" height="204"><g fill="none" fill-rule="evenodd"><path d="M4.417 0h112a4 4 0 014 4v121h-120V4a4 4 0 014-4z" fill="#FFF" fill-rule="nonzero"></path><g transform="translate(10.417 13)"><path d="M17.001 31.122h79.14a2.858 2.858 0 010 5.716h-79.14a2.858 2.858 0 110-5.716z" fill="#DAE2ED" fill-rule="nonzero"></path><rect fill="#DAE2ED" fill-rule="nonzero" y="20.324" width="74.571" height="5.716" rx="2.858"></rect><rect fill="#DAE2ED" fill-rule="nonzero" width="99" height="8.257" rx="3"></rect><path d="M17.001 41.284h79.14a2.858 2.858 0 010 5.716h-79.14a2.858 2.858 0 110-5.716z" fill="#DAE2ED" fill-rule="nonzero"></path><g transform="translate(0 30.486)"><rect fill="#2F90FF" fill-rule="nonzero" width="6.429" height="6.351" rx="2"></rect><path d="M2.734 4.765a.33.33 0 01-.238-.103L1.304 3.424a.36.36 0 010-.495.328.328 0 01.477 0l.953.99L4.878 1.69a.328.328 0 01.477 0 .36.36 0 010 .496L2.972 4.662a.33.33 0 01-.238.103" fill="#FFF"></path></g><rect fill="#DAE2ED" fill-rule="nonzero" y="40.649" width="6.429" height="6.351" rx="2"></rect></g><g transform="translate(10.417 72)"><path d="M17.036 10.929h79.071a2.893 2.893 0 010 5.785H17.036a2.893 2.893 0 110-5.785zM2.893 0h68.786a2.893 2.893 0 110 5.786H2.893a2.893 2.893 0 010-5.786zm14.143 21.214h79.071a2.893 2.893 0 010 5.786H17.036a2.893 2.893 0 110-5.786z" fill="#DAE2ED" fill-rule="nonzero"></path><g transform="translate(0 10.286)"><rect fill="#2F90FF" fill-rule="nonzero" width="6.429" height="6.429" rx="2"></rect><path d="M2.734 4.823a.327.327 0 01-.238-.104L1.304 3.465a.367.367 0 010-.5.325.325 0 01.477 0l.953 1.002L4.878 1.71a.325.325 0 01.477 0 .367.367 0 010 .501L2.972 4.72a.328.328 0 01-.238.104" fill="#FFF"></path></g><rect fill="#DAE2ED" fill-rule="nonzero" y="20.571" width="6.429" height="6.429" rx="2"></rect><g transform="translate(0 20.571)"><rect fill="#2F90FF" fill-rule="nonzero" width="6.429" height="6.429" rx="2"></rect><path d="M2.734 4.823a.327.327 0 01-.238-.104L1.304 3.465a.367.367 0 010-.5.325.325 0 01.477 0l.953 1.002L4.878 1.71a.325.325 0 01.477 0 .367.367 0 010 .501L2.972 4.72a.328.328 0 01-.238.104" fill="#FFF"></path></g></g><rect fill="#2F90FF" fill-rule="nonzero" x="77.417" y="109" width="32" height="10" rx="4"></rect></g></svg>
+        <div class="container">
+          <div class="select-form-type-header">
+            <h1>Select your form layout</h1>
+            <p>Choose a layout according to your needs</p>
+          </div>
+
+          <div class="select-form-type-content">
+            <div @click="setFormType('classic form')" class="select-form-type-classic">
+              <div class="classic-form">
+                <div class="svg">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 121 125" class="jfWizard-list-item-icon-svg" width="187" height="204"><g fill="none" fill-rule="evenodd"><path d="M4.417 0h112a4 4 0 014 4v121h-120V4a4 4 0 014-4z" fill="#FFF" fill-rule="nonzero"></path><g transform="translate(10.417 13)"><path d="M17.001 31.122h79.14a2.858 2.858 0 010 5.716h-79.14a2.858 2.858 0 110-5.716z" fill="#DAE2ED" fill-rule="nonzero"></path><rect fill="#DAE2ED" fill-rule="nonzero" y="20.324" width="74.571" height="5.716" rx="2.858"></rect><rect fill="#DAE2ED" fill-rule="nonzero" width="99" height="8.257" rx="3"></rect><path d="M17.001 41.284h79.14a2.858 2.858 0 010 5.716h-79.14a2.858 2.858 0 110-5.716z" fill="#DAE2ED" fill-rule="nonzero"></path><g transform="translate(0 30.486)"><rect fill="#2F90FF" fill-rule="nonzero" width="6.429" height="6.351" rx="2"></rect><path d="M2.734 4.765a.33.33 0 01-.238-.103L1.304 3.424a.36.36 0 010-.495.328.328 0 01.477 0l.953.99L4.878 1.69a.328.328 0 01.477 0 .36.36 0 010 .496L2.972 4.662a.33.33 0 01-.238.103" fill="#FFF"></path></g><rect fill="#DAE2ED" fill-rule="nonzero" y="40.649" width="6.429" height="6.351" rx="2"></rect></g><g transform="translate(10.417 72)"><path d="M17.036 10.929h79.071a2.893 2.893 0 010 5.785H17.036a2.893 2.893 0 110-5.785zM2.893 0h68.786a2.893 2.893 0 110 5.786H2.893a2.893 2.893 0 010-5.786zm14.143 21.214h79.071a2.893 2.893 0 010 5.786H17.036a2.893 2.893 0 110-5.786z" fill="#DAE2ED" fill-rule="nonzero"></path><g transform="translate(0 10.286)"><rect fill="#2F90FF" fill-rule="nonzero" width="6.429" height="6.429" rx="2"></rect><path d="M2.734 4.823a.327.327 0 01-.238-.104L1.304 3.465a.367.367 0 010-.5.325.325 0 01.477 0l.953 1.002L4.878 1.71a.325.325 0 01.477 0 .367.367 0 010 .501L2.972 4.72a.328.328 0 01-.238.104" fill="#FFF"></path></g><rect fill="#DAE2ED" fill-rule="nonzero" y="20.571" width="6.429" height="6.429" rx="2"></rect><g transform="translate(0 20.571)"><rect fill="#2F90FF" fill-rule="nonzero" width="6.429" height="6.429" rx="2"></rect><path d="M2.734 4.823a.327.327 0 01-.238-.104L1.304 3.465a.367.367 0 010-.5.325.325 0 01.477 0l.953 1.002L4.878 1.71a.325.325 0 01.477 0 .367.367 0 010 .501L2.972 4.72a.328.328 0 01-.238.104" fill="#FFF"></path></g></g><rect fill="#2F90FF" fill-rule="nonzero" x="77.417" y="109" width="32" height="10" rx="4"></rect></g></svg>
+                </div>
+              </div>
+              <div class="classic-footer">
+                <h3>Classic form</h3>
+                <p>Show all question</p>
               </div>
             </div>
-            <div class="classic-footer">
-              <h3>Classic form</h3>
-              <p>Show all question</p>
-            </div>
-          </div>
-          <div @click="setFormType('card form')" class="select-form-type-card">
-            <div class="card-form">
-              <div class="svg">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 121 92" class="jfWizard-list-item-icon-svg" width="166" height="146"><g fill="none" fill-rule="evenodd"><rect fill="#FFF" fill-rule="nonzero" x="7.934" width="105.131" height="62.153" rx="4"></rect><path d="M7.934 49.59h105.132v9.224a4 4 0 01-4 4H11.934a4 4 0 01-4-4V49.59z" fill="#2A5ACA" fill-rule="nonzero"></path><g transform="translate(15.208 11.24)"><rect fill="#DAE2ED" fill-rule="nonzero" x="10.579" y="11.24" width="80.667" height="5.951" rx="2.975"></rect><rect fill="#DAE2ED" fill-rule="nonzero" width="50.913" height="5.951" rx="2.975"></rect><path d="M13.555 21.82H88.27a2.975 2.975 0 010 5.95H13.555a2.975 2.975 0 010-5.95z" fill="#DAE2ED" fill-rule="nonzero"></path><g transform="translate(0 10.58)"><rect fill="#2F90FF" fill-rule="nonzero" width="6.612" height="6.612" rx="2"></rect><path d="M2.812 4.96a.337.337 0 01-.245-.107L1.34 3.564a.378.378 0 010-.515.334.334 0 01.49 0l.98 1.031 2.206-2.32a.334.334 0 01.49 0 .378.378 0 010 .515l-2.45 2.578a.337.337 0 01-.245.107" fill="#FFF"></path></g><rect fill="#DAE2ED" fill-rule="nonzero" y="21.158" width="6.612" height="6.612" rx="2"></rect></g><rect fill="#FFF" fill-rule="nonzero" width="121" height="62.153" rx="4"></rect><path d="M0 49.59h121v9.224a4 4 0 01-4 4H4a4 4 0 01-4-4V49.59z" fill="#51DCA9" fill-rule="nonzero"></path><g transform="translate(9.257 11.24)"><path d="M14.877 11.24H98.85a2.975 2.975 0 010 5.951H14.877a2.975 2.975 0 110-5.95zM2.975 0h50.913a2.975 2.975 0 110 5.95H2.975a2.975 2.975 0 110-5.95zm11.902 21.82H98.85a2.975 2.975 0 010 5.95H14.877a2.975 2.975 0 110-5.95z" fill="#DAE2ED" fill-rule="nonzero"></path><g transform="translate(0 10.58)"><rect fill="#2F90FF" fill-rule="nonzero" width="6.612" height="6.612" rx="2"></rect><path d="M2.812 4.96a.337.337 0 01-.245-.107L1.34 3.564a.378.378 0 010-.515.334.334 0 01.49 0l.98 1.031 2.206-2.32a.334.334 0 01.49 0 .378.378 0 010 .515l-2.45 2.578a.337.337 0 01-.245.107" fill="#FFF"></path></g><rect fill="#DAE2ED" fill-rule="nonzero" y="21.158" width="6.612" height="6.612" rx="2"></rect></g><path stroke="#319BF3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8.596 86.646h104.47"></path><circle stroke="#319BF3" stroke-width="1.5" fill="#51DCA9" fill-rule="nonzero" cx="60.831" cy="86.646" r="3.967"></circle><circle fill="#319BF3" fill-rule="nonzero" cx="9.918" cy="86.646" r="3.967"></circle><circle fill="#319BF3" fill-rule="nonzero" cx="111.743" cy="86.646" r="3.967"></circle></g></svg>
+            <div @click="setFormType('card form')" class="select-form-type-card">
+              <div class="card-form">
+                <div class="svg">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 121 92" class="jfWizard-list-item-icon-svg" width="166" height="146"><g fill="none" fill-rule="evenodd"><rect fill="#FFF" fill-rule="nonzero" x="7.934" width="105.131" height="62.153" rx="4"></rect><path d="M7.934 49.59h105.132v9.224a4 4 0 01-4 4H11.934a4 4 0 01-4-4V49.59z" fill="#2A5ACA" fill-rule="nonzero"></path><g transform="translate(15.208 11.24)"><rect fill="#DAE2ED" fill-rule="nonzero" x="10.579" y="11.24" width="80.667" height="5.951" rx="2.975"></rect><rect fill="#DAE2ED" fill-rule="nonzero" width="50.913" height="5.951" rx="2.975"></rect><path d="M13.555 21.82H88.27a2.975 2.975 0 010 5.95H13.555a2.975 2.975 0 010-5.95z" fill="#DAE2ED" fill-rule="nonzero"></path><g transform="translate(0 10.58)"><rect fill="#2F90FF" fill-rule="nonzero" width="6.612" height="6.612" rx="2"></rect><path d="M2.812 4.96a.337.337 0 01-.245-.107L1.34 3.564a.378.378 0 010-.515.334.334 0 01.49 0l.98 1.031 2.206-2.32a.334.334 0 01.49 0 .378.378 0 010 .515l-2.45 2.578a.337.337 0 01-.245.107" fill="#FFF"></path></g><rect fill="#DAE2ED" fill-rule="nonzero" y="21.158" width="6.612" height="6.612" rx="2"></rect></g><rect fill="#FFF" fill-rule="nonzero" width="121" height="62.153" rx="4"></rect><path d="M0 49.59h121v9.224a4 4 0 01-4 4H4a4 4 0 01-4-4V49.59z" fill="#51DCA9" fill-rule="nonzero"></path><g transform="translate(9.257 11.24)"><path d="M14.877 11.24H98.85a2.975 2.975 0 010 5.951H14.877a2.975 2.975 0 110-5.95zM2.975 0h50.913a2.975 2.975 0 110 5.95H2.975a2.975 2.975 0 110-5.95zm11.902 21.82H98.85a2.975 2.975 0 010 5.95H14.877a2.975 2.975 0 110-5.95z" fill="#DAE2ED" fill-rule="nonzero"></path><g transform="translate(0 10.58)"><rect fill="#2F90FF" fill-rule="nonzero" width="6.612" height="6.612" rx="2"></rect><path d="M2.812 4.96a.337.337 0 01-.245-.107L1.34 3.564a.378.378 0 010-.515.334.334 0 01.49 0l.98 1.031 2.206-2.32a.334.334 0 01.49 0 .378.378 0 010 .515l-2.45 2.578a.337.337 0 01-.245.107" fill="#FFF"></path></g><rect fill="#DAE2ED" fill-rule="nonzero" y="21.158" width="6.612" height="6.612" rx="2"></rect></g><path stroke="#319BF3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8.596 86.646h104.47"></path><circle stroke="#319BF3" stroke-width="1.5" fill="#51DCA9" fill-rule="nonzero" cx="60.831" cy="86.646" r="3.967"></circle><circle fill="#319BF3" fill-rule="nonzero" cx="9.918" cy="86.646" r="3.967"></circle><circle fill="#319BF3" fill-rule="nonzero" cx="111.743" cy="86.646" r="3.967"></circle></g></svg>
+                </div>
               </div>
-            </div>
-            <div class="card-form-footer">
-              <h3>Card form</h3>
-              <p>Show all question</p>
+              <div class="card-form-footer">
+                <h3>Card form</h3>
+                <p>Show all question</p>
+              </div>
             </div>
           </div>
         </div>
+
+      </div>
+
+      <div class="ar animate__animated animate__backInRight" v-if="getLang === 'ar'">
+
+        <main-header></main-header>
+
+        <div class="container">
+          <div class="select-form-type-header">
+            <h1>حدد تخطيط النموذج الخاص بك</h1>
+            <p>اختر تخطيطًا وفقًا لاحتياجاتك</p>
+          </div>
+
+          <div class="select-form-type-content">
+            <div @click="setFormType('classic form')" class="select-form-type-classic">
+              <div class="classic-form">
+                <div class="svg">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 121 125" class="jfWizard-list-item-icon-svg" width="187" height="204"><g fill="none" fill-rule="evenodd"><path d="M4.417 0h112a4 4 0 014 4v121h-120V4a4 4 0 014-4z" fill="#FFF" fill-rule="nonzero"></path><g transform="translate(10.417 13)"><path d="M17.001 31.122h79.14a2.858 2.858 0 010 5.716h-79.14a2.858 2.858 0 110-5.716z" fill="#DAE2ED" fill-rule="nonzero"></path><rect fill="#DAE2ED" fill-rule="nonzero" y="20.324" width="74.571" height="5.716" rx="2.858"></rect><rect fill="#DAE2ED" fill-rule="nonzero" width="99" height="8.257" rx="3"></rect><path d="M17.001 41.284h79.14a2.858 2.858 0 010 5.716h-79.14a2.858 2.858 0 110-5.716z" fill="#DAE2ED" fill-rule="nonzero"></path><g transform="translate(0 30.486)"><rect fill="#2F90FF" fill-rule="nonzero" width="6.429" height="6.351" rx="2"></rect><path d="M2.734 4.765a.33.33 0 01-.238-.103L1.304 3.424a.36.36 0 010-.495.328.328 0 01.477 0l.953.99L4.878 1.69a.328.328 0 01.477 0 .36.36 0 010 .496L2.972 4.662a.33.33 0 01-.238.103" fill="#FFF"></path></g><rect fill="#DAE2ED" fill-rule="nonzero" y="40.649" width="6.429" height="6.351" rx="2"></rect></g><g transform="translate(10.417 72)"><path d="M17.036 10.929h79.071a2.893 2.893 0 010 5.785H17.036a2.893 2.893 0 110-5.785zM2.893 0h68.786a2.893 2.893 0 110 5.786H2.893a2.893 2.893 0 010-5.786zm14.143 21.214h79.071a2.893 2.893 0 010 5.786H17.036a2.893 2.893 0 110-5.786z" fill="#DAE2ED" fill-rule="nonzero"></path><g transform="translate(0 10.286)"><rect fill="#2F90FF" fill-rule="nonzero" width="6.429" height="6.429" rx="2"></rect><path d="M2.734 4.823a.327.327 0 01-.238-.104L1.304 3.465a.367.367 0 010-.5.325.325 0 01.477 0l.953 1.002L4.878 1.71a.325.325 0 01.477 0 .367.367 0 010 .501L2.972 4.72a.328.328 0 01-.238.104" fill="#FFF"></path></g><rect fill="#DAE2ED" fill-rule="nonzero" y="20.571" width="6.429" height="6.429" rx="2"></rect><g transform="translate(0 20.571)"><rect fill="#2F90FF" fill-rule="nonzero" width="6.429" height="6.429" rx="2"></rect><path d="M2.734 4.823a.327.327 0 01-.238-.104L1.304 3.465a.367.367 0 010-.5.325.325 0 01.477 0l.953 1.002L4.878 1.71a.325.325 0 01.477 0 .367.367 0 010 .501L2.972 4.72a.328.328 0 01-.238.104" fill="#FFF"></path></g></g><rect fill="#2F90FF" fill-rule="nonzero" x="77.417" y="109" width="32" height="10" rx="4"></rect></g></svg>
+                </div>
+              </div>
+              <div class="classic-footer">
+                <h3>شكل كلاسيكي</h3>
+                <p>عرض كل الأسئلة</p>
+              </div>
+            </div>
+            <div @click="setFormType('card form')" class="select-form-type-card">
+              <div class="card-form">
+                <div class="svg">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 121 92" class="jfWizard-list-item-icon-svg" width="166" height="146"><g fill="none" fill-rule="evenodd"><rect fill="#FFF" fill-rule="nonzero" x="7.934" width="105.131" height="62.153" rx="4"></rect><path d="M7.934 49.59h105.132v9.224a4 4 0 01-4 4H11.934a4 4 0 01-4-4V49.59z" fill="#2A5ACA" fill-rule="nonzero"></path><g transform="translate(15.208 11.24)"><rect fill="#DAE2ED" fill-rule="nonzero" x="10.579" y="11.24" width="80.667" height="5.951" rx="2.975"></rect><rect fill="#DAE2ED" fill-rule="nonzero" width="50.913" height="5.951" rx="2.975"></rect><path d="M13.555 21.82H88.27a2.975 2.975 0 010 5.95H13.555a2.975 2.975 0 010-5.95z" fill="#DAE2ED" fill-rule="nonzero"></path><g transform="translate(0 10.58)"><rect fill="#2F90FF" fill-rule="nonzero" width="6.612" height="6.612" rx="2"></rect><path d="M2.812 4.96a.337.337 0 01-.245-.107L1.34 3.564a.378.378 0 010-.515.334.334 0 01.49 0l.98 1.031 2.206-2.32a.334.334 0 01.49 0 .378.378 0 010 .515l-2.45 2.578a.337.337 0 01-.245.107" fill="#FFF"></path></g><rect fill="#DAE2ED" fill-rule="nonzero" y="21.158" width="6.612" height="6.612" rx="2"></rect></g><rect fill="#FFF" fill-rule="nonzero" width="121" height="62.153" rx="4"></rect><path d="M0 49.59h121v9.224a4 4 0 01-4 4H4a4 4 0 01-4-4V49.59z" fill="#51DCA9" fill-rule="nonzero"></path><g transform="translate(9.257 11.24)"><path d="M14.877 11.24H98.85a2.975 2.975 0 010 5.951H14.877a2.975 2.975 0 110-5.95zM2.975 0h50.913a2.975 2.975 0 110 5.95H2.975a2.975 2.975 0 110-5.95zm11.902 21.82H98.85a2.975 2.975 0 010 5.95H14.877a2.975 2.975 0 110-5.95z" fill="#DAE2ED" fill-rule="nonzero"></path><g transform="translate(0 10.58)"><rect fill="#2F90FF" fill-rule="nonzero" width="6.612" height="6.612" rx="2"></rect><path d="M2.812 4.96a.337.337 0 01-.245-.107L1.34 3.564a.378.378 0 010-.515.334.334 0 01.49 0l.98 1.031 2.206-2.32a.334.334 0 01.49 0 .378.378 0 010 .515l-2.45 2.578a.337.337 0 01-.245.107" fill="#FFF"></path></g><rect fill="#DAE2ED" fill-rule="nonzero" y="21.158" width="6.612" height="6.612" rx="2"></rect></g><path stroke="#319BF3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8.596 86.646h104.47"></path><circle stroke="#319BF3" stroke-width="1.5" fill="#51DCA9" fill-rule="nonzero" cx="60.831" cy="86.646" r="3.967"></circle><circle fill="#319BF3" fill-rule="nonzero" cx="9.918" cy="86.646" r="3.967"></circle><circle fill="#319BF3" fill-rule="nonzero" cx="111.743" cy="86.646" r="3.967"></circle></g></svg>
+                </div>
+              </div>
+              <div class="card-form-footer">
+                <h3>نموذج البطاقة</h3>
+                <p>عرض كل الأسئلة</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="footer">
+        <main-footer></main-footer>
       </div>
 
     </div>
@@ -319,8 +365,8 @@
 
             <div class="form-header">
               <div class="form-title">
-                <b-form-input class="input-title" type="text" v-model="form.header" placeholder="Untitle form"></b-form-input>
-                <b-form-input class="input-description" type="text" v-model="form.description" placeholder="Form description"></b-form-input>
+                <b-form-input class="input-title" type="text" v-model="form.header" placeholder="نموذج بدون عنوان"></b-form-input>
+                <b-form-input class="input-description" type="text" v-model="form.description" placeholder="وصف النموذج"></b-form-input>
               </div>
               <div class="form-logo">
                 <img :src="form.logo">
@@ -332,16 +378,16 @@
               <div v-if="question.type === 'question'" class="question-type">
 
                 <div class="form-question-row-1">
-                  <b-form-input class="input-question" type="text" v-model="question.question" placeholder="Question"></b-form-input>
+                  <b-form-input class="input-question" type="text" v-model="question.question" placeholder="السؤال"></b-form-input>
                   <b-form-select class="select-answer" v-model="question.questionType">
-                    <b-form-select-option :value="null">Please select a question type</b-form-select-option>
-                    <b-form-select-option value="Short answer">Short answer</b-form-select-option>
-                    <b-form-select-option value="Paragraph">Paragraph</b-form-select-option>
-                    <b-form-select-option value="Multiple choice">Multiple choice</b-form-select-option>
-                    <b-form-select-option value="Checkboxes">Checkboxes</b-form-select-option>
-                    <b-form-select-option value="Dropdown">Dropdown</b-form-select-option>
-                    <b-form-select-option value="Date">Date</b-form-select-option>
-                    <b-form-select-option value="Time">Time</b-form-select-option>
+                    <b-form-select-option :value="null">الرجاء تحديد نوع السؤال</b-form-select-option>
+                    <b-form-select-option value="Short answer">اجابة قصيرة</b-form-select-option>
+                    <b-form-select-option value="Paragraph">فقرة</b-form-select-option>
+                    <b-form-select-option value="Multiple choice">متعدد الخيارات</b-form-select-option>
+                    <b-form-select-option value="Checkboxes">مربعات الاختيار</b-form-select-option>
+                    <b-form-select-option value="Dropdown">اسقاط</b-form-select-option>
+                    <b-form-select-option value="Date">التاريخ</b-form-select-option>
+                    <b-form-select-option value="Time">الوقت</b-form-select-option>
                   </b-form-select>
                 </div>
 
@@ -351,7 +397,7 @@
                   <b-form-input
                       type="text"
                       class="input-answer"
-                      placeholder="Short answer text"
+                      placeholder="نص إجابة قصيرة"
                       disabled
                   ></b-form-input>
                 </div>
@@ -360,7 +406,7 @@
                   <b-form-textarea
                       type="text"
                       class="input-paragraph"
-                      placeholder="Paragraph text"
+                      placeholder="نص الفقرة"
                       disabled
                   ></b-form-textarea>
                 </div>
@@ -371,7 +417,7 @@
                     <b-form-input class="multiple-choice-input" type="text" v-model="option.value"></b-form-input>
                     <i class="fas fa-times close" @click="removeChoice(option, question)"></i>
                   </div>
-                  <h6 @click="addOtherOption(question)">Add other option</h6>
+                  <h6 @click="addOtherOption(question)">أضف خيارًا آخر</h6>
                 </div>
 
                 <div v-else-if="question.questionType == 'Checkboxes'" class="form-question-row-2 choice-row">
@@ -380,7 +426,7 @@
                     <b-form-input class="multiple-choice-input" type="text" v-model="option.value"></b-form-input>
                     <i class="fas fa-times close" @click="removeChoice(option, question)"></i>
                   </div>
-                  <h6 @click="addOtherOption(question)">Add other option</h6>
+                  <h6 @click="addOtherOption(question)">أضف خيارًا آخر</h6>
                 </div>
 
                 <div v-else-if="question.questionType == 'Dropdown'" class="form-question-row-2 choice-row">
@@ -388,7 +434,7 @@
                     <b-form-input class="multiple-choice-input" type="text" v-model="option.value"></b-form-input>
                     <i class="fas fa-times close" @click="removeChoice(option, question)"></i>
                   </div>
-                  <h6 @click="addOtherOption(question)">Add other option</h6>
+                  <h6 @click="addOtherOption(question)">أضف خيارًا آخر</h6>
                 </div>
 
                 <div v-else-if="question.questionType == 'Date'" class="form-question-row-2 date-row">
@@ -413,7 +459,7 @@
                     <i class="far fa-copy duplicate" @click="duplicate(question)"></i>
                     <i class="fas fa-trash-alt remove" @click="remove(question)"></i>
                     <div class="required d-flex">
-                      <p>Required</p>
+                      <p>مطلوب</p>
                       <label class="switch mt-auto mb-auto">
                         <input type="checkbox" v-model="question.required">
                         <span class="slider round"></span>
@@ -427,7 +473,7 @@
               <div v-else class="else-type-content">
 
                 <div class="else-type-header">
-                  <b-form-input class="else-type-header-input" type="text" v-model="question.question" placeholder="Title"></b-form-input>
+                  <b-form-input class="else-type-header-input" type="text" v-model="question.question" placeholder="عنوان"></b-form-input>
                   <div class="else-type-header-icons">
                     <i class="far fa-copy duplicate" @click="duplicate(question)"></i>
                     <i class="fas fa-trash-alt remove" @click="remove(question)"></i>
@@ -439,7 +485,8 @@
                       class="title-description-input"
                       type="text"
                       v-model="question.description"
-                      placeholder="Add description"></b-form-input>
+                      placeholder="اضف وصفا"
+                  ></b-form-input>
                 </div>
 
                 <div v-if="question.type === 'image'" class="image-type-content">
@@ -459,9 +506,9 @@
                         class="title-description-input"
                         type="text"
                         v-model="question.description"
-                        placeholder="Add youtube video url"
+                        placeholder="أضف رابط فيديو youtube"
                     ></b-form-input>
-                    <b-button @click="addVideo(question.id)" type="reset">Add video</b-button>
+                    <b-button @click="addVideo(question.id)" type="reset">أضف الفيديو</b-button>
                   </div>
 
                 </div>
@@ -470,24 +517,24 @@
 
             </div>
 
-            <b-button class="btn" @click="addForm">Add Form</b-button>
+            <b-button class="btn" @click="addForm">أضف النموذج</b-button>
           </div>
 
           <div class="right-elements">
             <div class="top">
               <input type="file" accept="image/" class="hidden" ref="logoFile" @change="addLogo">
-              <div v-b-popover.hover.right="'Add logo'" class="add-logo">
+              <div v-b-popover.hover.left="'أضف الشعار'" class="add-logo">
                 <button type="reset" class="add-logo-btn" @click="browse">
-                  <i class="fas fa-plus-circle"></i>Logo
+                  <i class="fas fa-plus-circle"></i>شعار
                 </button>
               </div>
             </div>
             <div class="bottom">
-              <i @click="addNewQuestion" class="fas fa-plus-circle" v-b-popover.hover.right="'Add new question'"></i>
-              <i @click="addNewTitle" v-b-popover.hover.right="'Add new title and description'" class="fas fa-heading"></i>
+              <i @click="addNewQuestion" class="fas fa-plus-circle" v-b-popover.hover.left="'أضف سؤال جديد'"></i>
+              <i @click="addNewTitle" v-b-popover.hover.left="'أضف عنوانًا ووصفًا جديدين'" class="fas fa-heading"></i>
               <input type="file" accept="image/" class="hidden" ref="imageFile" @change="addImage">
-              <i @click="addNewImage" v-b-popover.hover.right="'Add new image'" class="far fa-image"></i>
-              <i @click="addNewVideo" v-b-popover.hover.right="'Add new video'" class="fas fa-video"></i>
+              <i @click="addNewImage" v-b-popover.hover.left="'أضف صورة جديدة'" class="far fa-image"></i>
+              <i @click="addNewVideo" v-b-popover.hover.left="'أضف فيديو جديد'" class="fas fa-video"></i>
             </div>
           </div>
 
@@ -580,9 +627,11 @@
 import CreateFormHeader from "../../components/Form/CreateFormHeader";
 import SendForm from "./SendForm";
 import MainHeader from "../../components/Main/MainHeader";
+import MainFooter from "../../components/Main/MainFooter";
 export default {
   name: "CreateForm",
   components: {
+    MainFooter,
     MainHeader,
     SendForm,
     CreateFormHeader
@@ -886,7 +935,7 @@ export default {
 
 .select-form-type-header {
   padding: 20px;
-  margin: 20px 0;
+  margin: 5px 0;
 }
 
 .select-form-type-header h1 {
@@ -974,6 +1023,11 @@ export default {
 .select-form-type-card:hover .card-form-footer h3,
 .select-form-type-card:hover .card-form-footer p {
   color: #9d55a0;
+}
+
+.select-form-type .ar {
+  direction: rtl;
+  text-align: right;
 }
 
 
@@ -1452,7 +1506,7 @@ input:checked + .slider:before {
   right: 0;
   background: #FFFFFF;
   border-left: 1px solid #c4c4c4;
-  top: 113px;
+  top: -19px;
   z-index: 999;
   width: 300px;
   padding: 0 20px 50px;
@@ -1645,8 +1699,20 @@ input:checked + .slider:before {
   background-color: var(--var-main-color);
   color: #FFFFFF;
   border: 1px solid var(--var-main-color);
-
 }
+
+.select-form-type-content {
+  margin-bottom: 20px;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  z-index: 1000;
+  width: 100%;
+  margin-top: 40px;
+}
+
 @media (max-width:1024px) {
   .main-content .container {
     width: 98%;
@@ -1741,7 +1807,7 @@ input:checked + .slider:before {
   }
 
   .theme {
-    top: 148px;
+    top: -19px;
   }
 
   .video-url input {
