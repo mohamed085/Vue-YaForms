@@ -130,6 +130,8 @@ export default {
     },
     addCompany() {
 
+
+      this.$router.push('/register/individual-account');
     }
   },
   computed: {

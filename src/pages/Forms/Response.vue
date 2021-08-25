@@ -29,6 +29,10 @@
               </label>
             </div>
           </div>
+          <div v-if="form.responseNum !== 0" class="responseExport-section">
+            <b-button class="export-btn">Export as pdf</b-button>
+            <b-button class="export-btn">Export as excel</b-button>
+          </div>
           <div v-if="form.responseNum !== 0" class="responseNum-section-row3">
             <div class="response-type">
               <router-link exact :to="'/form/response/' + form.id  ">Summary</router-link>
@@ -41,6 +45,8 @@
             </div>
           </div>
         </div>
+
+
 
         <div v-if="form.responseNum !== 0" class="response-content">
 
@@ -339,7 +345,7 @@ input:checked + .slider:before {
 
 .responseNum-section-row3 {
   display: flex;
-  margin: 50px 0 0;
+  margin: 30px 0 0;
 }
 
 .responseNum-section-row3 .response-type {
@@ -364,8 +370,23 @@ input:checked + .slider:before {
   border-radius: 3px;
 }
 
+.responseExport-section {
+  display: flex;
+}
 
+.export-btn {
+  background: none;
+  color: var(--var-main-color);
+  border: 1px solid var(--var-main-color);
+  margin: 0 5px;
+}
 
+.export-btn:hover{
+  background: var(--var-main-color);
+  color: #FFFFFF;
+  border: 1px solid var(--var-main-color);
+
+}
 
 @media (max-width:1024px) {
   .form-response {

@@ -156,11 +156,14 @@ export default {
   },
   methods: {
     addAccount() {
-      alert("sadsa")
+
+      this.$router.push('/register/auth');
+
     },
     reset() {
       this.$router.push('/register');
-    }
+    },
+
   }
 }
 </script>

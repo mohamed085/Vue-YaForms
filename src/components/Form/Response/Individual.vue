@@ -7,6 +7,10 @@
         </div>
       </div>
 
+      <div v-if="form[currentQuestion - 1].phone" class="csv">
+        <button class="phone-btn">Export numbers as csv</button>
+      </div>
+
       <div v-if="form[currentQuestion - 1].imageHeader" class="form-image-header question-section section">
         <img :src="form[currentQuestion - 1].imageHeader">
       </div>
@@ -25,6 +29,17 @@
       <div v-for="question in form[currentQuestion - 1].questions" :key="question.id">
 
         <div v-if="question.type === 'question'">
+
+          <div v-if="question.questionType === 'Phone number'" class="section question-section question">
+            <p class="question-title short-answer-title">{{ question.question }} ?</p>
+            <b-form-input
+                class="input question-short-answer"
+                type="text"
+                placeholder="Your answer"
+                v-model="question.response"
+                disabled
+            ></b-form-input>
+          </div>
 
           <div class="section question " v-if="question.questionType === 'Short answer'">
             <p class="question-title short-answer-title">{{ question.question }} ?</p>
@@ -268,8 +283,6 @@
 
     </div>
 
-
-
   </div>
 
 </template>
@@ -289,6 +302,7 @@ export default {
             logo: 'https://placekitten.com/300/300',
             styleTheme: 'default',
             fontFamily: 'default-font',
+            phone: '648651',
             questions: [
               {
                 id: '16151sad',
@@ -297,6 +311,14 @@ export default {
                 questionType: 'Short answer',
                 required: 'true',
                 response: 'Short answer 1'
+              },
+              {
+                id: '16151sad',
+                type: 'question',
+                question: 'Untitled Phone number Question',
+                questionType: 'Phone number',
+                required: 'true',
+                response: '0101202165'
               },
               {
                 id: '16152sad',
@@ -759,6 +781,21 @@ export default {
   font-style: italic;
   justify-content: flex-end;
   padding: 0 10px 10px 0;
+}
 
+.phone-btn {
+  color: var(--var-main-color);
+  background: none;
+  border: 1px solid var(--var-main-color);
+  border-radius: 7px;
+  padding: 8px 15px;
+  margin: 15px 10px 5px ;
+}
+
+
+.phone-btn:hover {
+  background: var(--var-main-color);
+  color: #FFFFFF;
+  border: 1px solid var(--var-main-color);
 }
 </style>

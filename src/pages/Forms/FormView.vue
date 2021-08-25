@@ -415,7 +415,7 @@ export default {
         header: 'Untitled form',
         description: 'Form description',
         logo: 'https://placekitten.com/300/300',
-        styleTheme: 'default',
+        styleTheme: 'theme-6',
         fontFamily: 'default-font',
         questions: [
           {

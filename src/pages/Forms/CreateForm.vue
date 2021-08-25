@@ -139,6 +139,7 @@
                     <b-form-select-option value="Dropdown">Dropdown</b-form-select-option>
                     <b-form-select-option value="Date">Date</b-form-select-option>
                     <b-form-select-option value="Time">Time</b-form-select-option>
+                    <b-form-select-option value="Phone number">Phone number</b-form-select-option>
                   </b-form-select>
                 </div>
 
@@ -149,6 +150,15 @@
                       type="text"
                       class="input-answer"
                       placeholder="Short answer text"
+                      disabled
+                  ></b-form-input>
+                </div>
+
+                <div v-else-if="question.questionType == 'Phone number'" class="form-question-row-2 short-answer-row">
+                  <b-form-input
+                      type="text"
+                      class="input-answer"
+                      placeholder="Short phone number"
                       disabled
                   ></b-form-input>
                 </div>
@@ -273,7 +283,7 @@
           <div class="right-elements">
             <div class="top">
               <input type="file" accept="image/" class="hidden" ref="logoFile" @change="addLogo">
-              <div v-b-popover.hover.right="'Add logo'" class="add-logo">
+              <div v-b-popover.hover.right="'Add logo (220*200)'" class="add-logo">
                 <button type="reset" class="add-logo-btn" @click="browse">
                   <i class="fas fa-plus-circle"></i>Logo
                 </button>
@@ -307,6 +317,7 @@
                   <i class="fas fa-image"></i>
                   <p>Choose image</p>
                 </button>
+                <p class="header-size">1100*200px</p>
               </div>
               <div v-else>
                 <button type="reset" class="btn-remove-image-header d-flex">
@@ -1157,8 +1168,8 @@ export default {
 }
 
 .form-logo {
-  width: 30%;
-  max-height: 100px;
+  width: 220px;
+  max-height: 120px;
 }
 
 .input-title:focus,
@@ -1711,6 +1722,13 @@ input:checked + .slider:before {
   z-index: 1000;
   width: 100%;
   margin-top: 40px;
+}
+
+.header-size {
+  color: #70757a;
+  margin: 0 10px;
+  font-size: 12px;
+  font-weight: 600;
 }
 
 @media (max-width:1024px) {

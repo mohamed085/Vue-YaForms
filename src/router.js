@@ -10,6 +10,7 @@ import Register from "./pages/Auth/Register";
 import SelectAccount from "./components/Auth/SelectAccount";
 import BusinessAccount from "./components/Auth/BusinessAccount";
 import IndividualAccount from "./components/Auth/IndividualAccount";
+import Auth from "./components/Auth/EmailAddress&Password";
 import FormView from "./pages/Forms/FormView";
 import CreateForm from "./pages/Forms/CreateForm";
 import Forms from "./pages/Forms/Forms";
@@ -32,6 +33,7 @@ const routes = [
             { path: '/register/', component: SelectAccount },
             { path: '/register/business-account', component: BusinessAccount },
             { path: '/register/individual-account', component: IndividualAccount },
+            { path: '/register/auth', component: Auth },
         ]},
     { path: '/profile/:id', component: ProfileIndex },
     { path: '/setting/:id', component: ProfileEdit },
