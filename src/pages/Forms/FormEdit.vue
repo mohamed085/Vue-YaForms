@@ -12,6 +12,8 @@
           :id="form._id"
           show="true"
           show-nav3=true
+          show-eye=true
+          show-send-icon=true
       >
       </create-form-header>
 

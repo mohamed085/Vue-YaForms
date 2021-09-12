@@ -13,10 +13,13 @@
 
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <div class="navbar-nav">
+              <router-link v-if="showEye" :to="'/form/' + id" class="link" >
+                <i class="far fa-eye"></i>
+              </router-link>
               <p class="link" @click="them">
                 <i class="fas fa-palette"></i>
               </p>
-              <p class="send" @click="send">
+              <p class="send" v-if="showSendIcon" @click="send">
                 <i class="fas fa-share-alt"></i>
                 Send
               </p>
@@ -107,13 +110,13 @@
       </nav>
 
       <div class="mobile-nav-1">
-        <router-link :to="'/form/' + id" class="link" >
+        <router-link v-if="showEye" :to="'/form/' + id" class="link" >
           <i class="far fa-eye"></i>
         </router-link>
         <p class="link" @click="them">
           <i class="fas fa-palette"></i>
         </p>
-        <p class="send" @click="send">
+        <p class="send" v-if="showSendIcon" @click="send">
           <i class="fas fa-share-alt"></i>
           Send
         </p>
@@ -142,13 +145,13 @@
 
           <div class="collapse navbar-collapse" id="navbarSupportedContentAr">
             <div class="navbar-nav">
-              <router-link :to="'/form/' + id" class="link" >
+              <router-link v-if="showEye" :to="'/form/' + id" class="link" >
                 <i class="far fa-eye"></i>
               </router-link>
               <p class="link" @click="them">
                 <i class="fas fa-palette"></i>
               </p>
-              <p class="send" @click="send">
+              <p class="send" v-if="showSendIcon" @click="send">
                 <i class="fas fa-share-alt"></i>
                 إرسال
               </p>
@@ -238,10 +241,13 @@
       </nav>
 
       <div class="mobile-nav-1">
+        <router-link v-if="showEye" :to="'/form/' + id" class="link" >
+          <i class="far fa-eye"></i>
+        </router-link>
         <p class="link" @click="them">
           <i class="fas fa-palette"></i>
         </p>
-        <p class="send" @click="send">
+        <p class="send" v-if="showSendIcon" @click="send">
           <i class="fas fa-share-alt"></i>
           ارسال
         </p>
@@ -266,7 +272,7 @@ export default {
   components: {
     Logo
   },
-  props: ['avatar', 'name', 'id', 'en', 'ar', 'theme', 'show', 'responseNum', 'showNav2', 'showNav3'],
+  props: ['avatar', 'name', 'id', 'en', 'ar', 'theme', 'show', 'responseNum', 'showNav2', 'showNav3', 'showEye', 'showSendIcon'],
   emits: ['show-theme', 'show-send'],
   data() {
     return {

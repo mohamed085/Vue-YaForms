@@ -1,5 +1,7 @@
 <template>
-  <div :class="'home animate__animated animate__fadeIn ' + form.styleTheme + ' ' + form.fontFamily ">
+  <base-spinner class="mt-5" v-if="isLoading"></base-spinner>
+  <div v-else :class="'home animate__animated animate__fadeIn ' + form.styleTheme + ' ' + form.fontFamily ">
+
     <div v-if="form.formType === 'classic form' && getLang === 'en'" class="form-view en animate__animated animate__backInLeft">
 
       <div v-if="form.imageHeader" class="form-image-header section">
@@ -222,118 +224,194 @@
 
     </div>
 
+    <div class="form-view en animate__animated animate__backInLeft" v-if="form.formType === 'card form' && getLang === 'en'">
+
+      <div v-if="form.imageHeader" class="form-image-header section">
+        <img :src="form.imageHeader">
+      </div>
+
+      <div class="form-title section">
+        <div class="titles">
+          <p class="title">{{ form.header }}</p>
+          <p class="description">{{ form.description }}</p>
+        </div>
+        <div class="logo">
+          <img :src="form.logo">
+        </div>
+      </div>
+
+      <div class="section question">
+        <p class="question-title short-answer-title">{{ form.questions[currentQuestion - 1].question }} ?</p>
+
+        <div v-if="form.questions[currentQuestion - 1].type === 'question'">
+          <b-form-input
+              v-if="form.questions[currentQuestion - 1].questionType === 'Short answer'"
+              class="input question-short-answer"
+              type="text"
+              placeholder="Your answer"
+          ></b-form-input>
+
+          <b-form-input
+              v-if="form.questions[currentQuestion - 1].questionType === 'Paragraph'"
+              class="input paragraph-answer"
+              type="text"
+              placeholder="Your answer"
+          ></b-form-input>
+
+          <b-form-radio-group
+              v-if="form.questions[currentQuestion - 1].questionType === 'Multiple choice'"
+              :options="form.questions[currentQuestion - 1].options"
+              stacked
+          ></b-form-radio-group>
+
+          <b-form-checkbox-group
+              v-if="form.questions[currentQuestion - 1].questionType === 'Checkboxes'"
+              class="checkbox-select"
+              :options="form.questions[currentQuestion - 1].options"
+              stacked
+          ></b-form-checkbox-group>
+
+          <b-form-select
+              v-if="form.questions[currentQuestion - 1].questionType === 'Dropdown'"
+              class="dropdown-select"
+              :options="form.questions[currentQuestion - 1].options"
+          ></b-form-select>
+
+          <b-form-input
+              v-if="form.questions[currentQuestion - 1].questionType === 'Date'"
+              class="input date-answer"
+              type="date"
+          ></b-form-input>
+
+          <b-form-input
+              v-if="form.questions[currentQuestion - 1].questionType === 'Time'"
+              class="input date-answer"
+              type="time"
+          ></b-form-input>
+
+        </div>
+
+        <div v-if="form.questions[currentQuestion - 1].type === 'title'" class="title-description">
+          <p class="description">{{ form.questions[currentQuestion - 1].description }}</p>
+        </div>
+
+        <div v-if="form.questions[currentQuestion - 1].type === 'image'" class="image">
+          <img :src="form.questions[currentQuestion - 1].description">
+        </div>
+
+        <div v-if="form.questions[currentQuestion - 1].type === 'video'" class="video">
+          <iframe class="p-3" :src="form.questions[currentQuestion - 1].description"></iframe>
+        </div>
+
+        <div v-else></div>
+
+      </div>
+
+      <b-pagination-nav v-model="currentQuestion" :link-gen="linkGen" :number-of-pages="form.questions.length" use-router></b-pagination-nav>
+    </div>
+
+    <div class="form-view ar animate__animated animate__backInRight" v-if="form.formType === 'card form' && getLang === 'ar'">
+      <div v-if="form.imageHeader" class="form-image-header section">
+        <img :src="form.imageHeader">
+      </div>
+
+      <div class="form-title section">
+        <div class="titles">
+          <p class="title">{{ form.header }}</p>
+          <p class="description">{{ form.description }}</p>
+        </div>
+        <div class="logo">
+          <img :src="form.logo">
+        </div>
+      </div>
+
+      <div class="section question">
+        <p class="question-title short-answer-title">{{ form.questions[currentQuestion - 1].question }} ؟ </p>
+
+        <div v-if="form.questions[currentQuestion - 1].type === 'question'">
+          <b-form-input
+              v-if="form.questions[currentQuestion - 1].questionType === 'Short answer'"
+              class="input question-short-answer"
+              type="text"
+              placeholder="Your answer"
+          ></b-form-input>
+
+          <b-form-input
+              v-if="form.questions[currentQuestion - 1].questionType === 'Paragraph'"
+              class="input paragraph-answer"
+              type="text"
+              placeholder="Your answer"
+          ></b-form-input>
+
+          <b-form-radio-group
+              v-if="form.questions[currentQuestion - 1].questionType === 'Multiple choice'"
+              :options="form.questions[currentQuestion - 1].options"
+              stacked
+          ></b-form-radio-group>
+
+          <b-form-checkbox-group
+              v-if="form.questions[currentQuestion - 1].questionType === 'Checkboxes'"
+              class="checkbox-select"
+              :options="form.questions[currentQuestion - 1].options"
+              stacked
+          ></b-form-checkbox-group>
+
+          <b-form-select
+              v-if="form.questions[currentQuestion - 1].questionType === 'Dropdown'"
+              class="dropdown-select"
+              :options="form.questions[currentQuestion - 1].options"
+          ></b-form-select>
+
+          <b-form-input
+              v-if="form.questions[currentQuestion - 1].questionType === 'Date'"
+              class="input date-answer"
+              type="date"
+          ></b-form-input>
+
+          <b-form-input
+              v-if="form.questions[currentQuestion - 1].questionType === 'Time'"
+              class="input date-answer"
+              type="time"
+          ></b-form-input>
+
+        </div>
+
+        <div v-if="form.questions[currentQuestion - 1].type === 'title'" class="title-description">
+          <p class="description">{{ form.questions[currentQuestion - 1].description }}</p>
+        </div>
+
+        <div v-if="form.questions[currentQuestion - 1].type === 'image'" class="image">
+          <img :src="form.questions[currentQuestion - 1].description">
+        </div>
+
+        <div v-if="form.questions[currentQuestion - 1].type === 'video'" class="video">
+          <iframe class="p-3" :src="form.questions[currentQuestion - 1].description"></iframe>
+        </div>
+
+        <div v-else></div>
+
+
+
+
+      </div>
+
+      <b-pagination-nav v-model="currentQuestion" :link-gen="linkGen" :number-of-pages="form.questions.length" use-router></b-pagination-nav>
+
+    </div>
+
   </div>
 </template>
 
 <script>
+import BaseSpinner from "@/components/Ui/BaseSpinner";
 export default {
   name: "FormView",
+  components: {BaseSpinner},
   data() {
     return {
-      form: {
-        id: '15648964',
-        formType: 'classic form',
-        imageHeader: 'https://lh3.googleusercontent.com/-QdAIymxsJlwHVBm6SqFSAi0aJK57Qy2JBB0wAQ8yXI3adtbAn5Ng2S-fqShC8STrgDEHWRElyC9DKlEwEZn49_3_rtEtOosQdPfqQk02ymnNVkeJs9XoGtPdasRUrJVI7bZQj9P1gt6cS2S',
-        header: 'Untitled form',
-        description: 'Form description',
-        logo: 'https://placekitten.com/300/300',
-        styleTheme: 'theme-6',
-        fontFamily: 'default-font',
-        questions: [
-          {
-            id: '16151sad',
-            type: 'question',
-            question: 'Untitled Short answer Question',
-            description: '',
-            questionType: 'Short answer',
-            required: 'true',
-          },
-          {
-            id: '16152sad',
-            type: 'question',
-            question: 'Untitled Paragraph Question',
-            description: '',
-            questionType: 'Paragraph',
-            required: 'true',
-          },
-          {
-            id: '16153sad',
-            type: 'question',
-            question: 'Multiple choice Question',
-            description: '',
-            questionType: 'Multiple choice',
-            required: 'true',
-            options: [
-              { id: '1', value: 'A', text: 'A' },
-              { id: '2', value: 'B', text: 'B' },
-              { id: '3', value: 'C', text: 'C' },
-            ]
-          },
-          {
-            id: '16154sad',
-            type: 'question',
-            question: 'Checkboxes Question',
-            description: '',
-            questionType: 'Checkboxes',
-            required: 'true',
-            options: [
-              { id: '1', value: 'A', text: 'A' },
-              { id: '2', value: 'B', text: 'B' },
-              { id: '3', value: 'C', text: 'C' },
-            ]
-          },
-          {
-            id: '16154sad',
-            type: 'question',
-            question: 'Dropdown Question',
-            description: '',
-            questionType: 'Dropdown',
-            required: 'true',
-            options: [
-              { id: '1', value: 'A', text: 'A' },
-              { id: '2', value: 'B', text: 'B' },
-              { id: '3', value: 'C', text: 'C' },
-            ]
-          },
-          {
-            id: '16156sad',
-            type: 'question',
-            question: 'Date Question',
-            description: '',
-            questionType: 'Date',
-            required: 'true',
-            date: null,
-          },
-          {
-            id: '16157sad',
-            type: 'question',
-            question: 'Time Question',
-            description: '',
-            date: null,
-            questionType: 'Time',
-            required: 'true',
-          },
-          {
-            id: '16157sad',
-            question: 'Untitled Title',
-            type: 'title',
-            description: 'Description'
-          },
-          {
-            id: '16157sad',
-            question: 'Image Title',
-            type: 'image',
-            description: 'https://lh6.googleusercontent.com/1tXGYHM6EXavj4Qu3RBwaGJtApVJaEtNcSYhttHPfBLwhy7rEcZR9kUS3XaqnmxI18viMhlvU7I7CIRYAHP1Nx-iVf2BpFSlfHCgac_V2HdXhi51Xxxit08gaQ14xXYGvvv5TvLxzUTrPpul'
-          },
-          {
-            id: '16157sad',
-            question: 'Video Title',
-            type: 'video',
-            description: 'https://www.youtube.com/embed/tgbNymZ7vqY'
-          },
-        ]
-      },
+      form: '',
       currentQuestion: '1',
+      isLoading: false
     }
   },
   computed: {
@@ -341,14 +419,48 @@ export default {
       return this.$store.getters['main/getLang'];
     }
   },
+  created() {
+    this.loadForm(this.$route.params.id)
+  },
   methods: {
-    submit() {
-      console.log(this.form)
+    async loadForm(id) {
+      this.isLoading = true;
+
+      let token = this.$store.getters.token;
+
+      let myHeaders = new Headers();
+      myHeaders.append("Authorization", "Bearer " + token);
+      myHeaders.append("Content-Type", "application/json");
+
+
+      let requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+      };
+      let url = `https://ya-forms-api.herokuapp.com/API/form/` + id;
+
+      const response = await fetch(url, requestOptions);
+      const responseData = await response.json();
+
+      if (!response.ok) {
+        const error = new Error(responseData.message || 'Failed to fetch!');
+        throw error;
+      }
+
+      console.log(responseData)
+
+      this.form = responseData;
+
+      this.isLoading = false;
+
     },
     linkGen(pageNum) {
       return `?question=${pageNum}`
     },
+    async submit() {
 
+    }
   }
 }
 </script>
@@ -416,6 +528,7 @@ export default {
 }
 
 .home {
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   background-color: var(--var-second-color);
