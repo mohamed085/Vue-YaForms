@@ -40,25 +40,25 @@
       </div>
       <b-form @submit="addAccount" @reset="reset">
         <div class="form-group">
-          <i class="fas fa-user-edit"></i>
+          <i class="i fas fa-user-edit"></i>
           <b-form-input v-model="user.name" placeholder="الاسم"></b-form-input>
         </div>
         <div class="form-group dob">
-          <i class="fas fa-baby"></i>
+          <i class="i fas fa-baby"></i>
           <b-form-select v-model="user.yearDOB" :options="YearOptionsAr"></b-form-select>
           <b-form-select v-model="user.monthDOB" :options="monthOptionAr"></b-form-select>
           <b-form-select v-model="user.dayBOB" :options="dayOptionAr"></b-form-select>
         </div>
         <div class="form-group">
-          <i class="fas fa-venus-mars"></i>
+          <i class="i fas fa-venus-mars"></i>
           <b-form-select class="w-100" v-model="user.gender" :options="genderOptionsAr"></b-form-select>
         </div>
         <div class="form-group">
-          <i class="far fa-flag"></i>
+          <i class="i far fa-flag"></i>
           <b-form-select class="w-100" v-model="user.country" :options="countryOptionsAr"></b-form-select>
         </div>
         <div class="form-group">
-          <i class="fas fa-mobile-alt"></i>
+          <i class="i fas fa-mobile-alt"></i>
           <b-form-input v-model="user.phone" placeholder="رقم الهاتف"></b-form-input>
         </div>
         <div class="form-button d-flex flex-row justify-content-around">

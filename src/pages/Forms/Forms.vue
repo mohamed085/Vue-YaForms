@@ -21,6 +21,7 @@
             </router-link>
           </div>
           <div class="forms">
+            <Form v-if="$store.getters.isAdmin === 'true'" add-template="true"></Form>
             <Form add-form="true"></Form>
             <Form contact-form="true"></Form>
             <Form hiring-form="true"></Form>
@@ -33,7 +34,56 @@
               </div>
             </div>
             <div class="forms">
-              <p class="no-form">No form selected yet</p>
+              <base-spinner v-if="isLoading"></base-spinner>
+              <div v-else-if="this.forms" class="w-100 forms-links">
+                <div v-for="form in forms" :key="form.id">
+                  <router-link class="form-link for-big-screen" to="">
+                    <div class="form-link-row row">
+                      <div class="form-link-row-header col-2">
+                        {{form.header}}
+                      </div>
+                      <div class="form-link-row-type col-4">
+                        {{form.description}}
+                      </div>
+                      <div class="form-link-row-type col-2">
+                        {{form.formType}}
+                      </div>
+                      <div class="form-link-row-date col-3">
+                        {{form.createdAt}}
+                      </div>
+                      <div class="form-link-row-header col-1 d-flex justify-content-end">
+                        <router-link :to="'form/' + form._id" class="i fas fa-eye me-2"></router-link>
+                        <router-link :to="'form-edit/' + form._id" class="i fas fa-edit me-2"></router-link>
+                        <i @click="deleteForm(form._id)" class="i fas fa-trash me-2 "></i>
+                      </div>
+                    </div>
+                  </router-link>
+                  <router-link class="form-link little-data w-100" to="">
+                    <div class="form-link-row">
+                      <div class="row form-link-row-header">
+                        <div class="col-10">
+                          {{ form.header }}
+                        </div>
+                        <div class="form-link-row-header col-2 d-flex justify-content-end">
+                          <i @click="deleteForm(form._id)" class="i fas fa-trash me-2 "></i>
+                          <router-link :to="'form/' + form._id" class="i fas fa-eye me-2"></router-link>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col">
+                          {{ form.description }}
+                        </div>
+                      </div>
+                      <div class="form-link-row-date row">
+                        <div class="col">
+                          {{form.createdAt}}
+                        </div>
+                      </div>
+                    </div>
+                  </router-link>
+                </div>
+              </div>
+              <p v-else class="no-form">No form selected yet</p>
             </div>
           </div>
         </div>
@@ -66,7 +116,33 @@
               </div>
             </div>
             <div class="forms">
-              <p class="no-form">لم يتم تحديد أي فورم حتى الآن</p>
+              <base-spinner v-if="isLoading"></base-spinner>
+              <base-spinner v-if="isLoading"></base-spinner>
+              <div v-else-if="this.forms" class="w-100 forms-links">
+                <div v-for="form in forms" :key="form.id">
+                  <router-link class="form-link for-big-screen" to="">
+                    <div class="form-link-row row">
+                      <div class="form-link-row-header col-2">
+                        {{form.header}}
+                      </div>
+                      <div class="form-link-row-type col-4">
+                        {{form.description}}
+                      </div>
+                      <div class="form-link-row-type col-2">
+                        {{form.formType}}
+                      </div>
+                      <div class="form-link-row-date col-3">
+                        {{form.createdAt}}
+                      </div>
+                      <div class="form-link-row-header col-1 d-flex justify-content-end">
+                        <i @click="deleteForm(form._id)" class="i fas fa-trash me-2 "></i>
+                        <router-link :to="'form/' + form._id" class="i fas fa-eye me-2"></router-link>
+                      </div>
+                    </div>
+                  </router-link>
+                </div>
+              </div>
+              <p v-else class="no-form">لم يتم تحديد أي فورم حتى الآن</p>
             </div>
           </div>
         </div>
@@ -80,17 +156,93 @@
 <script>
 import FormsHeader from "../../components/Form/FormsHeader";
 import Form from "../../components/Form/Form";
+import store from "@/store";
+import router from "@/router";
+import BaseSpinner from "@/components/Ui/BaseSpinner";
 export default {
   name: "Forms",
+  data() {
+    return {
+      isLoading: false,
+      error: null,
+      forms: [],
+    }
+  },
   components: {
+    BaseSpinner,
     FormsHeader,
     Form
+  },
+  created() {
+    if (!store.getters.isAuthenticated) {
+      router.push('/login')
+    }
+    this.loadForms();
   },
   computed: {
     getLang() {
       return this.$store.getters['main/getLang'];
-    }
+    },
   },
+  methods: {
+    async deleteForm(id) {
+
+      this.isLoading = true;
+
+      let token = this.$store.getters.token;
+
+      let myHeaders = new Headers();
+      myHeaders.append("Authorization", "Bearer " + token);
+      myHeaders.append("Content-Type", "application/json");
+
+      let requestOptions = {
+        method: 'DELETE',
+        headers: myHeaders,
+        redirect: 'follow'
+      };
+
+      let url = `https://ya-forms-api.herokuapp.com/api/form/` + id;
+
+      fetch(url, requestOptions)
+          .then(response => response.json())
+          .then(result => console.log(result.msg))
+          .catch(error => console.log('error', error));
+
+      this.loadForms();
+
+      this.isLoading = false;
+
+    },
+    async loadForms() {
+      this.isLoading = true;
+
+      let token = this.$store.getters.token;
+
+      let myHeaders = new Headers();
+      myHeaders.append("Authorization", "Bearer " + token);
+
+      let requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+      };
+
+      let url = "https://ya-forms-api.herokuapp.com/API/user/forms";
+      const response = await fetch(url, requestOptions);
+      const responseData = await response.json();
+
+      if (!response.ok) {
+        const error = new Error(responseData.message || 'Failed to fetch!');
+        throw error;
+      }
+
+      console.log(responseData)
+
+      this.forms = responseData;
+      this.isLoading = false;
+
+    }
+  }
 }
 </script>
 
@@ -114,6 +266,8 @@ main {
   width: 100%;
   z-index: 1000;
 }
+
+
 
 .footer {
   position: fixed;
@@ -150,15 +304,52 @@ main {
   align-items: center;
 }
 
-.form {
-  width: 260px;
-}
-
 .forms .no-form {
   font-weight: 600;
   color: #5A5C6C;
   font-size: 120%;
 }
+
+.form-link {
+  color: #111111;
+  text-decoration: none;
+}
+
+.form-link:hover .form-link-row {
+  background: #dddddd;
+}
+
+.form-link-row {
+  width: 100%;
+  border-radius: 5px;
+  padding: 15px 25px;
+  border-bottom: 1px solid #dddddd;
+}
+
+.i {
+  text-decoration: none;
+  color: #111111;
+  margin: auto 5px;
+}
+
+.i:hover {
+  color: #9d55a0;
+}
+
+.forms-links {
+  margin: 10px 5px;
+}
+
+.form-link-row-header {
+  font-size: 16px;
+  line-height: 24px;
+  font-family: "Google Sans",Roboto,Arial,sans-serif;
+}
+
+.little-data {
+  display: none;
+}
+
 
 @media (max-width:1024px) {
   .home {
@@ -174,5 +365,22 @@ main {
     font-size: 100%;
     margin: auto 0;
   }
+
+  .for-big-screen {
+    display: none;
+  }
+
+  .little-data {
+    display: block;
+  }
+
+  .i {
+    margin: auto 2px;
+  }
+
+  .form-link-row {
+    padding: 15px 10px;
+  }
+
 }
 </style>

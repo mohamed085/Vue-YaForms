@@ -5,15 +5,18 @@
         <img src="../../assets/images/ya_logo_lg.png">
       </router-link>
       <div class="form">
-        <p class="forgetText forrr">Forget password</p>
-        <p class="forgetText">Type your E-mail Address and you will receive email message to recover your password            </p>
-        <p v-if="!formIsValid" class="valid">{{ errorEn }}</p>
-        <p v-if="error" class="valid">{{ error }}</p>
+        <p class="forgetText">Reset your password</p>
+        <p class="valid" v-if="!isValid">{{ errorEn }}</p>
         <div class="input">
-          <span><i class="fas fa-at"></i></span>
-          <input type="text" v-model="email" placeholder="Email address">
+          <span><i class="fas fa-unlock-alt"></i></span>
+          <input v-model.trim="password" type="password" placeholder="Password">
         </div>
-        <button @click="addEmail" class="submit mb-5" type="submit">Next</button>
+        <div class="input">
+          <span><i class="fas fa-unlock-alt"></i></span>
+          <input @input="changePassword" v-model.trim="confirmPassword" type="password" placeholder="Confirm password">
+          <p class="valid mt-2" v-if="confirmPasswordErrorEn">{{ confirmPasswordErrorEn }}</p>
+        </div>
+        <button @click="login" class="submit mb-3" type="submit">Reset password</button>
       </div>
     </main>
 
@@ -22,13 +25,18 @@
         <img src="../../assets/images/ya_logo_lg.png">
       </router-link>
       <div class="form">
-        <p class="forgetText">اكتب عنوان بريدك الإلكتروني وستتلقى رسالة بريد إلكتروني لاستعادة كلمة المرور الخاصة بك</p>
-        <p v-if="!formIsValid" class="valid">{{ errorAr }}</p>
+        <p class="forgetText">اعد ضبط كلمه السر</p>
+        <p class="valid" v-if="!isValid">{{ errorAr }}</p>
         <div class="input">
-          <span><i class="fas fa-at"></i></span>
-          <input type="text" v-model="email" placeholder="البريد الالكتروني">
+          <span><i class="fas fa-unlock-alt"></i></span>
+          <input v-model.trim="password" type="password" placeholder="كلمة المرور">
         </div>
-        <button @click="addEmail" class="submit" type="submit">التالي</button>
+        <div class="input">
+          <span><i class="fas fa-unlock-alt"></i></span>
+          <input @input="changePassword" v-model.trim="confirmPassword" type="password" placeholder="تأكيد كلمة المرور">
+          <p class="valid mt-2" v-if="confirmPasswordErrorAr">{{ confirmPasswordErrorAr }}</p>
+        </div>
+        <button @click="login" class="submit" type="submit">Reset password</button>
       </div>
     </main>
 
@@ -43,16 +51,17 @@
 <script>
 import MainFooter from "../../components/Main/MainFooter";
 export default {
-  name: "ForgetPassword",
+  name: "ResetPassword",
   components: {MainFooter},
   data() {
     return {
-      email: '',
-      error: '',
-      errorAr: '',
+      password: '',
+      confirmPassword: '',
+      isValid: true,
       errorEn: '',
-      formIsValid: true,
-      isLoading: false
+      errorAr: '',
+      confirmPasswordErrorEn: '',
+      confirmPasswordErrorAr: ''
     }
   },
   computed: {
@@ -61,32 +70,41 @@ export default {
     }
   },
   methods: {
-    async addEmail() {
-      this.formIsValid = true;
-      if (this.email === '') {
-        this.formIsValid = false;
-        this.errorEn = 'You must add email'
-        this.errorAr = 'يجب عليك إضافة البريد الإلكتروني'
+    changePassword() {
+      if (this.password !== this.confirmPassword) {
+        this.confirmPasswordErrorEn = 'Password not confirm';
+        this.confirmPasswordErrorAr = 'كلمة المرور غير لا تطابق';
+      } else {
+        this.confirmPasswordErrorEn = '';
+        this.confirmPasswordErrorAr = '';
+      }
+    },
+    async login() {
+      const token = this.$route.params.token;
+
+      if (this.password === '' || this.confirmPassword === '') {
+        this.isValid = false;
+        this.errorEn = 'You must add password'
+        this.errorAr = 'يجب عليك إضافة كلمة المرور'
         return;
       }
 
-      let pattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
 
-      if (!this.email.match(pattern)) {
-        this.formIsValid = false;
-        this.errorEn = 'Email not valid'
-        this.errorAr = 'البريد الإلكتروني غير صالح'
+      if (this.password.length < 6) {
+        this.isValid = false;
+        this.errorEn = 'Password not valid (password must be greater than 6 digit)'
+        this.errorAr = 'كلمة المرور غير صالحة (يجب أن تكون كلمة المرور أكبر من 6 أرقام)'
         return;
       }
+
 
       this.isLoading = true;
       try {
         await  this.$store.dispatch('forget', {
-          email: this.email
+          email: this.email,
+          token: token
         })
 
-        this.errorEn = "Check your account to reset password"
-        this.errorAr = "تحقق من حسابك لإعادة تعيين كلمة المرور"
 
       } catch (e) {
         this.error = e.message || 'Failed to authenticate.';
@@ -144,7 +162,7 @@ main {
   width: 50%;
 }
 
-.form .forrr {
+.form p {
   font-size: 18px;
   font-weight: 500;
 }
@@ -168,16 +186,6 @@ main {
   background-clip: padding-box;
   transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
   text-rendering: auto;
-}
-
-
-.valid {
-  border: 1px solid #ff6b6b;
-  background: #ff6b6b;
-  border-radius: 5px;
-  color: #FFFFFF;
-  padding: 10px 30px;
-
 }
 
 .submit {
@@ -213,6 +221,18 @@ footer {
   margin-top: 20px;
 }
 
+
+.valid {
+  border: 1px solid #ff6b6b;
+  background: #ff6b6b;
+  border-radius: 5px;
+  color: #FFFFFF;
+  padding: 10px 30px;
+  font-size: 14px;
+  font-weight: 400;
+
+}
+
 @media (max-width:1024px)  {
 
   main .img img{
@@ -220,7 +240,7 @@ footer {
     height: 200px;
   }
 
-  form {
+  .form {
     width: 100%;
   }
 

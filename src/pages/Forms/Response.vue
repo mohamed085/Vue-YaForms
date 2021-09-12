@@ -112,6 +112,8 @@
 
 <script>
 import CreateFormHeader from "../../components/Form/CreateFormHeader";
+import store from "@/store";
+import router from "@/router";
 export default {
   name: "Response",
   components: {
@@ -120,6 +122,11 @@ export default {
   computed: {
     getLang() {
       return this.$store.getters['main/getLang'];
+    }
+  },
+  created() {
+    if (!store.getters.isAuthenticated) {
+      router.push('/login')
     }
   },
   data() {

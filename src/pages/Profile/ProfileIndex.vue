@@ -98,10 +98,17 @@
 
 <script>
 import ProfileHeader from "../../components/Profile/ProfileHeader";
+import store from "@/store";
+import router from "@/router";
 export default {
   name: "ProfileIndex",
   components: {
     ProfileHeader
+  },
+  created() {
+    if (!store.getters.isAuthenticated) {
+      router.push('/login')
+    }
   },
   computed: {
     getLang() {

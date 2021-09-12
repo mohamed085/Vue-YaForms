@@ -123,12 +123,19 @@
 <script>
 import Avatar from "../../components/Ui/Avatar";
 import ProfileHeader from "../../components/Profile/ProfileHeader";
+import store from "@/store";
+import router from "@/router";
 
 export default {
   name: "ProfileEdit",
   components: {
     ProfileHeader,
     Avatar
+  },
+  created() {
+    if (!store.getters.isAuthenticated) {
+      router.push('/login')
+    }
   },
   computed: {
     getLang() {

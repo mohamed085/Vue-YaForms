@@ -20,8 +20,9 @@
 
       <div class="main-content">
         <p class="line-1 anim-typewriter">Welcome to Ya Forms.</p>
-        <router-link to="/register"><button>Sign up</button></router-link>
-        <router-link to="/login" ><button>Log in</button></router-link>
+        <router-link v-if="!$store.getters.isAuthenticated" to="/register"><button>Sign up</button></router-link>
+        <router-link v-if="!$store.getters.isAuthenticated" to="/login" ><button>Log in</button></router-link>
+        <router-link v-if="$store.getters.isAuthenticated" to="#" ><button @click="$store.dispatch('logout')">Log out</button></router-link>
       </div>
 
     </div>

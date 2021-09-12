@@ -1,106 +1,24 @@
 <template>
-  <div :class="'home animate__animated animate__fadeIn ' + form.styleTheme + ' ' + form.fontFamily ">
+  <base-spinner v-if="isLoading"></base-spinner>
+  <div v-else :class="'home animate__animated animate__fadeIn ' + form.styleTheme + ' ' + form.fontFamily ">
 
-    <div class="select-form-type" v-if="form.formType === ''">
-
-      <div class="animate__animated animate__backInLeft" v-if="getLang === 'en'">
-
-        <main-header></main-header>
-
-        <div class="container ">
-          <div class="select-form-type-header">
-            <h1>Select your form layout</h1>
-            <p>Choose a layout according to your needs</p>
-          </div>
-
-          <div class="select-form-type-content">
-            <div @click="setFormType('classic form')" class="select-form-type-classic">
-              <div class="classic-form">
-                <div class="svg">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 121 125" class="jfWizard-list-item-icon-svg" width="187" height="204"><g fill="none" fill-rule="evenodd"><path d="M4.417 0h112a4 4 0 014 4v121h-120V4a4 4 0 014-4z" fill="#FFF" fill-rule="nonzero"></path><g transform="translate(10.417 13)"><path d="M17.001 31.122h79.14a2.858 2.858 0 010 5.716h-79.14a2.858 2.858 0 110-5.716z" fill="#DAE2ED" fill-rule="nonzero"></path><rect fill="#DAE2ED" fill-rule="nonzero" y="20.324" width="74.571" height="5.716" rx="2.858"></rect><rect fill="#DAE2ED" fill-rule="nonzero" width="99" height="8.257" rx="3"></rect><path d="M17.001 41.284h79.14a2.858 2.858 0 010 5.716h-79.14a2.858 2.858 0 110-5.716z" fill="#DAE2ED" fill-rule="nonzero"></path><g transform="translate(0 30.486)"><rect fill="#2F90FF" fill-rule="nonzero" width="6.429" height="6.351" rx="2"></rect><path d="M2.734 4.765a.33.33 0 01-.238-.103L1.304 3.424a.36.36 0 010-.495.328.328 0 01.477 0l.953.99L4.878 1.69a.328.328 0 01.477 0 .36.36 0 010 .496L2.972 4.662a.33.33 0 01-.238.103" fill="#FFF"></path></g><rect fill="#DAE2ED" fill-rule="nonzero" y="40.649" width="6.429" height="6.351" rx="2"></rect></g><g transform="translate(10.417 72)"><path d="M17.036 10.929h79.071a2.893 2.893 0 010 5.785H17.036a2.893 2.893 0 110-5.785zM2.893 0h68.786a2.893 2.893 0 110 5.786H2.893a2.893 2.893 0 010-5.786zm14.143 21.214h79.071a2.893 2.893 0 010 5.786H17.036a2.893 2.893 0 110-5.786z" fill="#DAE2ED" fill-rule="nonzero"></path><g transform="translate(0 10.286)"><rect fill="#2F90FF" fill-rule="nonzero" width="6.429" height="6.429" rx="2"></rect><path d="M2.734 4.823a.327.327 0 01-.238-.104L1.304 3.465a.367.367 0 010-.5.325.325 0 01.477 0l.953 1.002L4.878 1.71a.325.325 0 01.477 0 .367.367 0 010 .501L2.972 4.72a.328.328 0 01-.238.104" fill="#FFF"></path></g><rect fill="#DAE2ED" fill-rule="nonzero" y="20.571" width="6.429" height="6.429" rx="2"></rect><g transform="translate(0 20.571)"><rect fill="#2F90FF" fill-rule="nonzero" width="6.429" height="6.429" rx="2"></rect><path d="M2.734 4.823a.327.327 0 01-.238-.104L1.304 3.465a.367.367 0 010-.5.325.325 0 01.477 0l.953 1.002L4.878 1.71a.325.325 0 01.477 0 .367.367 0 010 .501L2.972 4.72a.328.328 0 01-.238.104" fill="#FFF"></path></g></g><rect fill="#2F90FF" fill-rule="nonzero" x="77.417" y="109" width="32" height="10" rx="4"></rect></g></svg>
-                </div>
-              </div>
-              <div class="classic-footer">
-                <h3>Classic form</h3>
-                <p>Show all question</p>
-              </div>
-            </div>
-            <div @click="setFormType('card form')" class="select-form-type-card">
-              <div class="card-form">
-                <div class="svg">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 121 92" class="jfWizard-list-item-icon-svg" width="166" height="146"><g fill="none" fill-rule="evenodd"><rect fill="#FFF" fill-rule="nonzero" x="7.934" width="105.131" height="62.153" rx="4"></rect><path d="M7.934 49.59h105.132v9.224a4 4 0 01-4 4H11.934a4 4 0 01-4-4V49.59z" fill="#2A5ACA" fill-rule="nonzero"></path><g transform="translate(15.208 11.24)"><rect fill="#DAE2ED" fill-rule="nonzero" x="10.579" y="11.24" width="80.667" height="5.951" rx="2.975"></rect><rect fill="#DAE2ED" fill-rule="nonzero" width="50.913" height="5.951" rx="2.975"></rect><path d="M13.555 21.82H88.27a2.975 2.975 0 010 5.95H13.555a2.975 2.975 0 010-5.95z" fill="#DAE2ED" fill-rule="nonzero"></path><g transform="translate(0 10.58)"><rect fill="#2F90FF" fill-rule="nonzero" width="6.612" height="6.612" rx="2"></rect><path d="M2.812 4.96a.337.337 0 01-.245-.107L1.34 3.564a.378.378 0 010-.515.334.334 0 01.49 0l.98 1.031 2.206-2.32a.334.334 0 01.49 0 .378.378 0 010 .515l-2.45 2.578a.337.337 0 01-.245.107" fill="#FFF"></path></g><rect fill="#DAE2ED" fill-rule="nonzero" y="21.158" width="6.612" height="6.612" rx="2"></rect></g><rect fill="#FFF" fill-rule="nonzero" width="121" height="62.153" rx="4"></rect><path d="M0 49.59h121v9.224a4 4 0 01-4 4H4a4 4 0 01-4-4V49.59z" fill="#51DCA9" fill-rule="nonzero"></path><g transform="translate(9.257 11.24)"><path d="M14.877 11.24H98.85a2.975 2.975 0 010 5.951H14.877a2.975 2.975 0 110-5.95zM2.975 0h50.913a2.975 2.975 0 110 5.95H2.975a2.975 2.975 0 110-5.95zm11.902 21.82H98.85a2.975 2.975 0 010 5.95H14.877a2.975 2.975 0 110-5.95z" fill="#DAE2ED" fill-rule="nonzero"></path><g transform="translate(0 10.58)"><rect fill="#2F90FF" fill-rule="nonzero" width="6.612" height="6.612" rx="2"></rect><path d="M2.812 4.96a.337.337 0 01-.245-.107L1.34 3.564a.378.378 0 010-.515.334.334 0 01.49 0l.98 1.031 2.206-2.32a.334.334 0 01.49 0 .378.378 0 010 .515l-2.45 2.578a.337.337 0 01-.245.107" fill="#FFF"></path></g><rect fill="#DAE2ED" fill-rule="nonzero" y="21.158" width="6.612" height="6.612" rx="2"></rect></g><path stroke="#319BF3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8.596 86.646h104.47"></path><circle stroke="#319BF3" stroke-width="1.5" fill="#51DCA9" fill-rule="nonzero" cx="60.831" cy="86.646" r="3.967"></circle><circle fill="#319BF3" fill-rule="nonzero" cx="9.918" cy="86.646" r="3.967"></circle><circle fill="#319BF3" fill-rule="nonzero" cx="111.743" cy="86.646" r="3.967"></circle></g></svg>
-                </div>
-              </div>
-              <div class="card-form-footer">
-                <h3>Card form</h3>
-                <p>Show all question</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <div class="ar animate__animated animate__backInRight" v-if="getLang === 'ar'">
-
-        <main-header></main-header>
-
-        <div class="container mt-4">
-          <div class="select-form-type-header">
-            <h1>حدد تخطيط النموذج الخاص بك</h1>
-            <p>اختر تخطيطًا وفقًا لاحتياجاتك</p>
-          </div>
-
-          <div class="select-form-type-content">
-            <div @click="setFormType('classic form')" class="select-form-type-classic">
-              <div class="classic-form">
-                <div class="svg">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 121 125" class="jfWizard-list-item-icon-svg" width="187" height="204"><g fill="none" fill-rule="evenodd"><path d="M4.417 0h112a4 4 0 014 4v121h-120V4a4 4 0 014-4z" fill="#FFF" fill-rule="nonzero"></path><g transform="translate(10.417 13)"><path d="M17.001 31.122h79.14a2.858 2.858 0 010 5.716h-79.14a2.858 2.858 0 110-5.716z" fill="#DAE2ED" fill-rule="nonzero"></path><rect fill="#DAE2ED" fill-rule="nonzero" y="20.324" width="74.571" height="5.716" rx="2.858"></rect><rect fill="#DAE2ED" fill-rule="nonzero" width="99" height="8.257" rx="3"></rect><path d="M17.001 41.284h79.14a2.858 2.858 0 010 5.716h-79.14a2.858 2.858 0 110-5.716z" fill="#DAE2ED" fill-rule="nonzero"></path><g transform="translate(0 30.486)"><rect fill="#2F90FF" fill-rule="nonzero" width="6.429" height="6.351" rx="2"></rect><path d="M2.734 4.765a.33.33 0 01-.238-.103L1.304 3.424a.36.36 0 010-.495.328.328 0 01.477 0l.953.99L4.878 1.69a.328.328 0 01.477 0 .36.36 0 010 .496L2.972 4.662a.33.33 0 01-.238.103" fill="#FFF"></path></g><rect fill="#DAE2ED" fill-rule="nonzero" y="40.649" width="6.429" height="6.351" rx="2"></rect></g><g transform="translate(10.417 72)"><path d="M17.036 10.929h79.071a2.893 2.893 0 010 5.785H17.036a2.893 2.893 0 110-5.785zM2.893 0h68.786a2.893 2.893 0 110 5.786H2.893a2.893 2.893 0 010-5.786zm14.143 21.214h79.071a2.893 2.893 0 010 5.786H17.036a2.893 2.893 0 110-5.786z" fill="#DAE2ED" fill-rule="nonzero"></path><g transform="translate(0 10.286)"><rect fill="#2F90FF" fill-rule="nonzero" width="6.429" height="6.429" rx="2"></rect><path d="M2.734 4.823a.327.327 0 01-.238-.104L1.304 3.465a.367.367 0 010-.5.325.325 0 01.477 0l.953 1.002L4.878 1.71a.325.325 0 01.477 0 .367.367 0 010 .501L2.972 4.72a.328.328 0 01-.238.104" fill="#FFF"></path></g><rect fill="#DAE2ED" fill-rule="nonzero" y="20.571" width="6.429" height="6.429" rx="2"></rect><g transform="translate(0 20.571)"><rect fill="#2F90FF" fill-rule="nonzero" width="6.429" height="6.429" rx="2"></rect><path d="M2.734 4.823a.327.327 0 01-.238-.104L1.304 3.465a.367.367 0 010-.5.325.325 0 01.477 0l.953 1.002L4.878 1.71a.325.325 0 01.477 0 .367.367 0 010 .501L2.972 4.72a.328.328 0 01-.238.104" fill="#FFF"></path></g></g><rect fill="#2F90FF" fill-rule="nonzero" x="77.417" y="109" width="32" height="10" rx="4"></rect></g></svg>
-                </div>
-              </div>
-              <div class="classic-footer">
-                <h3>شكل كلاسيكي</h3>
-                <p>عرض كل الأسئلة</p>
-              </div>
-            </div>
-            <div @click="setFormType('card form')" class="select-form-type-card">
-              <div class="card-form">
-                <div class="svg">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 121 92" class="jfWizard-list-item-icon-svg" width="166" height="146"><g fill="none" fill-rule="evenodd"><rect fill="#FFF" fill-rule="nonzero" x="7.934" width="105.131" height="62.153" rx="4"></rect><path d="M7.934 49.59h105.132v9.224a4 4 0 01-4 4H11.934a4 4 0 01-4-4V49.59z" fill="#2A5ACA" fill-rule="nonzero"></path><g transform="translate(15.208 11.24)"><rect fill="#DAE2ED" fill-rule="nonzero" x="10.579" y="11.24" width="80.667" height="5.951" rx="2.975"></rect><rect fill="#DAE2ED" fill-rule="nonzero" width="50.913" height="5.951" rx="2.975"></rect><path d="M13.555 21.82H88.27a2.975 2.975 0 010 5.95H13.555a2.975 2.975 0 010-5.95z" fill="#DAE2ED" fill-rule="nonzero"></path><g transform="translate(0 10.58)"><rect fill="#2F90FF" fill-rule="nonzero" width="6.612" height="6.612" rx="2"></rect><path d="M2.812 4.96a.337.337 0 01-.245-.107L1.34 3.564a.378.378 0 010-.515.334.334 0 01.49 0l.98 1.031 2.206-2.32a.334.334 0 01.49 0 .378.378 0 010 .515l-2.45 2.578a.337.337 0 01-.245.107" fill="#FFF"></path></g><rect fill="#DAE2ED" fill-rule="nonzero" y="21.158" width="6.612" height="6.612" rx="2"></rect></g><rect fill="#FFF" fill-rule="nonzero" width="121" height="62.153" rx="4"></rect><path d="M0 49.59h121v9.224a4 4 0 01-4 4H4a4 4 0 01-4-4V49.59z" fill="#51DCA9" fill-rule="nonzero"></path><g transform="translate(9.257 11.24)"><path d="M14.877 11.24H98.85a2.975 2.975 0 010 5.951H14.877a2.975 2.975 0 110-5.95zM2.975 0h50.913a2.975 2.975 0 110 5.95H2.975a2.975 2.975 0 110-5.95zm11.902 21.82H98.85a2.975 2.975 0 010 5.95H14.877a2.975 2.975 0 110-5.95z" fill="#DAE2ED" fill-rule="nonzero"></path><g transform="translate(0 10.58)"><rect fill="#2F90FF" fill-rule="nonzero" width="6.612" height="6.612" rx="2"></rect><path d="M2.812 4.96a.337.337 0 01-.245-.107L1.34 3.564a.378.378 0 010-.515.334.334 0 01.49 0l.98 1.031 2.206-2.32a.334.334 0 01.49 0 .378.378 0 010 .515l-2.45 2.578a.337.337 0 01-.245.107" fill="#FFF"></path></g><rect fill="#DAE2ED" fill-rule="nonzero" y="21.158" width="6.612" height="6.612" rx="2"></rect></g><path stroke="#319BF3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8.596 86.646h104.47"></path><circle stroke="#319BF3" stroke-width="1.5" fill="#51DCA9" fill-rule="nonzero" cx="60.831" cy="86.646" r="3.967"></circle><circle fill="#319BF3" fill-rule="nonzero" cx="9.918" cy="86.646" r="3.967"></circle><circle fill="#319BF3" fill-rule="nonzero" cx="111.743" cy="86.646" r="3.967"></circle></g></svg>
-                </div>
-              </div>
-              <div class="card-form-footer">
-                <h3>نموذج البطاقة</h3>
-                <p>عرض كل الأسئلة</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <div class="footer">
-        <main-footer></main-footer>
-      </div>
-
-    </div>
-
-    <div v-else>
-      <create-form-header class="mb-4"
+    <div >
+      <create-form-header
           @show-theme="showTheme"
           @show-send="showSend"
           :theme="form.styleTheme"
           avatar="https://pbs.twimg.com/media/E7yILDuVoAEOzoE?format=jpg&name=medium"
           name="Mohamed Emad"
-          id="132165sda"
+          :id="form._id"
           show="true"
+          show-nav3=true
       >
       </create-form-header>
 
       <send-form
           @close-send="closeSend"
           v-if="displaySend"
-          :formId="form.id"
+          :formId="form._id"
           :theme="form.styleTheme"
       ></send-form>
 
@@ -640,70 +558,37 @@
 <script>
 import CreateFormHeader from "../../components/Form/CreateFormHeader";
 import SendForm from "./SendForm";
-import MainHeader from "../../components/Main/MainHeader";
-import MainFooter from "../../components/Main/MainFooter";
 import BaseSpinner from "@/components/Ui/BaseSpinner";
 import store from "@/store";
 import router from "@/router";
 export default {
-  name: "CreateForm",
+  name: "FormEdit",
   components: {
-    MainFooter,
     BaseSpinner,
-    MainHeader,
     SendForm,
     CreateFormHeader
   },
-  computed: {
-    getLang() {
-      return this.$store.getters['main/getLang'];
-    }
-  },
   data() {
     return {
-      form: {
-        formType: '',
-        imageHeader: '',
-        header: 'Untitled form',
-        isTemplate: false,
-        description: 'Form description',
-        logo: 'https://placekitten.com/300/300',
-        styleTheme: 'default',
-        fontFamily: 'default-font',
-        questions: [
-          {
-            id: Date.now(),
-            type: 'question',
-            question: '',
-            description: '',
-            questionType: 'null',
-            required: '',
-            focus: false,
-            displayVideo: false,
-            options: [
-              {
-                id: Date.now(),
-                value: 'option 1',
-                text: 'option 1'
-              }
-            ],
-          }
-        ]
-      },
+      form: '',
+      currentQuestion: '1',
+      isLoading: false,
       displayTheme: false,
       displaySend: false,
-      isLoading: false
     }
   },
   created() {
     if (!store.getters.isAuthenticated) {
       router.push('/login')
     }
+    this.loadForm(this.$route.params.id)
+  },
+  computed: {
+    getLang() {
+      return this.$store.getters['main/getLang'];
+    }
   },
   methods: {
-    setFormType(formType) {
-      this.form.formType = formType;
-    },
     showTheme(theme) {
       this.displayTheme = theme;
     },
@@ -872,15 +757,47 @@ export default {
       })
 
     },
-    async addForm() {
-      this.isLoading = true;
+    async loadForm(id) {
 
-      console.log(this.form)
+      this.isLoading = true;
 
       let token = this.$store.getters.token;
 
       let myHeaders = new Headers();
+      myHeaders.append("Authorization", "Bearer " + token);
+      myHeaders.append("Content-Type", "application/json");
 
+
+      let requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+      };
+      let url = `https://ya-forms-api.herokuapp.com/API/form/` + id;
+
+      const response = await fetch(url, requestOptions);
+      const responseData = await response.json();
+
+      if (!response.ok) {
+        const error = new Error(responseData.message || 'Failed to fetch!');
+        throw error;
+      }
+
+      console.log(responseData)
+
+      this.form = responseData;
+
+      this.isLoading = false;
+
+    },
+    async addForm() {
+      this.isLoading = true;
+
+      let id = this.$route.params.id;
+
+      let token = this.$store.getters.token;
+
+      let myHeaders = new Headers();
       myHeaders.append("Authorization", "Bearer " + token);
       myHeaders.append("Content-Type", "application/json");
 
@@ -898,13 +815,13 @@ export default {
       });
 
       let requestOptions = {
-        method: 'POST',
+        method: 'PUT',
         headers: myHeaders,
         body: raw,
         redirect: 'follow'
       };
+      let url = `https://ya-forms-api.herokuapp.com/API/form/` + id;
 
-      let url = "https://ya-forms-api.herokuapp.com/API/form";
       const response = await fetch(url, requestOptions);
       const responseData = await response.json();
 
@@ -914,6 +831,8 @@ export default {
       }
 
       console.log(responseData)
+
+      this.form = responseData;
 
       this.isLoading = false;
 

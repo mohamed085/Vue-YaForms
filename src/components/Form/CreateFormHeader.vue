@@ -3,7 +3,7 @@
     <div class="create-form-header en animate__animated animate__backInLeft" v-if="getLang === 'en'">
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-          <router-link to="/" class="navbar-brand">
+          <router-link to="/forms" class="navbar-brand">
             <logo></logo>
           </router-link>
 
@@ -13,9 +13,6 @@
 
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <div class="navbar-nav">
-              <router-link :to="'/form/' + id" class="link" >
-                  <i class="far fa-eye"></i>
-              </router-link>
               <p class="link" @click="them">
                 <i class="fas fa-palette"></i>
               </p>
@@ -49,7 +46,7 @@
                   </router-link>
                 </li>
                 <li>
-                  <router-link to="/">
+                  <router-link to="/forms">
                     <div class="d-flex">
                       <i class="fas fa-sign-out-alt"></i>
                       <div class="dropdown-content">
@@ -122,16 +119,20 @@
         </p>
       </div>
 
-      <div class="nav-2">
+      <div class="nav-2" v-if="showNav2">
         <router-link to="/create-form" exact>Questions</router-link>
         <router-link :to="'/form/response/' + id">Responses <span v-if="responseNum" class="responseNum">{{ responseNum }}</span></router-link>
+      </div>
+
+      <div class="nav-2" v-if="showNav3">
+        <router-link to="/form-edit">Questions</router-link>
       </div>
     </div>
 
     <div class="create-form-header ar animate__animated animate__backInRight" v-if="getLang === 'ar'">
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-          <router-link to="/" class="navbar-brand">
+          <router-link to="/forms" class="navbar-brand">
             <logo></logo>
           </router-link>
 
@@ -237,9 +238,6 @@
       </nav>
 
       <div class="mobile-nav-1">
-        <router-link :to="'/form-en/' + id" class="link" >
-          <i class="far fa-eye"></i>
-        </router-link>
         <p class="link" @click="them">
           <i class="fas fa-palette"></i>
         </p>
@@ -249,9 +247,13 @@
         </p>
       </div>
 
-      <div class="nav-2">
+      <div class="nav-2" v-if="showNav2">
         <router-link to="/create-form" exact>الاسئلة</router-link>
         <router-link :to="'/form/response/' + id">الردود <span v-if="responseNum" class="responseNum">{{ responseNum }}</span></router-link>
+      </div>
+
+      <div class="nav-2" v-if="showNav3">
+        <router-link to="/form-edit">الاسئلة</router-link>
       </div>
     </div>
   </div>
@@ -264,7 +266,7 @@ export default {
   components: {
     Logo
   },
-  props: ['avatar', 'name', 'id', 'en', 'ar', 'theme', 'show', 'responseNum'],
+  props: ['avatar', 'name', 'id', 'en', 'ar', 'theme', 'show', 'responseNum', 'showNav2', 'showNav3'],
   emits: ['show-theme', 'show-send'],
   data() {
     return {

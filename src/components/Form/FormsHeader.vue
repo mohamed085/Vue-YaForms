@@ -3,7 +3,7 @@
     <div class="form-header en animate__animated animate__backInLeft" v-if="getLang === 'en'">
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-          <router-link to="/" class="navbar-brand">
+          <router-link to="/forms" class="navbar-brand">
             <logo></logo>
           </router-link>
 
@@ -105,7 +105,7 @@
     <div class="form-header ar animate__animated animate__backInRight" v-if="getLang === 'ar'">
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-          <router-link to="/" class="navbar-brand">
+          <router-link to="/forms" class="navbar-brand">
             <logo></logo>
           </router-link>
 

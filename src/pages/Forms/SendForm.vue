@@ -183,6 +183,9 @@
 </template>
 
 <script>
+import store from "@/store";
+import router from "@/router";
+
 export default {
   name: "SendForm",
   props: ['formId', 'theme',],
@@ -195,6 +198,11 @@ export default {
       subject: '',
       message: '',
       url: 'https://localhost8080/forms/' + this.formId
+    }
+  },
+  created() {
+    if (!store.getters.isAuthenticated) {
+      router.push('/login')
     }
   },
   computed: {

@@ -8,6 +8,17 @@
         <p v-if="getLang === 'en'">Blank</p>
         <p v-if="getLang === 'ar'">فارغ</p>
       </div>
+    </div>
+  </router-link>
+  <router-link v-else-if="addTemplate" class="form-content" to="/create-template">
+    <div class="form-content">
+      <div class="form-img">
+        <i class="fas fa-plus"></i>
+      </div>
+      <div class="form-footer">
+        <p v-if="getLang === 'en'">Add new template</p>
+        <p v-if="getLang === 'ar'">انشاء نموذج جديد</p>
+      </div>
 
     </div>
   </router-link>
@@ -53,22 +64,25 @@ export default {
   name: "Form",
   props: {
     addForm: {
-      type: Boolean,
+      type: String,
+      required: false,
+    },
+    addTemplate: {
+      type: String,
       required: false,
     },
     contactForm: {
-      type: Boolean,
+      type: String,
       required: false,
     },
     hiringForm: {
-      type: Boolean,
+      type: String,
       required: false,
     },
     orderForm: {
-      type: Boolean,
+      type: String,
       required: false,
     },
-
   },
   computed: {
     getLang() {

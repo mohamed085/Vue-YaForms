@@ -7,10 +7,6 @@ import Contact from "./pages/Contact";
 import Login from "./pages/Auth/Login";
 import ForgetPassword from "./pages/Auth/ForgetPassword";
 import Register from "./pages/Auth/Register";
-import SelectAccount from "./components/Auth/SelectAccount";
-import BusinessAccount from "./components/Auth/BusinessAccount";
-import IndividualAccount from "./components/Auth/IndividualAccount";
-import Auth from "./components/Auth/EmailAddress&Password";
 import FormView from "./pages/Forms/FormView";
 import CreateForm from "./pages/Forms/CreateForm";
 import Forms from "./pages/Forms/Forms";
@@ -20,6 +16,8 @@ import Response from "./pages/Forms/Response";
 import Summary from "./components/Form/Response/Summary";
 import Question from "./components/Form/Response/Question";
 import Individual from "./components/Form/Response/Individual";
+import CreateTemplates from "@/pages/Forms/CreateTemplates";
+import FormEdit from "@/pages/Forms/FormEdit";
 
 Vue.use(VueRouter)
 
@@ -29,16 +27,13 @@ const routes = [
     { path: '/contact', component: Contact },
     { path: '/login', component: Login },
     { path: '/forget', component: ForgetPassword },
-    { path: '/register', component: Register, children: [
-            { path: '/register/', component: SelectAccount },
-            { path: '/register/business-account', component: BusinessAccount },
-            { path: '/register/individual-account', component: IndividualAccount },
-            { path: '/register/auth', component: Auth },
-        ]},
+    { path: '/register', component: Register },
     { path: '/profile/:id', component: ProfileIndex },
     { path: '/setting/:id', component: ProfileEdit },
     { path: '/forms', component: Forms },
     { path: '/create-form', component: CreateForm },
+    { path: '/form-edit/:id', component: FormEdit },
+    { path: '/create-template', component: CreateTemplates },
     { path: '/create-contact-form', component: null },
     { path: '/create-hiring-form', component: null },
     { path: '/create-order-form', component: null },

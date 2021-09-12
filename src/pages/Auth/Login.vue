@@ -1,28 +1,41 @@
 <template>
   <div class="home animate__animated animate__fadeIn">
+
     <main class="en animate__animated animate__backInLeft" v-if="getLang === 'en'">
       <router-link to="/" class="img">
         <img src="../../assets/images/ya_logo_lg.png">
       </router-link>
-      <form @submit="login">
+      <p v-if="error" class="valid">{{ error }}</p>
+      <p v-if="!formIsValid" class="valid">{{ validErrorEn }}</p>
+      <div v-if="isLoading">
+        <p class="authenticating">Authenticating</p>
+        <base-spinner></base-spinner>
+      </div>
+      <form v-if="!isLoading" @submit.prevent="login">
         <div class="input">
           <span><i class="fas fa-at"></i></span>
-          <input v-model="user.email" type="text" placeholder="Email address">
+          <input v-model.trim="user.email" type="text" placeholder="Email address">
         </div>
         <div class="input">
           <span><i class="fas fa-unlock-alt"></i></span>
-          <input v-model="user.password" type="text" placeholder="Password">
+          <input v-model.trim="user.password" type="password" placeholder="Password">
         </div>
         <button class="submit" type="submit">Log in</button>
       </form>
-      <router-link class="forgetPassword" to="/forget">Forget your password?</router-link>
+      <router-link v-if="!isLoading" class="forgetPassword" to="/forget">Forget your password?</router-link>
     </main>
 
     <main class="ar animate__animated animate__backInRight" v-if="getLang === 'ar'">
       <router-link to="/" class="img">
         <img src="../../assets/images/ya_logo_lg.png">
       </router-link>
-      <form @submit="login">
+      <p v-if="error" class="valid">{{ error }}</p>
+      <p v-if="!formIsValid" class="valid">{{ validErrorAr }}</p>
+      <div v-if="isLoading">
+        <p class="authenticating">المصادقة</p>
+        <base-spinner></base-spinner>
+      </div>
+      <form v-if="!isLoading" @submit="login">
         <div class="input">
           <span><i class="fas fa-at"></i></span>
           <input v-model="user.email" type="text" placeholder="بريدك الالكتروني">
@@ -33,7 +46,7 @@
         </div>
         <button class="submit" type="submit">تسجيل دخول</button>
       </form>
-      <router-link class="forgetPassword" to="/forget">هل نسيت كلمة المرور؟</router-link>
+      <router-link v-if="!isLoading" class="forgetPassword" to="/forget">هل نسيت كلمة المرور؟</router-link>
     </main>
 
     <div class="footer">
@@ -45,17 +58,31 @@
 
 <script>
 import MainFooter from "../../components/Main/MainFooter";
+import BaseSpinner from "@/components/Ui/BaseSpinner";
+import router from "@/router";
+import store from "@/store";
 export default {
   name: "Login",
   components: {
+    BaseSpinner,
     MainFooter
   },
   data() {
     return {
       user: {
         email: '',
-        password: ''
-      }
+        password: '',
+      },
+      formIsValid: true,
+      validErrorEn: '',
+      validErrorAr: '',
+      isLoading: false,
+      error: ''
+    }
+  },
+  created() {
+    if (store.getters.isAuthenticated) {
+      router.push('/')
     }
   },
   computed: {
@@ -64,7 +91,47 @@ export default {
     }
   },
   methods: {
-    login() {
+    async login() {
+      this.formIsValid = true;
+
+      if (this.user.email === '' ||  this.user.password === '') {
+        this.formIsValid = false;
+        this.validErrorEn = 'You must add email and password'
+        this.validErrorAr = 'يجب عليك إضافة البريد الإلكتروني وكلمة المرور'
+        return;
+      }
+
+      let pattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+
+      if (this.user.email === '' || !this.user.email.match(pattern)) {
+        this.formIsValid = false;
+        this.validErrorEn = 'Email not valid'
+        this.validErrorAr = 'البريد الإلكتروني غير صالح'
+        return;
+      }
+
+      if ( this.user.password.length < 6) {
+        this.formIsValid = false;
+        this.validErrorEn = 'Password not valid (password must be greater than 6 digit)'
+        this.validErrorAr = 'كلمة المرور غير صالحة (يجب أن تكون كلمة المرور أكبر من 6 أرقام)'
+        return;
+
+      }
+
+      this.isLoading = true;
+
+      try {
+        await  this.$store.dispatch('login', {
+          user: this.user
+        })
+
+        await router.push('/forms')
+
+      } catch (e) {
+        this.error = e.message || 'Failed to authenticate.';
+      }
+
+      this.isLoading = false;
 
     }
   }
@@ -81,6 +148,20 @@ export default {
   width: 100%;
   position: fixed;
   bottom: 0;
+}
+
+.valid {
+  border: 1px solid #ff6b6b;
+  background: #ff6b6b;
+  border-radius: 5px;
+  color: #FFFFFF;
+  padding: 10px 30px;
+
+}
+
+.authenticating {
+  font-weight: 500;
+  font-size: 20px;
 }
 
 main {
@@ -165,6 +246,7 @@ footer {
   bottom: 0;
   margin-top: 20px;
 }
+
 
 @media (max-width:1024px)  {
 

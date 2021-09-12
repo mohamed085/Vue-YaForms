@@ -2,7 +2,7 @@
   <div class="home">
     <nav class="navbar navbar-expand-lg navbar-light bg-light en animate__animated animate__backInLeft" v-if="getLang === 'en'">
       <div class="container-fluid">
-        <router-link to="/" class="navbar-brand">
+        <router-link to="/forms" class="navbar-brand">
           <logo></logo>
         </router-link>
 
@@ -98,7 +98,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light ar animate__animated animate__backInRight" v-if="getLang === 'ar'">
       <div class="container-fluid">
-        <router-link to="/" class="navbar-brand">
+        <router-link to="/forms" class="navbar-brand">
           <logo></logo>
         </router-link>
 
