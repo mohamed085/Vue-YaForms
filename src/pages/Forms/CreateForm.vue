@@ -93,7 +93,8 @@
           avatar="https://pbs.twimg.com/media/E7yILDuVoAEOzoE?format=jpg&name=medium"
           name="Mohamed Emad"
           id="132165sda"
-          show="true"
+          show=true
+          show-theme-icon=true
       >
       </create-form-header>
 

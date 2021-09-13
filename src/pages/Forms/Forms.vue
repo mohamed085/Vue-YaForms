@@ -15,10 +15,6 @@
             <div>
               <h4>Start your form</h4>
             </div>
-            <router-link to="/" class="d-flex">
-              <h4>Show all forms</h4>
-              <i class="fas fa-arrow-alt-circle-right"></i>
-            </router-link>
           </div>
           <div class="forms">
             <Form v-if="$store.getters.isAdmin === 'true'" add-template="true"></Form>
@@ -52,7 +48,7 @@
                         {{form.createdAt}}
                       </div>
                       <div class="form-link-row-header col-1 d-flex justify-content-end">
-                        <router-link :to="'form/' + form._id" class="i fas fa-eye me-2"></router-link>
+                        <router-link :to="'form-view/' + form._id" class="i fas fa-eye me-2"></router-link>
                         <router-link :to="'form-edit/' + form._id" class="i fas fa-edit me-2"></router-link>
                         <i @click="deleteForm(form._id)" class="i fas fa-trash me-2 "></i>
                       </div>
@@ -98,10 +94,6 @@
             <div>
               <h4>ابدأ الفورم الخاص بك</h4>
             </div>
-            <router-link to="/" class="d-flex">
-              <h4>إظهار كل الفورمز</h4>
-              <i class="fas fa-arrow-alt-circle-left"></i>
-            </router-link>
           </div>
           <div class="forms">
             <Form add-form="true"></Form>
@@ -136,7 +128,7 @@
                       </div>
                       <div class="form-link-row-header col-1 d-flex justify-content-end">
                         <i @click="deleteForm(form._id)" class="i fas fa-trash me-2 "></i>
-                        <router-link :to="'form/' + form._id" class="i fas fa-eye me-2"></router-link>
+                        <router-link :to="'form-view/' + form._id" class="i fas fa-eye me-2"></router-link>
                       </div>
                     </div>
                   </router-link>

@@ -16,7 +16,7 @@
               <router-link v-if="showEye" :to="'/form/' + id" class="link" >
                 <i class="far fa-eye"></i>
               </router-link>
-              <p class="link" @click="them">
+              <p class="link" v-if="showThemeIcon" @click="them">
                 <i class="fas fa-palette"></i>
               </p>
               <p class="send" v-if="showSendIcon" @click="send">
@@ -113,7 +113,7 @@
         <router-link v-if="showEye" :to="'/form/' + id" class="link" >
           <i class="far fa-eye"></i>
         </router-link>
-        <p class="link" @click="them">
+        <p class="link" v-if="showThemeIcon" @click="them">
           <i class="fas fa-palette"></i>
         </p>
         <p class="send" v-if="showSendIcon" @click="send">
@@ -123,7 +123,7 @@
       </div>
 
       <div class="nav-2" v-if="showNav2">
-        <router-link to="/create-form" exact>Questions</router-link>
+        <router-link to="/form-view">Questions</router-link>
         <router-link :to="'/form/response/' + id">Responses <span v-if="responseNum" class="responseNum">{{ responseNum }}</span></router-link>
       </div>
 
@@ -148,7 +148,7 @@
               <router-link v-if="showEye" :to="'/form/' + id" class="link" >
                 <i class="far fa-eye"></i>
               </router-link>
-              <p class="link" @click="them">
+              <p class="link" v-if="showThemeIcon" @click="them">
                 <i class="fas fa-palette"></i>
               </p>
               <p class="send" v-if="showSendIcon" @click="send">
@@ -272,7 +272,7 @@ export default {
   components: {
     Logo
   },
-  props: ['avatar', 'name', 'id', 'en', 'ar', 'theme', 'show', 'responseNum', 'showNav2', 'showNav3', 'showEye', 'showSendIcon'],
+  props: ['avatar', 'name', 'id', 'en', 'ar', 'theme', 'show', 'responseNum', 'showNav2', 'showNav3', 'showEye', 'showSendIcon', 'showThemeIcon'],
   emits: ['show-theme', 'show-send'],
   data() {
     return {

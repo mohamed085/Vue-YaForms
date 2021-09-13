@@ -7,7 +7,7 @@ import Contact from "./pages/Contact";
 import Login from "./pages/Auth/Login";
 import ForgetPassword from "./pages/Auth/ForgetPassword";
 import Register from "./pages/Auth/Register";
-import FormView from "./pages/Forms/FormView";
+import Form from "./pages/Forms/Form";
 import CreateForm from "./pages/Forms/CreateForm";
 import Forms from "./pages/Forms/Forms";
 import ProfileIndex from "./pages/Profile/ProfileIndex";
@@ -18,6 +18,7 @@ import Question from "./components/Form/Response/Question";
 import Individual from "./components/Form/Response/Individual";
 import CreateTemplates from "@/pages/Forms/CreateTemplates";
 import FormEdit from "@/pages/Forms/FormEdit";
+import FormView from "@/pages/Forms/FormView";
 
 Vue.use(VueRouter)
 
@@ -33,6 +34,7 @@ const routes = [
     { path: '/forms', component: Forms },
     { path: '/create-form', component: CreateForm },
     { path: '/form-edit/:id', component: FormEdit },
+    { path: '/form-view/:id', component: FormView },
     { path: '/create-template', component: CreateTemplates },
     { path: '/create-contact-form', component: null },
     { path: '/create-hiring-form', component: null },
@@ -42,7 +44,7 @@ const routes = [
             { path: '/form/response/:id/question', component: Question },
             { path: '/form/response/:id/individual', component: Individual },
         ]},
-    { path: '/form/:id', component: FormView },
+    { path: '/form/:id', component: Form },
     { path: '/:notFound(.*)', component: NotFound }
 ]
 

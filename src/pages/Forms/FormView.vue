@@ -1,401 +1,248 @@
 <template>
-  <base-spinner class="mt-5" v-if="isLoading"></base-spinner>
+  <base-spinner v-if="isLoading"></base-spinner>
   <div v-else :class="'home animate__animated animate__fadeIn ' + form.styleTheme + ' ' + form.fontFamily ">
 
-    <div v-if="form.formType === 'classic form' && getLang === 'en'" class="form-view en animate__animated animate__backInLeft">
+    <div >
+      <create-form-header
+          @show-send="showSend"
+          :theme="form.styleTheme"
+          avatar="https://pbs.twimg.com/media/E7yILDuVoAEOzoE?format=jpg&name=medium"
+          name="Mohamed Emad"
+          :id="form._id"
+          show="true"
+          show-nav2=true
+          show-eye=true
+          show-send-icon=true
+      >
+      </create-form-header>
 
-      <div v-if="form.imageHeader" class="form-image-header section">
-        <img :src="form.imageHeader">
-      </div>
+      <send-form
+          @close-send="closeSend"
+          v-if="displaySend"
+          :formId="form._id"
+          :theme="form.styleTheme"
+      ></send-form>
 
-      <div class="form-title section">
-        <div class="titles">
-          <p class="title">{{ form.header }}</p>
-          <p class="description">{{ form.description }}</p>
-        </div>
-        <div class="logo">
-          <img :src="form.logo">
-        </div>
-      </div>
+      <div class="main-content en animate__animated animate__backInLeft" v-if="getLang === 'en'">
+        <base-spinner v-if="isLoading"></base-spinner>
 
-      <div class="form-content">
+        <div v-else class="container">
 
-        <div v-for="question in form.questions" :key="question.id">
+          <div class="create-form">
 
-          <div v-if="question.type === 'question'">
-
-            <div class="section question " v-if="question.questionType === 'Short answer'">
-              <p class="question-title short-answer-title">{{ question.question }} ?</p>
-              <b-form-input
-                  class="input question-short-answer"
-                  type="text"
-                  placeholder="Your answer"
-              ></b-form-input>
+            <div class="form-image-header" v-if="form.imageHeader">
+              <img :src="form.imageHeader">
             </div>
 
-            <div class="question-title section question " v-if="question.questionType === 'Paragraph'">
-              <p class="paragraph-title">{{ question.question }} ?</p>
-              <b-form-input
-                  class="input paragraph-answer"
-                  type="text"
-                  placeholder="Your answer"
-              ></b-form-input>
+            <div class="form-header">
+              <div class="form-title">
+                <b-form-input class="input-title" type="text" v-model="form.header" placeholder="Untitled form" readonly></b-form-input>
+                <b-form-input class="input-description" type="text" v-model="form.description" placeholder="Form description" readonly></b-form-input>
+              </div>
+              <div class="form-logo">
+                <img :src="form.logo">
+              </div>
             </div>
 
-            <div class="section question " v-if="question.questionType === 'Multiple choice'">
-              <p class="question-title multiple-choice-title">{{ question.question }} ?</p>
-              <b-form-radio-group
-                  :options="question.options"
-                  stacked
-              ></b-form-radio-group>
+            <div v-for="question in form.questions" :key="question.id" :class="'form-question ' + question.focus ">
+
+              <div v-if="question.type === 'question'" class="question-type">
+
+                <div class="form-question-row-1">
+                  <b-form-input class="input-question" type="text" v-model="question.question" placeholder="Question" readonly></b-form-input>
+                  <b-form-select class="select-answer" v-model="question.questionType" value="question.questionType">
+                    <b-form-select-option :value="question.questionType">{{ question.questionType }}</b-form-select-option>
+                  </b-form-select>
+                </div>
+
+                <div v-if="question.questionType == 'null'" class="form-question-row-2"></div>
+
+                <div v-else-if="question.questionType == 'Short answer'" class="form-question-row-2 short-answer-row">
+                  <b-form-input
+                      type="text"
+                      class="input-answer"
+                      placeholder="Short answer text"
+                      disabled
+                  ></b-form-input>
+                </div>
+
+                <div v-else-if="question.questionType == 'Phone number'" class="form-question-row-2 short-answer-row">
+                  <b-form-input
+                      type="text"
+                      class="input-answer"
+                      placeholder="Short phone number"
+                      disabled
+                  ></b-form-input>
+                </div>
+
+                <div v-else-if="question.questionType == 'Paragraph'" class="form-question-row-2 paragraph-row">
+                  <b-form-textarea
+                      type="text"
+                      class="input-paragraph"
+                      placeholder="Paragraph text"
+                      disabled
+                  ></b-form-textarea>
+                </div>
+
+                <div v-else-if="question.questionType == 'Multiple choice'" class="form-question-row-2 choice-row">
+                  <div class="multiple-choice-row" v-for="option in question.options" :key="option.id">
+                    <i class="far fa-circle"></i>
+                    <b-form-input class="multiple-choice-input" type="text" v-model="option.value" disabled></b-form-input>
+                    <i class="fas fa-times close" @click="removeChoice(option, question)"></i>
+                  </div>
+                </div>
+
+                <div v-else-if="question.questionType == 'Checkboxes'" class="form-question-row-2 choice-row">
+                  <div class="multiple-choice-row" v-for="option in question.options" :key="option.id">
+                    <i class="far fa-square"></i>
+                    <b-form-input class="multiple-choice-input" type="text" v-model="option.value" disabled></b-form-input>
+                    <i class="fas fa-times close" @click="removeChoice(option, question)"></i>
+                  </div>
+                </div>
+
+                <div v-else-if="question.questionType == 'Dropdown'" class="form-question-row-2 choice-row">
+                  <div class="multiple-choice-row" v-for="option in question.options" :key="option.id">
+                    <b-form-input class="multiple-choice-input" type="text" v-model="option.value" disabled></b-form-input>
+                    <i class="fas fa-times close" @click="removeChoice(option, question)"></i>
+                  </div>
+                </div>
+
+                <div v-else-if="question.questionType == 'Date'" class="form-question-row-2 date-row">
+                  <b-form-input
+                      type="date"
+                      disabled
+                  ></b-form-input>
+                </div>
+
+                <div v-else-if="question.questionType == 'Time'" class="form-question-row-2 time-row">
+                  <b-form-input
+                      type="time"
+                      disabled
+                  ></b-form-input>
+                </div>
+
+                <div v-else class="form-question-row-2"></div>
+
+              </div>
+
             </div>
-
-            <div class="section question " v-if="question.questionType === 'Checkboxes'">
-              <p class="question-title checkboxes-title">{{ question.question }} ?</p>
-              <b-form-checkbox-group
-                  class="checkbox-select"
-                  :options="question.options"
-                  stacked
-              ></b-form-checkbox-group>
-
-            </div>
-
-            <div class="section question " v-if="question.questionType === 'Dropdown'">
-              <p class="question-title dropdown-title">{{ question.question }} ?</p>
-              <b-form-select
-                  class="dropdown-select"
-                  :options="question.options"
-              ></b-form-select>
-            </div>
-
-            <div class="section question " v-if="question.questionType === 'Date'">
-              <p class="question-title short-answer-title">{{ question.question }} ?</p>
-              <b-form-input
-                  class="input date-answer"
-                  type="date"
-              ></b-form-input>
-            </div>
-
-            <div class="section question " v-if="question.questionType === 'Time'">
-              <p class="question-title short-answer-title">{{ question.question }} ?</p>
-              <b-form-input
-                  class="input time-answer"
-                  type="time"
-              ></b-form-input>
-            </div>
-
 
           </div>
 
-          <div v-if="question.type === 'title'" class="section question title-description">
-            <p class="question-title title">{{ question.question }}</p>
-            <p class="description">{{ question.description }}</p>
-          </div>
-
-          <div v-if="question.type === 'image'" class="section question image">
-            <p class="question-title title">{{ question.question }}</p>
-            <img :src="question.description">
-          </div>
-
-          <div v-if="question.type === 'video'" class="section question video">
-            <p class="question-title title">{{ question.question }}</p>
-            <iframe class="p-3" :src="question.description"></iframe>
-          </div>
-
-          <div v-else></div>
-
         </div>
 
       </div>
 
-      <b-button @click="submit" type="submit" class="submit">Submit form</b-button>
+      <div class="main-content ar animate__animated animate__backInRight" v-if="getLang === 'ar'">
 
-    </div>
+        <base-spinner v-if="isLoading"></base-spinner>
 
-    <div v-if="form.formType === 'classic form' && getLang === 'ar'" class="form-view ar animate__animated animate__backInRight">
+        <div v-else class="container">
 
-      <div v-if="form.imageHeader" class="form-image-header section">
-        <img :src="form.imageHeader">
-      </div>
+          <div class="create-form">
 
-      <div class="form-title section">
-        <div class="titles">
-          <p class="title">{{ form.header }}</p>
-          <p class="description">{{ form.description }}</p>
-        </div>
-        <div class="logo">
-          <img :src="form.logo">
-        </div>
-      </div>
-
-      <div class="form-content">
-
-        <div v-for="question in form.questions" :key="question.id">
-
-          <div v-if="question.type === 'question'">
-
-            <div class="section question " v-if="question.questionType === 'Short answer'">
-              <p class="question-title short-answer-title">{{ question.question }} ؟</p>
-              <b-form-input
-                  class="input question-short-answer"
-                  type="text"
-                  placeholder="Your answer"
-              ></b-form-input>
+            <div class="form-image-header" v-if="form.imageHeader">
+              <img :src="form.imageHeader">
             </div>
 
-            <div class="question-title section question " v-if="question.questionType === 'Paragraph'">
-              <p class="paragraph-title">{{ question.question }} ؟</p>
-              <b-form-input
-                  class="input paragraph-answer"
-                  type="text"
-                  placeholder="Your answer"
-              ></b-form-input>
+            <div class="form-header">
+              <div class="form-title">
+                <b-form-input class="input-title" type="text" v-model="form.header" placeholder="Untitled form" readonly></b-form-input>
+                <b-form-input class="input-description" type="text" v-model="form.description" placeholder="Form description" readonly></b-form-input>
+              </div>
+              <div class="form-logo">
+                <img :src="form.logo">
+              </div>
             </div>
 
-            <div class="section question " v-if="question.questionType === 'Multiple choice'">
-              <p class="question-title multiple-choice-title">{{ question.question }}c</p>
-              <b-form-radio-group
-                  :options="question.options"
-                  stacked
-              ></b-form-radio-group>
+            <div v-for="question in form.questions" :key="question.id" :class="'form-question ' + question.focus ">
+
+              <div v-if="question.type === 'question'" class="question-type">
+
+                <div class="form-question-row-1">
+                  <b-form-input class="input-question" type="text" v-model="question.question" placeholder="Question" readonly></b-form-input>
+                  <b-form-select class="select-answer" v-model="question.questionType" value="question.questionType">
+                    <b-form-select-option :value="question.questionType">{{ question.questionType }}</b-form-select-option>
+                  </b-form-select>
+                </div>
+
+                <div v-if="question.questionType == 'null'" class="form-question-row-2"></div>
+
+                <div v-else-if="question.questionType == 'Short answer'" class="form-question-row-2 short-answer-row">
+                  <b-form-input
+                      type="text"
+                      class="input-answer"
+                      placeholder="Short answer text"
+                      disabled
+                  ></b-form-input>
+                </div>
+
+                <div v-else-if="question.questionType == 'Phone number'" class="form-question-row-2 short-answer-row">
+                  <b-form-input
+                      type="text"
+                      class="input-answer"
+                      placeholder="Short phone number"
+                      disabled
+                  ></b-form-input>
+                </div>
+
+                <div v-else-if="question.questionType == 'Paragraph'" class="form-question-row-2 paragraph-row">
+                  <b-form-textarea
+                      type="text"
+                      class="input-paragraph"
+                      placeholder="Paragraph text"
+                      disabled
+                  ></b-form-textarea>
+                </div>
+
+                <div v-else-if="question.questionType == 'Multiple choice'" class="form-question-row-2 choice-row">
+                  <div class="multiple-choice-row" v-for="option in question.options" :key="option.id">
+                    <i class="far fa-circle"></i>
+                    <b-form-input class="multiple-choice-input" type="text" v-model="option.value" disabled></b-form-input>
+                    <i class="fas fa-times close" @click="removeChoice(option, question)"></i>
+                  </div>
+                </div>
+
+                <div v-else-if="question.questionType == 'Checkboxes'" class="form-question-row-2 choice-row">
+                  <div class="multiple-choice-row" v-for="option in question.options" :key="option.id">
+                    <i class="far fa-square"></i>
+                    <b-form-input class="multiple-choice-input" type="text" v-model="option.value" disabled></b-form-input>
+                    <i class="fas fa-times close" @click="removeChoice(option, question)"></i>
+                  </div>
+                </div>
+
+                <div v-else-if="question.questionType == 'Dropdown'" class="form-question-row-2 choice-row">
+                  <div class="multiple-choice-row" v-for="option in question.options" :key="option.id">
+                    <b-form-input class="multiple-choice-input" type="text" v-model="option.value" disabled></b-form-input>
+                    <i class="fas fa-times close" @click="removeChoice(option, question)"></i>
+                  </div>
+                </div>
+
+                <div v-else-if="question.questionType == 'Date'" class="form-question-row-2 date-row">
+                  <b-form-input
+                      type="date"
+                      disabled
+                  ></b-form-input>
+                </div>
+
+                <div v-else-if="question.questionType == 'Time'" class="form-question-row-2 time-row">
+                  <b-form-input
+                      type="time"
+                      disabled
+                  ></b-form-input>
+                </div>
+
+                <div v-else class="form-question-row-2"></div>
+
+              </div>
+
             </div>
-
-            <div class="section question " v-if="question.questionType === 'Checkboxes'">
-              <p class="question-title checkboxes-title">{{ question.question }} ؟</p>
-              <b-form-checkbox-group
-                  class="checkbox-select"
-                  :options="question.options"
-                  stacked
-              ></b-form-checkbox-group>
-
-            </div>
-
-            <div class="section question " v-if="question.questionType === 'Dropdown'">
-              <p class="question-title dropdown-title">{{ question.question }} ؟</p>
-              <b-form-select
-                  class="dropdown-select"
-                  :options="question.options"
-              ></b-form-select>
-
-
-            </div>
-
-            <div class="section question " v-if="question.questionType === 'Date'">
-              <p class="question-title short-answer-title">{{ question.question }} ؟</p>
-              <b-form-input
-                  class="input date-answer"
-                  type="date"
-              ></b-form-input>
-            </div>
-
-            <div class="section question " v-if="question.questionType === 'Time'">
-              <p class="question-title short-answer-title">{{ question.question }} ؟</p>
-              <b-form-input
-                  class="input time-answer"
-                  type="time"
-              ></b-form-input>
-            </div>
-
 
           </div>
 
-          <div v-if="question.type === 'title'" class="section question title-description">
-            <p class="question-title title">{{ question.question }}</p>
-            <p class="description">{{ question.description }}</p>
-          </div>
-
-          <div v-if="question.type === 'image'" class="section question image">
-            <p class="question-title title">{{ question.question }}</p>
-            <img :src="question.description">
-          </div>
-
-          <div v-if="question.type === 'video'" class="section question video">
-            <p class="question-title title">{{ question.question }}</p>
-            <iframe class="p-3" :src="question.description"></iframe>
-          </div>
-
-          <div v-else></div>
-
         </div>
 
       </div>
-
-      <b-button type="submit" class="submit">Submit form</b-button>
-
-    </div>
-
-    <div class="form-view en animate__animated animate__backInLeft" v-if="form.formType === 'card form' && getLang === 'en'">
-
-      <div v-if="form.imageHeader" class="form-image-header section">
-        <img :src="form.imageHeader">
-      </div>
-
-      <div class="form-title section">
-        <div class="titles">
-          <p class="title">{{ form.header }}</p>
-          <p class="description">{{ form.description }}</p>
-        </div>
-        <div class="logo">
-          <img :src="form.logo">
-        </div>
-      </div>
-
-      <div class="section question">
-        <p class="question-title short-answer-title">{{ form.questions[currentQuestion - 1].question }} ?</p>
-
-        <div v-if="form.questions[currentQuestion - 1].type === 'question'">
-          <b-form-input
-              v-if="form.questions[currentQuestion - 1].questionType === 'Short answer'"
-              class="input question-short-answer"
-              type="text"
-              placeholder="Your answer"
-          ></b-form-input>
-
-          <b-form-input
-              v-if="form.questions[currentQuestion - 1].questionType === 'Paragraph'"
-              class="input paragraph-answer"
-              type="text"
-              placeholder="Your answer"
-          ></b-form-input>
-
-          <b-form-radio-group
-              v-if="form.questions[currentQuestion - 1].questionType === 'Multiple choice'"
-              :options="form.questions[currentQuestion - 1].options"
-              stacked
-          ></b-form-radio-group>
-
-          <b-form-checkbox-group
-              v-if="form.questions[currentQuestion - 1].questionType === 'Checkboxes'"
-              class="checkbox-select"
-              :options="form.questions[currentQuestion - 1].options"
-              stacked
-          ></b-form-checkbox-group>
-
-          <b-form-select
-              v-if="form.questions[currentQuestion - 1].questionType === 'Dropdown'"
-              class="dropdown-select"
-              :options="form.questions[currentQuestion - 1].options"
-          ></b-form-select>
-
-          <b-form-input
-              v-if="form.questions[currentQuestion - 1].questionType === 'Date'"
-              class="input date-answer"
-              type="date"
-          ></b-form-input>
-
-          <b-form-input
-              v-if="form.questions[currentQuestion - 1].questionType === 'Time'"
-              class="input date-answer"
-              type="time"
-          ></b-form-input>
-
-        </div>
-
-        <div v-if="form.questions[currentQuestion - 1].type === 'title'" class="title-description">
-          <p class="description">{{ form.questions[currentQuestion - 1].description }}</p>
-        </div>
-
-        <div v-if="form.questions[currentQuestion - 1].type === 'image'" class="image">
-          <img :src="form.questions[currentQuestion - 1].description">
-        </div>
-
-        <div v-if="form.questions[currentQuestion - 1].type === 'video'" class="video">
-          <iframe class="p-3" :src="form.questions[currentQuestion - 1].description"></iframe>
-        </div>
-
-        <div v-else></div>
-
-      </div>
-
-      <b-pagination-nav v-model="currentQuestion" :link-gen="linkGen" :number-of-pages="form.questions.length" use-router></b-pagination-nav>
-    </div>
-
-    <div class="form-view ar animate__animated animate__backInRight" v-if="form.formType === 'card form' && getLang === 'ar'">
-      <div v-if="form.imageHeader" class="form-image-header section">
-        <img :src="form.imageHeader">
-      </div>
-
-      <div class="form-title section">
-        <div class="titles">
-          <p class="title">{{ form.header }}</p>
-          <p class="description">{{ form.description }}</p>
-        </div>
-        <div class="logo">
-          <img :src="form.logo">
-        </div>
-      </div>
-
-      <div class="section question">
-        <p class="question-title short-answer-title">{{ form.questions[currentQuestion - 1].question }} ؟ </p>
-
-        <div v-if="form.questions[currentQuestion - 1].type === 'question'">
-          <b-form-input
-              v-if="form.questions[currentQuestion - 1].questionType === 'Short answer'"
-              class="input question-short-answer"
-              type="text"
-              placeholder="Your answer"
-          ></b-form-input>
-
-          <b-form-input
-              v-if="form.questions[currentQuestion - 1].questionType === 'Paragraph'"
-              class="input paragraph-answer"
-              type="text"
-              placeholder="Your answer"
-          ></b-form-input>
-
-          <b-form-radio-group
-              v-if="form.questions[currentQuestion - 1].questionType === 'Multiple choice'"
-              :options="form.questions[currentQuestion - 1].options"
-              stacked
-          ></b-form-radio-group>
-
-          <b-form-checkbox-group
-              v-if="form.questions[currentQuestion - 1].questionType === 'Checkboxes'"
-              class="checkbox-select"
-              :options="form.questions[currentQuestion - 1].options"
-              stacked
-          ></b-form-checkbox-group>
-
-          <b-form-select
-              v-if="form.questions[currentQuestion - 1].questionType === 'Dropdown'"
-              class="dropdown-select"
-              :options="form.questions[currentQuestion - 1].options"
-          ></b-form-select>
-
-          <b-form-input
-              v-if="form.questions[currentQuestion - 1].questionType === 'Date'"
-              class="input date-answer"
-              type="date"
-          ></b-form-input>
-
-          <b-form-input
-              v-if="form.questions[currentQuestion - 1].questionType === 'Time'"
-              class="input date-answer"
-              type="time"
-          ></b-form-input>
-
-        </div>
-
-        <div v-if="form.questions[currentQuestion - 1].type === 'title'" class="title-description">
-          <p class="description">{{ form.questions[currentQuestion - 1].description }}</p>
-        </div>
-
-        <div v-if="form.questions[currentQuestion - 1].type === 'image'" class="image">
-          <img :src="form.questions[currentQuestion - 1].description">
-        </div>
-
-        <div v-if="form.questions[currentQuestion - 1].type === 'video'" class="video">
-          <iframe class="p-3" :src="form.questions[currentQuestion - 1].description"></iframe>
-        </div>
-
-        <div v-else></div>
-
-
-
-
-      </div>
-
-      <b-pagination-nav v-model="currentQuestion" :link-gen="linkGen" :number-of-pages="form.questions.length" use-router></b-pagination-nav>
 
     </div>
 
@@ -403,27 +250,209 @@
 </template>
 
 <script>
+import CreateFormHeader from "../../components/Form/CreateFormHeader";
+import SendForm from "./SendForm";
 import BaseSpinner from "@/components/Ui/BaseSpinner";
+import store from "@/store";
+import router from "@/router";
 export default {
   name: "FormView",
-  components: {BaseSpinner},
+  components: {
+    BaseSpinner,
+    SendForm,
+    CreateFormHeader
+  },
   data() {
     return {
       form: '',
       currentQuestion: '1',
-      isLoading: false
+      isLoading: false,
+      displayTheme: false,
+      displaySend: false,
     }
+  },
+  created() {
+    if (!store.getters.isAuthenticated) {
+      router.push('/login')
+    }
+    this.loadForm(this.$route.params.id)
   },
   computed: {
     getLang() {
       return this.$store.getters['main/getLang'];
     }
   },
-  created() {
-    this.loadForm(this.$route.params.id)
-  },
   methods: {
+    showTheme(theme) {
+      this.displayTheme = theme;
+    },
+    closeTheme() {
+      this.displayTheme = false;
+    },
+    showSend() {
+      this.displaySend = true;
+    },
+    closeSend() {
+      this.displaySend = false;
+    },
+    addLogo(e) {
+      this.file = e.target.files[0];
+      this.$emit('input', this.file);
+      let reader = new FileReader();
+      reader.readAsDataURL(this.file);
+      reader.onload = e => {
+        console.log(e.target.result);
+        this.form.logo = e.target.result;
+      }
+    },
+    browse() {
+      this.$refs.logoFile.click();
+    },
+    addNewQuestion() {
+      this.form.questions.push(
+          {
+            id: Date.now(),
+            question: '',
+            type: 'question',
+            questionType: 'null',
+            required: '',
+            focus: true,
+            options: [
+              {
+                id: Date.now(),
+                value: 'option 1',
+                text: 'option 1'
+              }
+            ],
+          });
+    },
+    addNewTitle() {
+      this.form.questions.push(
+          {
+            id: Date.now(),
+            question: '',
+            type: 'title',
+            description: '',
+            focus: true,
+          });
+    },
+    addImage(e) {
+      this.file = e.target.files[0];
+      this.$emit('input', this.file);
+      let reader = new FileReader();
+      reader.readAsDataURL(this.file);
+      reader.onload = e => {
+        console.log(e.target.result);
+        this.form.questions.push(
+            {
+              id: Date.now(),
+              question: '',
+              type: 'image',
+              description: e.target.result,
+              focus: true,
+            });
+      }
+    },
+    addNewImage() {
+      this.$refs.imageFile.click();
+    },
+    addNewVideo() {
+      this.form.questions.push(
+          {
+            id: Date.now(),
+            question: '',
+            type: 'video',
+            description: '',
+            focus: true,
+            displayVideo: false,
+          });
+    },
+    duplicate(currentQuestion) {
+      this.form.questions.push(
+          {
+            id: Date.now(),
+            question: currentQuestion.question,
+            type: currentQuestion.type,
+            questionType: currentQuestion.questionType,
+            required: currentQuestion.required,
+            description: currentQuestion.description,
+            displayVideo: false,
+            focus: true,
+            options: [
+              {
+                id: Date.now(),
+                value: 'option 1',
+                text: 'option 1'
+              }
+            ],
+          });
+    },
+    remove(question) {
+      const removeIndex = this.form.questions.findIndex(value => value.id === question.id);
+      this.form.questions.splice(removeIndex, 1);
+    },
+    addOtherOption(question) {
+      const questionId = question.id;
+      this.form.questions.find(value => {
+        if (value.id === questionId) {
+          value.options.push({
+            id: Date.now(),
+            value: 'new option'
+          })
+        }
+      })
+    },
+    removeChoice(option ,question) {
+      const questionId = question.id;
+      const optionId = option.id;
+      this.form.questions.find(value => {
+        if (value.id === questionId) {
+          const removeIndex = value.options.findIndex(value1 => value1.id === optionId);
+          value.options.splice(removeIndex, 1);
+        }
+      })
+
+    },
+    divFocus(question) {
+      const questionId = question.id;
+      this.form.questions.find(value => {
+        if (value.id === questionId) {
+          value.focus = true;
+        } else {
+          value.focus = false;
+        }
+      })
+    },
+    editTheme(theme) {
+      this.form.styleTheme = theme;
+    },
+    browseFormHeaderImage() {
+      this.$refs.file.click();
+    },
+    changeFormHeaderImage(e) {
+      this.file = e.target.files[0];
+      this.$emit('input', this.file);
+      let reader = new FileReader();
+      reader.readAsDataURL(this.file);
+      reader.onload = e => {
+        console.log(e.target.result);
+        this.form.imageHeader = e.target.result;
+      }
+    },
+    removeFormHeaderImage() {
+      this.form.imageHeader = '';
+    },
+    addVideo(id) {
+      this.form.questions.find(value => {
+        if (value.id === id) {
+          value.displayVideo = true;
+          console.log(value.displayVideo)
+        }
+      })
+
+    },
     async loadForm(id) {
+
       this.isLoading = true;
 
       let token = this.$store.getters.token;
@@ -455,10 +484,53 @@ export default {
       this.isLoading = false;
 
     },
-    linkGen(pageNum) {
-      return `?question=${pageNum}`
-    },
-    async submit() {
+    async addForm() {
+      this.isLoading = true;
+
+      let id = this.$route.params.id;
+
+      let token = this.$store.getters.token;
+
+      let myHeaders = new Headers();
+      myHeaders.append("Authorization", "Bearer " + token);
+      myHeaders.append("Content-Type", "application/json");
+
+      let raw = JSON.stringify({
+        "formType": this.form.formType,
+        "imageHeader": this.form.imageHeader,
+        "header": this.form.header,
+        "description": this.form.description,
+        "isTemplate": this.form.isTemplate,
+        "logo": this.form.logo,
+        "styleTheme": this.form.styleTheme,
+        "fontFamily": this.form.fontFamily,
+        "questions": this.form.questions,
+
+      });
+
+      let requestOptions = {
+        method: 'PUT',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+      };
+      let url = `https://ya-forms-api.herokuapp.com/API/form/` + id;
+
+      const response = await fetch(url, requestOptions);
+      const responseData = await response.json();
+
+      if (!response.ok) {
+        const error = new Error(responseData.message || 'Failed to fetch!');
+        throw error;
+      }
+
+      console.log(responseData)
+
+      this.form = responseData;
+
+      this.isLoading = false;
+
+      await this.$router.push('/forms')
 
     }
   }
@@ -481,170 +553,169 @@ export default {
   --var-main-color: #673ab7;
   --var-second-color: #c2c0c6;
 }
+
 .theme-3 {
   --var-main-color: #3f51b5;
   --var-second-color: #c2c0c6;
 }
+
 .theme-4 {
   --var-main-color: #4285f4;
   --var-second-color: #c2c0c6;
 }
+
 .theme-5 {
   --var-main-color: #03a9f4;
   --var-second-color: #d5ebf5;
 }
+
 .theme-6 {
   --var-main-color: #ff5722;
   --var-second-color: #ffeee0;
 }
+
 .theme-7 {
   --var-main-color: #ff9800;
   --var-second-color: #ffdcab;
 }
+
 .theme-8 {
   --var-main-color: #009688;
   --var-second-color: #cefcf9;
 }
+
 .theme-9 {
   --var-main-color: #4caf50;
   --var-second-color: #9fb89f;
 }
+
 .theme-10 {
   --var-main-color: #607d8b;
   --var-second-color: #ddd;
 }
+
 .theme-11 {
   --var-main-color: #9e9e9e;
   --var-second-color: #ddd;
 }
+
 .default-font {
   --var-font: 'Google Sans', Roboto, Helvetica, Arial, sans-serif;
 }
+
 .Playful {
   --var-font: 'Style Script', cursive;
 }
+
 .Roboto-Mono {
   --var-font: 'Roboto Mono', monospace;
 }
 
-.home {
-  min-height: 100vh;
+.select-form-type .container {
+  padding: 40px;
+}
+
+.select-form-type-header {
+  padding: 20px;
+  margin: 5px 0;
+}
+
+.select-form-type-header h1 {
+  font-family: 'Google Sans', Roboto, Helvetica, Arial, sans-serif;
+  font-size: 28px;
+  font-weight: 600;
+  color: #2B3245;
+  margin: 0;
+  line-height: 1.15;
+}
+
+.select-form-type-header p {
+  font-family: 'Google Sans', Roboto, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #8D8FA8;
+  margin: 0 10px;
+  letter-spacing: 0.001px;
+  line-height: 1.15;
+}
+
+.select-form-type-content {
   display: flex;
   justify-content: center;
-  background-color: var(--var-second-color);
+  flex-wrap: wrap;
 }
 
-.section {
-  margin: 20px 0;
-  border-radius: 15px;
-  border: 1px solid #c4c4c4;
-}
-
-.input, .dropdown-select {
-  border: none;
-  border-bottom: 2px dotted #dddddd;
-}
-
-.input:focus, .dropdown-select:focus {
-  outline: none;
-  border-color: inherit;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-  border-bottom: 2px solid var(--var-main-color);
-}
-
-.question {
-  padding: 30px 20px;
-  background-color: #FFFFFF;
-}
-
-.form-view {
-  width: 60%;
-  min-height: 100vh;
-  padding: 20px;
-}
-
-.form-image-header {
-  width: 100%;
-  height: 180px;
-}
-
-.form-image-header img {
-  width: 100%;
-  height: 100%;
-  border-radius: 15px;
-}
-
-.form-title {
-  padding: 20px 15px;
-  border-top: 8px solid var(--var-main-color);
-  background-color: #FFFFFF;
+.select-form-type-content .classic-form,
+.select-form-type-content .card-form {
+  margin: 15px 30px;
+  cursor: pointer;
+  border-radius: 6px;
   display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 350px;
+  height: 250px;
+  padding: 55px 10px 0;
+  background-color: rgb(53,149,246);
 }
 
-.form-title .titles {
-  width: 70%;
+.select-form-type-content .classic-form {
+  background-color: #BC77BF;
 }
 
-.form-title .title {
-  font-family: var(--var-font);
-  font-size: 32px;
+.classic-footer, .card-form-footer  {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.form-title .description,
-.title-description .description {
+.classic-footer h3,
+.card-form-footer h3 {
+  font-weight: 500;
+  margin-top: 8px;
+  margin-bottom: 4px;
+  padding: 0;
+  transition: .3s;
+  font-size: 18px;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  line-height: 1.15;
+  cursor: pointer;
+}
+
+.classic-footer p,
+.card-form-footer p {
+  text-align: center;
+  color: #8D8FA8;
   font-size: 16px;
-  padding: 0 10px;
+  margin-top: 2px;
+  line-height: 1.15;
 }
 
-.form-title .logo {
-  width: 28%;
-  margin-right: 2%;
-  max-height: 100px;
+.select-form-type-classic:hover .classic-form,
+.select-form-type-card:hover .card-form {
+  margin-top: 0;
+  border: 3px solid #9d55a0;
 }
 
-.form-title .logo img {
-  width: 100%;
-  max-height: 100%;
-  border-radius: 15px;
+.select-form-type-classic:hover .classic-footer h3,
+.select-form-type-classic:hover .classic-footer p,
+.select-form-type-card:hover .card-form-footer h3,
+.select-form-type-card:hover .card-form-footer p {
+  color: #9d55a0;
 }
 
-.question-title {
-  font-size: 16px;
-  letter-spacing: .1px;
-  line-height: 24px;
-  color: #202124;
-  font-weight: 400;
-  word-break: break-word;
-  font-family: var(--var-font);
+.select-form-type .ar {
+  direction: rtl;
+  text-align: right;
 }
 
-.question-short-answer {
-  width: 240px;
-}
 
-.dropdown-select, .date-answer, .time-answer {
-  width: 250px;
-}
-
-.image img {
-  border-radius: 15px;
-  width: 100%;
-  max-height: 500px;
-}
-
-.submit {
-  color: var(--var-main-color);
-  background-color: #FFFFFF;
-  border: 1px solid var(--var-main-color);
-  border-radius: 8px;
-  padding: 8px 20px;
-}
-
-.submit:hover {
-  background-color: var(--var-main-color);
-  color: #FFFFFF;
-  border: 1px solid var(--var-main-color);
+.home {
+  background-color: var(--var-second-color);
+  min-height: 100vh;
 }
 
 .ar {
@@ -652,22 +723,784 @@ export default {
   text-align: right;
 }
 
+.mobile-add {
+  display: none;
+}
+
+.hidden {
+  display: none;
+}
+
+.main-content .container {
+  width: 70%;
+  display: flex;
+}
+
+.create-form {
+  width: 92%;
+  margin-right: 2%;
+}
+
+.ar .create-form {
+  margin-left: 2%;
+  margin-right: 0;
+}
+
+.form-image-header {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0 20px;
+  max-height: 200px;
+}
+
+.form-image-header img {
+  width: 100%;
+  max-height: 100%;
+  border-radius: 15px;
+}
+
+
+.right-elements {
+  width: 5%;
+  display: flex;
+  flex-direction: column;
+}
+
+.right-elements .top {
+  background-color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 10px 0;
+  border: 1px solid #c4c4c4;
+  border-radius: 8px;
+}
+
+.right-elements .top  i {
+  font-size: 130%;
+}
+
+.add-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.add-logo-btn {
+  font-size: 12px;
+  color: #111111;
+  margin: 0;
+  border: none;
+  background: none;
+}
+
+.add-logo-btn:hover {
+  color: var(--var-main-color);
+}
+
+.right-elements .bottom {
+  background-color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 10px 0;
+  border: 1px solid #c4c4c4;
+  border-radius: 8px;
+}
+
+.right-elements .bottom i {
+  font-size: 120%;
+  margin: 10px 0px;
+}
+
+.right-elements .bottom i:hover {
+  color: var(--var-main-color);
+  cursor: pointer;
+}
+
+.form-header {
+  padding: 15px;
+  background-color: #FFFFFF;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  border-top: 8px solid var(--var-main-color);
+  margin-bottom: 20px;
+  border-right: 1px solid #c4c4c4;
+  border-left: 1px solid #c4c4c4;
+  border-bottom: 1px solid #c4c4c4;
+}
+
+.form-title {
+  width: 79%;
+  margin-right: 1%;
+}
+
+.form-logo {
+  width: 220px;
+  max-height: 120px;
+}
+
+.input-title:focus,
+.input-description:focus {
+  outline: none;
+  border-color: inherit;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.input-title {
+  padding: 0 20px 0 5px;
+  border: 0;
+  font-size: 28px;
+  font-weight: 600;
+  color: #111111;
+  margin: 10px;
+  font-family: var(--var-font);
+  width: 80%;
+}
+
+.input-title::placeholder {
+  color: #111111;
+}
+
+.input-title:focus {
+  border-bottom: 3px solid var(--var-main-color);
+}
+
+.input-description {
+  border: 0;
+  font-size: 14px;
+  color: #111111;
+  margin: 10px;
+  width: 90%;
+}
+
+.input-description:focus {
+  border-bottom: 1px solid var(--var-main-color);
+}
+
+.form-logo img {
+  border-radius: 15px;
+  width: 100%;
+  height: 100%;
+}
+
+.form-question {
+  padding: 25px 0 0;
+  background-color: #FFFFFF;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  border-right: 1px solid #c4c4c4;
+  border-top: 1px solid #c4c4c4;
+  border-bottom: 1px solid #c4c4c4;
+}
+
+.true {
+  border-left: 8px solid var(--var-main-color);
+}
+
+.form-question-row-1 {
+  display: flex;
+  margin-bottom: 10px;
+  padding: 10px 20px;
+}
+
+.form-question-row-2 {
+  margin-bottom: 10px;
+  padding: 0 20px;
+}
+
+.input-question {
+  border: none;
+  border-bottom: 3px solid #dddddd;
+  margin-right: 20px;
+  font-family: var(--var-font);
+  font-size: 20px;
+}
+
+.input-question:focus {
+  outline: none;
+  border-color: inherit;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border-bottom: 3px solid var(--var-main-color);
+}
+
+.select-answer {
+  width: 45%;
+}
+
+.input-answer {
+  border: none;
+  margin: 10px 0;
+  width: 60%;
+  border-bottom: 3px dotted #dddddd;
+}
+
+.input-answer:focus {
+  outline: none;
+  border-color: inherit;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border-bottom: 3px dotted var(--var-main-color);
+}
+
+.input-paragraph {
+  border: none;
+  margin: 10px 0;
+  width: 80%;
+  border-bottom: 3px dotted #dddddd;
+}
+
+.input-paragraph:focus {
+  outline: none;
+  border-color: inherit;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border-bottom: 3px dotted var(--var-main-color);
+}
+
+.multiple-choice-row {
+  display: flex;
+}
+
+.multiple-choice-row i {
+  margin: auto 10px;
+}
+
+.multiple-choice-row .close {
+  cursor: pointer;
+}
+
+.multiple-choice-row .close:hover {
+  color: var(--var-main-color);
+}
+
+.multiple-choice-input {
+  border: none;
+  border-bottom: 3px solid #dddddd;
+  width: 70%;
+  color: #111111;
+}
+
+.multiple-choice-input:focus {
+  outline: none;
+  border-color: inherit;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border-bottom: 3px solid var(--var-main-color);
+}
+
+.choice-row h6 {
+  margin: 10px;
+  cursor: pointer;
+}
+
+.choice-row h6:hover {
+  color: var(--var-main-color);
+}
+
+.choice-row ul {
+  list-style-type: lower-alpha;
+}
+
+.date-row input,
+.time-row input {
+  width: 150px;
+}
+
+.question-footer {
+  padding: 10px 15px;
+  border-top: 1px solid #c4c4c4;
+  display: flex;
+}
+
+.hidden-class {
+  width: 70%;
+}
+
+.question-footer-content {
+  width: 30%;
+  display: flex;
+  justify-content: center;
+}
+
+.question-footer i {
+  font-size: 120%;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.question-footer i:hover {
+  color: var(--var-main-color);
+}
+
+.ar .required {
+  margin-right: 20px;
+  padding-right: 20px;
+  border-right: 2px solid #c4c4c4;
+}
+
+.en .required {
+  margin-left: 20px;
+  padding-left: 20px;
+  border-left: 2px solid #c4c4c4;
+}
+
+.required p {
+  margin: auto 0;
+  font-weight: 500;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 24px;
+  margin: 0 18px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: var(--var-main-color);
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px var(--var-main-color);
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(16px);
+  -ms-transform: translateX(16px);
+  transform: translateX(16px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.else-type-content {
+  padding: 5px 20px;
+}
+
+.else-type-header {
+  display: flex;
+}
+
+.else-type-header-input {
+  width: 80%;
+  margin: auto 20px auto 0 ;
+  border: none;
+  border-bottom: 3px solid #dddddd;
+  font-family: var(--var-font);
+  font-size: 20px;
+}
+
+.else-type-header-input:focus {
+  outline: none;
+  border-color: inherit;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border-bottom: 3px solid var(--var-main-color);
+}
+
+.else-type-header-icons {
+  margin: auto 0 auto auto;
+}
+
+.else-type-header-icons i {
+  font-size: 120%;
+  margin: auto 10px;
+  cursor: pointer;
+}
+
+.else-type-header-icons i:hover {
+  color: var(--var-main-color);
+}
+
+.title-description-input {
+  margin: 10px 5px 20px;
+  border: none;
+  border-bottom: 1px solid #dddddd;
+  font-size: 16px;
+}
+
+.title-description-input:focus {
+  outline: none;
+  border-color: inherit;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border-bottom: 1px solid var(--var-main-color);
+}
+
+.image-type-content {
+  display: flex;
+  justify-content: center;
+  padding: 20px 10px 30px;
+  max-height: 400px;
+}
+
+.image-type-content img {
+  width: 100%;
+  max-height: 100%;
+  border-radius: 15px;
+}
+
+.theme {
+  position: fixed;
+  right: 0;
+  background: #FFFFFF;
+  border-left: 1px solid #c4c4c4;
+  top: -19px;
+  z-index: 999;
+  width: 300px;
+  padding: 0 20px 50px;
+}
+
+.theme-header {
+  display: flex;
+  padding: 16px 0;
+  box-shadow: 0 4px 2px -2px rgba(0,0,0,.2);
+  margin-bottom: 10px;
+}
+
+.theme-header p {
+  margin: auto 0;
+  font-family: 'Google Sans',Roboto,Arial,sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: .1px;
+  line-height: 24px;
+  color: #202124;
+
+}
+
+.theme-header i {
+  margin: auto 10px;
+  color: var(--var-main-color);
+}
+
+.theme-header .close {
+  color: #111111;
+  cursor: pointer;
+  margin: auto 10px auto auto;
+}
+
+.theme .p-header {
+  font-family: Roboto,Arial,sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: .3px;
+  line-height: 16px;
+  color: #202124;
+}
+
+.image-header {
+  margin: 20px 0;
+  padding: 0 10px 20px;
+  box-shadow: 0 4px 2px -2px rgba(0,0,0,.2);
+}
+
+.btn-image-header {
+  border: 1px solid #c1c1c1;
+  padding: 5px 10px;
+  color: #1a73e8;
+  width: 160px;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.btn-image-header i {
+  margin: auto 0;
+  font-size: 120%;
+}
+
+.btn-image-header p {
+  margin: auto 5px;
+}
+
+.btn-remove-image-header {
+  border: 1px solid #c1c1c1;
+  padding: 5px 10px;
+  width: 200px;
+  margin: 10px;
+}
+
+.btn-remove-image-header p {
+  margin: auto 5px;
+}
+
+.btn-remove-image-header .fa-image {
+  margin: auto 0;
+  font-size: 120%;
+  color: var(--var-main-color);
+}
+
+.btn-remove-image-header .fa-times {
+  margin: auto 5px auto auto;
+}
+
+.btn-remove-image-header .fa-times:hover {
+  color: var(--var-main-color);
+}
+
+.video-url input {
+  width: 75%;
+}
+
+.video-url button {
+  margin: auto 0 auto auto;
+  color: var(--var-main-color);
+  border: 1px solid var(--var-main-color);
+  background-color: #FFFFFF;
+}
+
+.video-url button:hover {
+  color: #FFFFFF;
+  background-color: var(--var-main-color);
+}
+
+
+.theme-color {
+  box-shadow: 0 4px 2px -2px rgba(0,0,0,.2);
+  margin: 20px 0;
+  padding: 0 10px 20px;
+}
+
+.theme-color-content {
+  padding: 0 10px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.theme-color-content i {
+  font-size: 180%;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.theme-color-content i:hover {
+  font-size: 190%;
+}
+
+.color-1 {
+  color: #9d55a0;
+}
+
+.color-2 {
+  color: #db4437;
+}
+
+.color-3 {
+  color: #673ab7;
+}
+
+.color-4 {
+  color: #3f51b5;
+}
+
+.color-5 {
+  color: #4285f4;
+}
+
+.color-6 {
+  color: #03a9f4;
+}
+
+.color-7 {
+  color: #ff5722;
+}
+
+.color-8 {
+  color: #ff9800;
+}
+
+.color-9 {
+  color: #009688;
+}
+
+.color-10 {
+  color: #4caf50;
+}
+
+.color-11 {
+  color: #607d8b;
+}
+
+.color-12 {
+  color: #9e9e9e;
+}
+
+
+.btn {
+  color: var(--var-main-color);
+  background-color: #FFFFFF;
+  border: 1px solid var(--var-main-color);
+  padding: 8px 20px;
+  margin: auto 20px;
+}
+
+.btn:hover {
+  background-color: var(--var-main-color);
+  color: #FFFFFF;
+  border: 1px solid var(--var-main-color);
+}
+
+.select-form-type-content {
+  margin-bottom: 20px;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  z-index: 1000;
+  width: 100%;
+  margin-top: 40px;
+}
+
+.header-size {
+  color: #70757a;
+  margin: 0 10px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
 @media (max-width:1024px) {
-  .form-view {
+  .main-content .container {
+    width: 98%;
+  }
+
+  .create-form {
     width: 95%;
   }
 
-  .form-title {
+  .right-elements {
+    display: none;
+  }
+
+  .mobile-add {
+    display: block;
+    width: 100%;
+    background: #FFFFFF;
+    padding: 10px;
+    border-top: 1px solid #c4c4c4;
+    z-index: 1000;
+  }
+
+  .mobile-add-content {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .mobile-add-content i {
+    color: #111111;
+    margin: auto 5px;
+    cursor: pointer;
+  }
+
+  .mobile-add-content i:hover {
+    color: var(--var-main-color);
+  }
+
+
+  .form-header, .form-title, .form-logo {
+    margin: 0;
+    padding: 0;
+  }
+
+  .form-header {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+
+  .form-title, .form-logo {
+    width: 95%;
+  }
+
+  .form-title input {
+    margin: 0 0 5px 5px;
+    width: 95%;
+  }
+
+  .form-logo img {
+    width: 100px;
+    height: 100px;
+    margin: 0 10px;
+  }
+
+  .form-question-row-1 {
     display: flex;
     flex-direction: column;
   }
 
-  .form-title .titles {
+  .select-answer {
+    margin: 5px 10px;
+    width: 90%;
+  }
+
+  .hidden-class {
+    display: none;
+  }
+
+  .question-footer {
+    justify-content: center;
+  }
+
+  .question-footer-content {
+    width: 90%;
+  }
+
+  .else-type-header-input {
     width: 98%;
   }
 
-  .form-title .logo {
-    margin: 0 20px;
+  .theme {
+    top: -19px;
+  }
+
+  .video-url input {
+    width: 60%;
   }
 }
 </style>
