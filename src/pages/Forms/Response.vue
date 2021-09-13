@@ -4,9 +4,13 @@
         :theme="form.styleTheme"
         avatar="https://pbs.twimg.com/media/E7yILDuVoAEOzoE?format=jpg&name=medium"
         name="Mohamed Emad"
-        :id=form.id
-        show="false"
+        id="613f337367941f0016f9dd0a"
+        show=false
         :responseNum="form.responseNum"
+        show-nav2=true
+        show-eye=true
+        show-send-icon=true
+
     >
     </create-form-header>
 

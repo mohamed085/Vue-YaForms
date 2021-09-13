@@ -8,7 +8,7 @@
           :theme="form.styleTheme"
           avatar="https://pbs.twimg.com/media/E7yILDuVoAEOzoE?format=jpg&name=medium"
           name="Mohamed Emad"
-          id="132165sda"
+          :id=$store.getters.token
           show="true"
           shownav2=true
       >

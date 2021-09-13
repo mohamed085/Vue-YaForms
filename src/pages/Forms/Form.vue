@@ -29,7 +29,9 @@
               <b-form-input
                   class="input question-short-answer"
                   type="text"
+                  v-model="question.response"
                   placeholder="Your answer"
+                  :required="question.required"
               ></b-form-input>
             </div>
 
@@ -38,6 +40,8 @@
               <b-form-input
                   class="input paragraph-answer"
                   type="text"
+                  v-model="question.response"
+                  :required="question.required"
                   placeholder="Your answer"
               ></b-form-input>
             </div>
@@ -46,6 +50,8 @@
               <p class="question-title multiple-choice-title">{{ question.question }} ?</p>
               <b-form-radio-group
                   :options="question.options"
+                  v-model="question.response"
+                  :required="question.required"
                   stacked
               ></b-form-radio-group>
             </div>
@@ -55,6 +61,8 @@
               <b-form-checkbox-group
                   class="checkbox-select"
                   :options="question.options"
+                  :required="question.required"
+                  v-model="question.response"
                   stacked
               ></b-form-checkbox-group>
 
@@ -63,7 +71,9 @@
             <div class="section question " v-if="question.questionType === 'Dropdown'">
               <p class="question-title dropdown-title">{{ question.question }} ?</p>
               <b-form-select
+                  v-model="question.response"
                   class="dropdown-select"
+                  :required="question.required"
                   :options="question.options"
               ></b-form-select>
             </div>
@@ -72,6 +82,8 @@
               <p class="question-title short-answer-title">{{ question.question }} ?</p>
               <b-form-input
                   class="input date-answer"
+                  v-model="question.response"
+                  :required="question.required"
                   type="date"
               ></b-form-input>
             </div>
@@ -80,10 +92,11 @@
               <p class="question-title short-answer-title">{{ question.question }} ?</p>
               <b-form-input
                   class="input time-answer"
+                  v-model="question.response"
+                  :required="question.required"
                   type="time"
               ></b-form-input>
             </div>
-
 
           </div>
 
@@ -138,6 +151,8 @@
               <p class="question-title short-answer-title">{{ question.question }} ؟</p>
               <b-form-input
                   class="input question-short-answer"
+                  v-model="question.response"
+                  :required="question.required"
                   type="text"
                   placeholder="Your answer"
               ></b-form-input>
@@ -147,6 +162,8 @@
               <p class="paragraph-title">{{ question.question }} ؟</p>
               <b-form-input
                   class="input paragraph-answer"
+                  :required="question.required"
+                  v-model="question.response"
                   type="text"
                   placeholder="Your answer"
               ></b-form-input>
@@ -156,6 +173,8 @@
               <p class="question-title multiple-choice-title">{{ question.question }}c</p>
               <b-form-radio-group
                   :options="question.options"
+                  v-model="question.response"
+                  :required="question.required"
                   stacked
               ></b-form-radio-group>
             </div>
@@ -164,6 +183,8 @@
               <p class="question-title checkboxes-title">{{ question.question }} ؟</p>
               <b-form-checkbox-group
                   class="checkbox-select"
+                  :required="question.required"
+                  v-model="question.response"
                   :options="question.options"
                   stacked
               ></b-form-checkbox-group>
@@ -174,6 +195,8 @@
               <p class="question-title dropdown-title">{{ question.question }} ؟</p>
               <b-form-select
                   class="dropdown-select"
+                  v-model="question.response"
+                  :required="question.required"
                   :options="question.options"
               ></b-form-select>
 
@@ -184,6 +207,8 @@
               <p class="question-title short-answer-title">{{ question.question }} ؟</p>
               <b-form-input
                   class="input date-answer"
+                  v-model="question.response"
+                  :required="question.required"
                   type="date"
               ></b-form-input>
             </div>
@@ -191,7 +216,9 @@
             <div class="section question " v-if="question.questionType === 'Time'">
               <p class="question-title short-answer-title">{{ question.question }} ؟</p>
               <b-form-input
+                  v-model="question.response"
                   class="input time-answer"
+                  :required="question.required"
                   type="time"
               ></b-form-input>
             </div>
@@ -246,7 +273,9 @@
         <div v-if="form.questions[currentQuestion - 1].type === 'question'">
           <b-form-input
               v-if="form.questions[currentQuestion - 1].questionType === 'Short answer'"
+              v-model="form.questions[currentQuestion - 1].response"
               class="input question-short-answer"
+              :required="form.questions[currentQuestion - 1].required"
               type="text"
               placeholder="Your answer"
           ></b-form-input>
@@ -255,11 +284,15 @@
               v-if="form.questions[currentQuestion - 1].questionType === 'Paragraph'"
               class="input paragraph-answer"
               type="text"
+              :required="form.questions[currentQuestion - 1].required"
+              v-model="form.questions[currentQuestion - 1].response"
               placeholder="Your answer"
           ></b-form-input>
 
           <b-form-radio-group
               v-if="form.questions[currentQuestion - 1].questionType === 'Multiple choice'"
+              :required="form.questions[currentQuestion - 1].required"
+              v-model="form.questions[currentQuestion - 1].response"
               :options="form.questions[currentQuestion - 1].options"
               stacked
           ></b-form-radio-group>
@@ -267,6 +300,8 @@
           <b-form-checkbox-group
               v-if="form.questions[currentQuestion - 1].questionType === 'Checkboxes'"
               class="checkbox-select"
+              v-model="form.questions[currentQuestion - 1].response"
+              :required="form.questions[currentQuestion - 1].required"
               :options="form.questions[currentQuestion - 1].options"
               stacked
           ></b-form-checkbox-group>
@@ -274,16 +309,22 @@
           <b-form-select
               v-if="form.questions[currentQuestion - 1].questionType === 'Dropdown'"
               class="dropdown-select"
+              v-model="form.questions[currentQuestion - 1].response"
+              :required="form.questions[currentQuestion - 1].questions[currentQuestion - 1].required"
               :options="form.questions[currentQuestion - 1].options"
           ></b-form-select>
 
           <b-form-input
               v-if="form.questions[currentQuestion - 1].questionType === 'Date'"
+              v-model="form.questions[currentQuestion - 1].response"
+              :required="form.questions[currentQuestion - 1].required"
               class="input date-answer"
               type="date"
           ></b-form-input>
 
           <b-form-input
+              :required="form.questions[currentQuestion - 1].required"
+              v-model="form.questions[currentQuestion - 1].response"
               v-if="form.questions[currentQuestion - 1].questionType === 'Time'"
               class="input date-answer"
               type="time"
@@ -331,32 +372,42 @@
         <div v-if="form.questions[currentQuestion - 1].type === 'question'">
           <b-form-input
               v-if="form.questions[currentQuestion - 1].questionType === 'Short answer'"
+              v-model="form.questions[currentQuestion - 1].response"
+              :required="form.questions[currentQuestion - 1].required"
               class="input question-short-answer"
               type="text"
               placeholder="Your answer"
           ></b-form-input>
 
           <b-form-input
+              :required="form.questions[currentQuestion - 1].required"
               v-if="form.questions[currentQuestion - 1].questionType === 'Paragraph'"
               class="input paragraph-answer"
+              v-model="form.questions[currentQuestion - 1].response"
               type="text"
               placeholder="Your answer"
           ></b-form-input>
 
           <b-form-radio-group
               v-if="form.questions[currentQuestion - 1].questionType === 'Multiple choice'"
+              :required="form.questions[currentQuestion - 1].required"
               :options="form.questions[currentQuestion - 1].options"
+              v-model="form.questions[currentQuestion - 1].response"
               stacked
           ></b-form-radio-group>
 
           <b-form-checkbox-group
               v-if="form.questions[currentQuestion - 1].questionType === 'Checkboxes'"
+              :required="form.questions[currentQuestion - 1].required"
               class="checkbox-select"
+              v-model="form.questions[currentQuestion - 1].response"
               :options="form.questions[currentQuestion - 1].options"
               stacked
           ></b-form-checkbox-group>
 
           <b-form-select
+              v-model="form.questions[currentQuestion - 1].response"
+              :required="form.questions[currentQuestion - 1].required"
               v-if="form.questions[currentQuestion - 1].questionType === 'Dropdown'"
               class="dropdown-select"
               :options="form.questions[currentQuestion - 1].options"
@@ -364,11 +415,15 @@
 
           <b-form-input
               v-if="form.questions[currentQuestion - 1].questionType === 'Date'"
+              v-model="form.questions[currentQuestion - 1].response"
               class="input date-answer"
+              :required="form.questions[currentQuestion - 1].required"
               type="date"
           ></b-form-input>
 
           <b-form-input
+              :required="form.questions[currentQuestion - 1].required"
+              v-model="form.questions[currentQuestion - 1].response"
               v-if="form.questions[currentQuestion - 1].questionType === 'Time'"
               class="input date-answer"
               type="time"
@@ -389,9 +444,6 @@
         </div>
 
         <div v-else></div>
-
-
-
 
       </div>
 
@@ -459,7 +511,7 @@ export default {
       return `?question=${pageNum}`
     },
     async submit() {
-
+      console.log(this.form)
     }
   }
 }

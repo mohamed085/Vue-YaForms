@@ -3,8 +3,7 @@
     <div class="nav">
       <forms-header
           avatar="https://pbs.twimg.com/media/E7yILDuVoAEOzoE?format=jpg&name=medium"
-          name="Mohamed Emad"
-          id="asdasd132"
+          :id=$store.getters.token
       ></forms-header>
     </div>
 
@@ -35,10 +34,13 @@
                 <div v-for="form in forms" :key="form.id">
                   <router-link class="form-link for-big-screen" to="">
                     <div class="form-link-row row">
+                      <div class="form-link-row-header col-1">
+                        <img src="../../assets/images/formIcon.png" width="35" height="35">
+                      </div>
                       <div class="form-link-row-header col-2">
                         {{form.header}}
                       </div>
-                      <div class="form-link-row-type col-4">
+                      <div class="form-link-row-type col-3">
                         {{form.description}}
                       </div>
                       <div class="form-link-row-type col-2">
@@ -320,12 +322,12 @@ main {
 
 .i {
   text-decoration: none;
-  color: #111111;
+  color: #8d8d8d;
   margin: auto 5px;
 }
 
 .i:hover {
-  color: #9d55a0;
+  color: #7349B9;
 }
 
 .forms-links {

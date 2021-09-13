@@ -43,7 +43,7 @@
                   </router-link>
                 </li>
                 <li>
-                  <router-link to="/">
+                  <router-link to="" @click="$store.dispatch('logout')">
                     <div class="d-flex">
                       <i class="fas fa-sign-out-alt"></i>
                       <div class="dropdown-content">
@@ -76,7 +76,7 @@
                   </div>
                 </div>
               </b-dropdown-item>
-              <b-dropdown-item to="#">
+              <b-dropdown-item to="" @click="$store.dispatch('logout')">
                 <div class="d-flex">
                   <i class="fas fa-sign-out-alt"></i>
                   <div class="dropdown-content">
@@ -145,7 +145,7 @@
                   </router-link>
                 </li>
                 <li>
-                  <router-link to="/">
+                  <router-link to="" @click="$store.dispatch('logout')">
                     <div class="d-flex">
                       <i class="fas fa-sign-out-alt"></i>
                       <div class="dropdown-content">
@@ -179,7 +179,7 @@
                   </div>
                 </div>
               </b-dropdown-item>
-              <b-dropdown-item to="#">
+              <b-dropdown-item to="" @click="$store.dispatch('logout')">
                 <div class="d-flex">
                   <i class="fas fa-sign-out-alt"></i>
                   <div class="dropdown-content">
@@ -248,6 +248,10 @@ nav {
   box-shadow: 0 4px 2px -2px rgba(0,0,0,.2);
   width: 100%;
   padding: 0 10px;
+}
+
+.dropdown {
+  z-index: 999;
 }
 
 .ar nav {

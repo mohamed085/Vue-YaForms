@@ -49,7 +49,7 @@
                   </router-link>
                 </li>
                 <li>
-                  <router-link to="/forms">
+                  <router-link to="" @click="$store.dispatch('logout')">
                     <div class="d-flex">
                       <i class="fas fa-sign-out-alt"></i>
                       <div class="dropdown-content">
@@ -83,7 +83,7 @@
                   </div>
                 </div>
               </b-dropdown-item>
-              <b-dropdown-item to="#">
+              <b-dropdown-item to="" @click="$store.dispatch('logout')">
                 <div class="d-flex">
                   <i class="fas fa-sign-out-alt"></i>
                   <div class="dropdown-content">
@@ -123,7 +123,7 @@
       </div>
 
       <div class="nav-2" v-if="showNav2">
-        <router-link to="/form-view">Questions</router-link>
+        <router-link :to="'/form-view/' + id">Questions</router-link>
         <router-link :to="'/form/response/' + id">Responses <span v-if="responseNum" class="responseNum">{{ responseNum }}</span></router-link>
       </div>
 
@@ -181,7 +181,7 @@
                   </router-link>
                 </li>
                 <li>
-                  <router-link to="/">
+                  <router-link to="" @click="$store.dispatch('logout')">
                     <div class="d-flex">
                       <i class="fas fa-sign-out-alt"></i>
                       <div class="dropdown-content">
@@ -215,7 +215,7 @@
                   </div>
                 </div>
               </b-dropdown-item>
-              <b-dropdown-item to="#">
+              <b-dropdown-item to="" @click="$store.dispatch('logout')">
                 <div class="d-flex">
                   <i class="fas fa-sign-out-alt"></i>
                   <div class="dropdown-content">
@@ -392,6 +392,9 @@ form {
 
 form input {
   border: none;
+}
+.dropdown {
+  z-index: 999;
 }
 
 .navbar-nav {

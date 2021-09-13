@@ -5,7 +5,7 @@
       <profile-header
           :avatar="user.imgSrc"
           :name="user.name"
-          :id="user.id"
+          :id=$store.getters.token
       ></profile-header>
     </div>
 

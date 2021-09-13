@@ -17,7 +17,7 @@
           <div class="mobile-nav">
             <ul>
               <li>
-                <router-link :to="'/profile/'+id">
+                <router-link :to="'/profile/' + id">
                   <div class="profile mt-3 d-flex">
                     <b-avatar :src="avatar" size="3rem"></b-avatar>
                     <div class="dropdown-content">
@@ -28,7 +28,7 @@
                 </router-link>
               </li>
               <li>
-                <router-link :to="'/setting/'+id">
+                <router-link :to="'/setting/' + id">
                   <div class="d-flex">
                     <i class="fas fa-cog"></i>
                     <div class="dropdown-content">
@@ -38,7 +38,7 @@
                 </router-link>
               </li>
               <li>
-                <router-link to="/">
+                <router-link to="" @click="$store.dispatch('logout')">
                   <div class="d-flex">
                     <i class="fas fa-sign-out-alt"></i>
                     <div class="dropdown-content">
@@ -71,7 +71,7 @@
                 </div>
               </div>
             </b-dropdown-item>
-            <b-dropdown-item to="#">
+            <b-dropdown-item @click="$store.dispatch('logout')" to="#">
               <div class="d-flex">
                 <i class="fas fa-sign-out-alt"></i>
                 <div class="dropdown-content">
@@ -135,7 +135,7 @@
                 </router-link>
               </li>
               <li>
-                <router-link to="/">
+                <router-link to="" @click="$store.dispatch('logout')">
                   <div class="d-flex mt-2">
                     <i class="fas fa-sign-out-alt"></i>
                     <div class="dropdown-content">
@@ -168,7 +168,7 @@
                 </div>
               </div>
             </b-dropdown-item>
-            <b-dropdown-item class="link" to="/">
+            <b-dropdown-item class="link" to="" @click="$store.dispatch('logout')">
               <div class="d-flex">
                 <i class="fas fa-sign-out-alt"></i>
                 <div class="dropdown-content">

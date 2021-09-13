@@ -5,7 +5,7 @@
       <profile-header
           :avatar="user.imgSrc"
           :name="user.name"
-          :id="user.id"
+          :id=$store.getters.token
       ></profile-header>
     </div>
 
@@ -109,6 +109,8 @@ export default {
     if (!store.getters.isAuthenticated) {
       router.push('/login')
     }
+    console.log(this.$route.params.id)
+
   },
   computed: {
     getLang() {
