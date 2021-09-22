@@ -6,7 +6,8 @@ export default {
   namespaced: true,
   state() {
     return {
-      lang: 'en'
+      lang: 'en',
+      user: ''
     };
   },
   mutations,

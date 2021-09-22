@@ -512,23 +512,21 @@ export default {
       ],
       countryOptions: [
         { value: null, text: 'Country' },
-        { value: 'Male', text: 'Male' },
-        { value: 'Female', text: 'Female' },
+        { value: "x", text: 'Country' },
+        { value: "y", text: 'Country' },
+        { value: "z", text: 'Country' },
       ],
       countryOptionsAr: [
         { value: null, text: 'البلد' },
-        { value: 'Male', text: 'Male' },
-        { value: 'Female', text: 'Female' },
       ],
       businessCategoryOptions: [
         { value: null, text: 'Business Category' },
-        { value: 'Male', text: 'Male' },
-        { value: 'Female', text: 'Female' },
+        { value: "Business", text: 'Business Category' },
+        { value: "Business", text: 'Business Category' },
+        { value: "Business", text: 'Business Category' },
       ],
       businessCategoryOptionsAr: [
         { value: null, text: 'نوع العمل' },
-        { value: 'Male', text: 'ذكر' },
-        { value: 'Female', text: 'انثي' },
       ],
     }
   },
@@ -639,13 +637,6 @@ export default {
       if (this.user.companyName === '' || this.user.companyBusinessCategory === null || this.user.companyNumOfEmployees === '' || this.user.companyCountry === null ||  this.user.companyUrl === '' ) {
         this.businessAccountErrorEn = "You must fill all input first";
         this.businessAccountErrorAr = "يجب عليك ملء كل المدخلات أولا";
-        return
-      }
-
-      let url = 'http://www.google.com';
-      if (!this.user.companyUrl.match(url)) {
-        this.businessAccountErrorEn = "Company url not valid";
-        this.businessAccountErrorAr = "موقع الشركة غير صالح";
         return
       }
 

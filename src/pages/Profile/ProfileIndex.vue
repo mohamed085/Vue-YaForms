@@ -32,7 +32,7 @@
             </div>
             <div class="personalInfo-row mt-4 mb-4">
               <i class="fas fa-baby"></i>
-              <h4>Birth of date: <span>{{user.birthDate}}</span></h4>
+              <h4>Birth of date: <span>{{user.yearDOB + " " + user.monthDOB + " " + user.dayBOB}}</span></h4>
             </div>
             <div class="personalInfo-row mt-4 mb-4">
               <i class="far fa-flag"></i>
@@ -44,7 +44,7 @@
             </div>
             <div class="personalInfo-row mt-4 mb-4">
               <i class="fas fa-mobile-alt"></i>
-              <h4>Mobile number: <span>{{user.mobileNumber}}</span></h4>
+              <h4>Mobile number: <span>{{user.phone}}</span></h4>
             </div>
           </div>
         </div>
@@ -74,7 +74,7 @@
             </div>
             <div class="personalInfo-row mt-4 mb-4">
               <i class="fas fa-baby"></i>
-              <h4>تاريخ الميلاد: <span>{{user.birthDate}}</span></h4>
+              <h4>تاريخ الميلاد: <span>{{user.yearDOB + " " + user.monthDOB + " " + user.dayBOB}}</span></h4>
             </div>
             <div class="personalInfo-row mt-4 mb-4">
               <i class="far fa-flag"></i>
@@ -86,7 +86,7 @@
             </div>
             <div class="personalInfo-row mt-4 mb-4">
               <i class="fas fa-mobile-alt"></i>
-              <h4>رقم الهاتف: <span>{{user.mobileNumber}}</span></h4>
+              <h4>رقم الهاتف: <span>{{user.phone}}</span></h4>
             </div>
           </div>
         </div>
@@ -105,12 +105,11 @@ export default {
   components: {
     ProfileHeader
   },
-  created() {
+  async created() {
     if (!store.getters.isAuthenticated) {
       router.push('/login')
     }
-    console.log(this.$route.params.id)
-
+    await this.loadUser();
   },
   computed: {
     getLang() {
@@ -119,15 +118,32 @@ export default {
   },
   data() {
     return {
-      user: {
-        id: '161565asd',
-        imgSrc: 'https://pbs.twimg.com/media/E7yILDuVoAEOzoE?format=jpg&name=medium',
-        name: 'Mohamed Emad',
-        birthDate: '12 jun 1999',
-        country: 'Egypt',
-        gender: 'Male',
-        mobileNumber: '0100000000'
-      },
+      user: '',
+      isLoading: false
+    }
+  },
+  methods: {
+    async loadUser() {
+      let token = this.$route.params.id;
+
+
+      let myHeaders = new Headers();
+      myHeaders.append("Token", token);
+
+      let requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+      };
+
+      const response = await fetch("https://ya-forms-api.herokuapp.com/API/user", requestOptions);
+
+      const responseData = await response.json();
+
+      this.user = responseData;
+
+      console.log(this.user)
+
     }
   }
 }

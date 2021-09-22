@@ -32,16 +32,16 @@ export default {
       throw error;
     }
 
+    console.log(responseData);
+
     localStorage.setItem('token', responseData.token);
     localStorage.setItem('isAdmin', responseData.isAdmin);
+    localStorage.setItem('name', responseData.name);
 
     context.commit('setUser', {
       token: responseData.token,
       isAdmin: responseData.isAdmin,
     });
-
-    console.log("token: " + localStorage.getItem('token'))
-    console.log("isAdmin: " + localStorage.getItem('isAdmin'))
 
   },
 
@@ -51,7 +51,22 @@ export default {
     myHeaders.append("Content-Type", "application/json");
 
     let raw = JSON.stringify({
-      "user": payload.user
+      "accountType": payload.user.accountType,
+      "name": payload.user.name,
+      "phone": payload.user.phone,
+      "yearDOB": payload.user.yearDOB,
+      "monthDOB": payload.user.monthDOB,
+      "dayBOB": payload.user.dayBOB,
+      "gender": payload.user.gender,
+      "country": payload.user.country,
+      "email": payload.user.email,
+      "password": payload.user.password,
+      "companyName": payload.user.companyName,
+      "companyNumOfEmployees": payload.user.companyNumOfEmployees,
+      "companyImgSrc": payload.user.companyImgSrc,
+      "companyUrl": payload.user.companyUrl,
+      "companyCountry": payload.user.companyCountry,
+      "companyBusinessCategory": payload.user.companyBusinessCategory,
     });
 
 
@@ -174,6 +189,6 @@ export default {
 
     localStorage.removeItem('token')
     localStorage.removeItem('isAdmin')
-  }
+  },
 
 };

@@ -7,8 +7,6 @@
           @show-theme="showTheme"
           @show-send="showSend"
           :theme="form.styleTheme"
-          avatar="https://pbs.twimg.com/media/E7yILDuVoAEOzoE?format=jpg&name=medium"
-          name="Mohamed Emad"
           :id="form._id"
           show="true"
           show-nav3=true
@@ -766,7 +764,7 @@ export default {
       let token = this.$store.getters.token;
 
       let myHeaders = new Headers();
-      myHeaders.append("Authorization", "Bearer " + token);
+      myHeaders.append("Token", token);
       myHeaders.append("Content-Type", "application/json");
 
 
@@ -797,10 +795,7 @@ export default {
 
       let id = this.$route.params.id;
 
-      let token = this.$store.getters.token;
-
       let myHeaders = new Headers();
-      myHeaders.append("Authorization", "Bearer " + token);
       myHeaders.append("Content-Type", "application/json");
 
       let raw = JSON.stringify({
@@ -822,13 +817,14 @@ export default {
         body: raw,
         redirect: 'follow'
       };
-      let url = `https://ya-forms-api.herokuapp.com/API/form/` + id;
+      let url = `https://ya-forms-api.herokuapp.com/api/form/` + id;
 
       const response = await fetch(url, requestOptions);
       const responseData = await response.json();
 
       if (!response.ok) {
         const error = new Error(responseData.message || 'Failed to fetch!');
+        console.log(error)
         throw error;
       }
 

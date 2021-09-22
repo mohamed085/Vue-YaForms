@@ -1,10 +1,9 @@
 <template>
-  <div :class="'home animate__animated animate__backInRight ' + form.styleTheme + ' ' + form.fontFamily ">
+  <base-spinner v-if="isLoading"></base-spinner>
+  <div v-else :class="'home animate__animated animate__backInRight ' + form.styleTheme + ' ' + form.fontFamily ">
     <create-form-header
         :theme="form.styleTheme"
-        avatar="https://pbs.twimg.com/media/E7yILDuVoAEOzoE?format=jpg&name=medium"
-        name="Mohamed Emad"
-        id="613f337367941f0016f9dd0a"
+        :id=$route.params.id
         show=false
         :responseNum="form.responseNum"
         show-nav2=true
@@ -28,24 +27,29 @@
             <div class="accepting-responses d-flex">
               <p>Accepting responses</p>
               <label class="switch mt-auto mb-auto">
-                <input type="checkbox" v-model="form.acceptingResponses">
+                <input @click="changeAcceptingResponsesStatus" type="checkbox" v-model="form.acceptResponse">
                 <span class="slider round"></span>
               </label>
             </div>
           </div>
-          <div v-if="form.responseNum !== 0" class="responseExport-section">
-            <b-button class="export-btn">Export as pdf</b-button>
-            <b-button class="export-btn">Export as excel</b-button>
+          <div v-if="form.responseNum !== 0" class="responseExport-section d-flex justify-content-between">
+            <div>
+              <b-button class="export-btn" >Export as pdf</b-button>
+              <b-button class="export-btn" @click="exportResponseAsCSV">Export as excel</b-button>
+            </div>
+            <div>
+              <b-button class="export-btn" @click="deleteAllResponses">Delete all responses</b-button>
+            </div>
           </div>
           <div v-if="form.responseNum !== 0" class="responseNum-section-row3">
             <div class="response-type">
-              <router-link exact :to="'/form/response/' + form.id  ">Summary</router-link>
+              <router-link exact :to="'/form/response/' + $route.params.id  ">Summary</router-link>
             </div>
             <div class="response-type">
-              <router-link :to="'/form/response/' + form.id + '/question' ">Question</router-link>
+              <router-link :to="'/form/response/' + $route.params.id + '/question' ">Question</router-link>
             </div>
             <div class="response-type">
-              <router-link :to="'/form/response/' + form.id + '/individual' ">Individual</router-link>
+              <router-link :to="'/form/response/' + $route.params.id + '/individual' ">Individual</router-link>
             </div>
           </div>
         </div>
@@ -118,35 +122,132 @@
 import CreateFormHeader from "../../components/Form/CreateFormHeader";
 import store from "@/store";
 import router from "@/router";
+import BaseSpinner from "@/components/Ui/BaseSpinner";
 export default {
   name: "Response",
   components: {
+    BaseSpinner,
     CreateFormHeader
   },
   computed: {
     getLang() {
-      return this.$store.getters['main/getLang'];
+      return this.$store.getters['main/getLang']
     }
   },
   created() {
     if (!store.getters.isAuthenticated) {
       router.push('/login')
     }
+    this.loadForm(this.$route.params.id)
+
   },
   data() {
     return {
-      form: {
-        id: '132165sda',
-        styleTheme: 'default',
-        fontFamily: 'default-font',
-        responseNum: 8,
-        acceptingResponses: true,
-      },
+      form: '',
       displaySummary: true,
       displayTheme: false,
       displaySend: false,
+      isLoading: false
     }
   },
+  methods: {
+    async changeAcceptingResponsesStatus() {
+      let myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+
+      let raw = JSON.stringify({
+        "acceptResponse": !this.form.acceptResponse
+      });
+
+      let requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+      };
+
+      let url = `https://ya-forms-api.herokuapp.com/api/form/` + this.$route.params.id + `/response/status`
+
+      fetch(url, requestOptions)
+          .then(response => response.text())
+          .then(result => console.log(result))
+          .catch(error => console.log('error', error));
+    },
+
+    async exportResponseAsCSV() {
+
+      let id = this.$route.params.id
+
+      let requestOptions = {
+        method: 'GET',
+        redirect: 'follow',
+      };
+
+      let url = `c/api/form/` + id + `/responses/summary/csv`;
+
+      fetch(url, requestOptions)
+          .then(response => response.blob())
+          .then(blob => {
+            let url = window.URL.createObjectURL(blob);
+            let a = document.createElement('a');
+            a.href = url;
+            a.download = "Responses summery.csv";
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+          });
+    },
+
+    async loadForm(id) {
+
+      this.isLoading = true;
+
+      let token = this.$store.getters.token;
+
+      let myHeaders = new Headers();
+      myHeaders.append("Token", token);
+      myHeaders.append("Content-Type", "application/json");
+
+
+      let requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+      };
+
+      let url = `https://ya-forms-api.herokuapp.com/API/form/` + id ;
+
+      const response = await fetch(url, requestOptions);
+      const responseData = await response.json();
+
+      if (!response.ok) {
+        const error = new Error(responseData.message || 'Failed to fetch!');
+        throw error;
+      }
+
+      console.log(responseData)
+
+      this.form = responseData;
+
+      this.isLoading = false;
+
+    },
+
+    async deleteAllResponses() {
+      let requestOptions = {
+        method: 'DELETE',
+        redirect: 'follow'
+      };
+
+      let id = this.$route.params.id;
+      let url = `https://ya-forms-api.herokuapp.com/API/form/` + id + `response`;
+
+
+      fetch(url, requestOptions)
+          .then(response => response.json())
+          .catch(error => console.log('error', error));
+    },
+  }
 
 }
 </script>

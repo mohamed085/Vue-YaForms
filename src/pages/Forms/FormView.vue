@@ -6,8 +6,6 @@
       <create-form-header
           @show-send="showSend"
           :theme="form.styleTheme"
-          avatar="https://pbs.twimg.com/media/E7yILDuVoAEOzoE?format=jpg&name=medium"
-          name="Mohamed Emad"
           :id="form._id"
           show="true"
           show-nav2=true
@@ -88,7 +86,7 @@
                   <div class="multiple-choice-row" v-for="option in question.options" :key="option.id">
                     <i class="far fa-circle"></i>
                     <b-form-input class="multiple-choice-input" type="text" v-model="option.value" disabled></b-form-input>
-                    <i class="fas fa-times close" @click="removeChoice(option, question)"></i>
+                    <i class="fas fa-times close"></i>
                   </div>
                 </div>
 
@@ -296,7 +294,7 @@ export default {
       let token = this.$store.getters.token;
 
       let myHeaders = new Headers();
-      myHeaders.append("Authorization", "Bearer " + token);
+      myHeaders.append("Token", token);
       myHeaders.append("Content-Type", "application/json");
 
 

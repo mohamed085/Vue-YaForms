@@ -7,6 +7,8 @@ export default {
     return {
       isAdmin: null,
       token: null,
+      name: null,
+      image: null,
     };
   },
   mutations,

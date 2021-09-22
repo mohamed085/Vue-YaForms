@@ -2,12 +2,12 @@
   <div class="en animate__animated animate__backInLeft" v-if="getLang === 'en'">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid d-flex">
-        <router-link to="/forms" class="navbar-brand">
+        <router-link to="/" class="navbar-brand">
           <logo></logo>
         </router-link>
         <div>
           <div class="navbar-nav">
-            <router-link to="/forms"><i class="fas fa-home me-1"></i>Home</router-link>
+            <router-link to="/"><i class="fas fa-home me-1"></i>Home</router-link>
           </div>
         </div>
       </div>

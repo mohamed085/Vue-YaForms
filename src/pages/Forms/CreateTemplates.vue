@@ -6,8 +6,6 @@
           @show-theme="showTheme"
           @show-send="showSend"
           :theme="form.styleTheme"
-          avatar="https://pbs.twimg.com/media/E7yILDuVoAEOzoE?format=jpg&name=medium"
-          name="Mohamed Emad"
           :id=$store.getters.token
           show="true"
           shownav2=true
@@ -785,7 +783,7 @@ export default {
 
       let myHeaders = new Headers();
 
-      myHeaders.append("Authorization", "Bearer " + token);
+      myHeaders.append("Token", token);
       myHeaders.append("Content-Type", "application/json");
 
       let raw = JSON.stringify({

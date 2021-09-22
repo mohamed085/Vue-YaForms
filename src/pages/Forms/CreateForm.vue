@@ -90,8 +90,6 @@
           @show-theme="showTheme"
           @show-send="showSend"
           :theme="form.styleTheme"
-          avatar="https://pbs.twimg.com/media/E7yILDuVoAEOzoE?format=jpg&name=medium"
-          name="Mohamed Emad"
           :id=$store.getters.token
           show=true
           show-theme-icon=true
@@ -177,7 +175,7 @@
                 <div v-else-if="question.questionType == 'Multiple choice'" class="form-question-row-2 choice-row">
                   <div class="multiple-choice-row" v-for="option in question.options" :key="option.id">
                     <i class="far fa-circle"></i>
-                    <b-form-input class="multiple-choice-input" type="text" v-model="option.value"></b-form-input>
+                    <b-form-input class="multiple-choice-input" type="text"  v-b-modal="option.value" v-model="option.text"></b-form-input>
                     <i class="fas fa-times close" @click="removeChoice(option, question)"></i>
                   </div>
                   <h6 @click="addOtherOption(question)">Add other option</h6>
@@ -186,7 +184,7 @@
                 <div v-else-if="question.questionType == 'Checkboxes'" class="form-question-row-2 choice-row">
                   <div class="multiple-choice-row" v-for="option in question.options" :key="option.id">
                     <i class="far fa-square"></i>
-                    <b-form-input class="multiple-choice-input" type="text" v-model="option.value"></b-form-input>
+                    <b-form-input class="multiple-choice-input" type="text" v-b-modal="option.value" v-model="option.text"></b-form-input>
                     <i class="fas fa-times close" @click="removeChoice(option, question)"></i>
                   </div>
                   <h6 @click="addOtherOption(question)">Add other option</h6>
@@ -194,7 +192,7 @@
 
                 <div v-else-if="question.questionType == 'Dropdown'" class="form-question-row-2 choice-row">
                   <div class="multiple-choice-row" v-for="option in question.options" :key="option.id">
-                    <b-form-input class="multiple-choice-input" type="text" v-model="option.value"></b-form-input>
+                    <b-form-input class="multiple-choice-input" type="text" v-b-modal="option.value" v-model="option.text"></b-form-input>
                     <i class="fas fa-times close" @click="removeChoice(option, question)"></i>
                   </div>
                   <h6 @click="addOtherOption(question)">Add other option</h6>
@@ -819,7 +817,8 @@ export default {
         if (value.id === questionId) {
           value.options.push({
             id: Date.now(),
-            value: 'new option'
+            value: 'new option',
+            text: 'new option'
           })
         }
       })
@@ -882,7 +881,7 @@ export default {
 
       let myHeaders = new Headers();
 
-      myHeaders.append("Authorization", "Bearer " + token);
+      myHeaders.append("Token", token);
       myHeaders.append("Content-Type", "application/json");
 
       let raw = JSON.stringify({
@@ -897,6 +896,8 @@ export default {
         "questions": this.form.questions,
 
       });
+
+      console.log(this.form.questions)
 
       let requestOptions = {
         method: 'POST',

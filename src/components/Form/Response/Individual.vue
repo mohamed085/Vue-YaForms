@@ -3,30 +3,33 @@
     <div v-if="getLang === 'en'" class="form-view en animate__animated animate__backInLeft">
       <div v-if="form.length !== 0" class="section pagination-section">
         <div class="overflow-auto">
-          <b-pagination-nav v-model="currentQuestion" :link-gen="linkGen" :number-of-pages="form.length" use-router></b-pagination-nav>
+          <b-pagination-nav v-model="currentQuestion" :link-gen="linkGen" :number-of-pages="form.responses.length" use-router></b-pagination-nav>
         </div>
       </div>
 
-      <div v-if="form[currentQuestion - 1].phone" class="csv">
-        <button class="phone-btn">Export numbers as csv</button>
+      <div class="d-flex">
+        <div v-if="form.responses[currentQuestion - 1].question == Phone" class="csv">
+          <button @click="exportResponseAsCSV(form.responses[currentQuestion - 1]._id)" class="phone-btn">Export numbers as csv</button>
+        </div>
+
       </div>
 
-      <div v-if="form[currentQuestion - 1].imageHeader" class="form-image-header question-section section">
-        <img :src="form[currentQuestion - 1].imageHeader">
+      <div v-if="form.responses[currentQuestion - 1].imageHeader" class="form-image-header question-section section">
+        <img :src="form.responses[currentQuestion - 1].imageHeader">
       </div>
 
       <div class="form-title section question-section">
         <div class="titles">
           <p class="cannot-edited">Responses cannot be edited</p>
-          <p class="title">{{ form[currentQuestion - 1].header }}</p>
-          <p class="description">{{ form[currentQuestion - 1].description }}</p>
+          <p class="title">{{ form.responses[currentQuestion - 1].header }}</p>
+          <p class="description">{{ form.responses[currentQuestion - 1].description }}</p>
         </div>
         <div class="logo">
-          <img :src="form[currentQuestion - 1].logo">
+          <img :src="form.responses[currentQuestion - 1].logo">
         </div>
       </div>
 
-      <div v-for="question in form[currentQuestion - 1].questions" :key="question.id">
+      <div v-for="question in form.responses[currentQuestion - 1].questions" :key="question.id">
 
         <div v-if="question.type === 'question'">
 
@@ -141,139 +144,6 @@
 
       <p class="Submitted">Submitted 8/17/21, 12:29 PM</p>
 
-      <div v-if="form.length === 0">
-        <div class="section question-section no-response">
-          No response yet
-        </div>
-      </div>
-
-    </div>
-
-    <div v-if="getLang === 'ar'" class="form-view en animate__animated animate__backInRight">
-      <div v-if="form.length !== 0" class="section pagination-section">
-        <div class="overflow-auto">
-          <b-pagination-nav v-model="currentQuestion" :link-gen="linkGen" :number-of-pages="form.length" use-router></b-pagination-nav>
-        </div>
-      </div>
-
-      <div v-if="form[currentQuestion - 1].imageHeader" class="form-image-header question-section section">
-        <img :src="form[currentQuestion - 1].imageHeader">
-      </div>
-
-      <div class="form-title section question-section">
-        <div class="titles">
-          <p class="cannot-edited">لا يمكن تعديل الردود</p>
-          <p class="title">{{ form[currentQuestion - 1].header }}</p>
-          <p class="description">{{ form[currentQuestion - 1].description }}</p>
-        </div>
-        <div class="logo">
-          <img :src="form[currentQuestion - 1].logo">
-        </div>
-      </div>
-
-      <div v-for="question in form[currentQuestion - 1].questions" :key="question.id">
-
-        <div v-if="question.type === 'question'">
-
-          <div class="section question " v-if="question.questionType === 'Short answer'">
-            <p class="question-title short-answer-title">{{ question.question }} ؟</p>
-
-            <b-form-input
-                class="input question-short-answer"
-                type="text"
-                placeholder="Your answer"
-                v-model="question.response"
-                disabled
-            ></b-form-input>
-          </div>
-
-          <div class="question-title section question-section question " v-if="question.questionType === 'Paragraph'">
-            <p class="paragraph-title">{{ question.question }} ؟</p>
-            <b-form-input
-                class="input paragraph-answer"
-                type="text"
-                placeholder="Your answer"
-                v-model="question.response"
-                disabled
-            ></b-form-input>
-          </div>
-
-          <div class="section question-section question " v-if="question.questionType === 'Multiple choice'">
-            <p class="question-title multiple-choice-title">{{ question.question }} ؟</p>
-            <b-form-radio-group
-                :options="question.options"
-                stacked
-                v-model="question.response"
-                disabled
-            ></b-form-radio-group>
-          </div>
-
-          <div class="section question-section question " v-if="question.questionType === 'Checkboxes'">
-            <p class="question-title checkboxes-title">{{ question.question }} ؟</p>
-            <b-form-checkbox-group
-                class="checkbox-select"
-                :options="question.options"
-                stacked
-                v-model="question.response"
-                disabled
-            ></b-form-checkbox-group>
-
-          </div>
-
-          <div class="section question-section question " v-if="question.questionType === 'Dropdown'">
-            <p class="question-title dropdown-title">{{ question.question }} ؟</p>
-            <b-form-select
-                class="dropdown-select"
-                :options="question.options"
-                v-model="question.response"
-                disabled
-            ></b-form-select>
-
-
-          </div>
-
-          <div class="section question-section question " v-if="question.questionType === 'Date'">
-            <p class="question-title short-answer-title">{{ question.question }} ؟</p>
-            <b-form-input
-                class="input date-answer"
-                type="date"
-                v-model="question.response"
-                disabled
-            ></b-form-input>
-          </div>
-
-          <div class="section question-section question " v-if="question.questionType === 'Time'">
-            <p class="question-title short-answer-title">{{ question.question }} ؟</p>
-            <b-form-input
-                class="input time-answer"
-                type="time"
-                v-model="question.response"
-                disabled
-            ></b-form-input>
-          </div>
-
-        </div>
-
-        <div v-if="question.type === 'title'" class="section question-section question title-description">
-          <p class="question-title title">{{ question.question }}</p>
-          <p class="description">{{ question.description }}</p>
-        </div>
-
-        <div v-if="question.type === 'image'" class="section question-section question image">
-          <p class="question-title title">{{ question.question }}</p>
-          <img :src="question.description">
-        </div>
-
-        <div v-if="question.type === 'video'" class="section question-section question video">
-          <p class="question-title title">{{ question.question }}</p>
-          <iframe class="p-3" :src="question.description"></iframe>
-        </div>
-
-        <div v-else></div>
-
-      </div>
-
-      <p class="Submitted">تم التقديم 8/17/21, 12:29 PM</p>
 
       <div v-if="form.length === 0">
         <div class="section question-section no-response">
@@ -282,6 +152,7 @@
       </div>
 
     </div>
+
 
   </div>
 
@@ -293,281 +164,77 @@ export default {
   data() {
     return {
       currentQuestion: 1,
-      form: [
-          {
-            id: '15648964',
-            imageHeader: 'https://lh3.googleusercontent.com/-QdAIymxsJlwHVBm6SqFSAi0aJK57Qy2JBB0wAQ8yXI3adtbAn5Ng2S-fqShC8STrgDEHWRElyC9DKlEwEZn49_3_rtEtOosQdPfqQk02ymnNVkeJs9XoGtPdasRUrJVI7bZQj9P1gt6cS2S',
-            header: 'Untitled form',
-            description: 'Form description',
-            logo: 'https://placekitten.com/300/300',
-            styleTheme: 'default',
-            fontFamily: 'default-font',
-            phone: '648651',
-            questions: [
-              {
-                id: '16151sad',
-                type: 'question',
-                question: 'Untitled Short answer Question',
-                questionType: 'Short answer',
-                required: 'true',
-                response: 'Short answer 1'
-              },
-              {
-                id: '16151sad',
-                type: 'question',
-                question: 'Untitled Phone number Question',
-                questionType: 'Phone number',
-                required: 'true',
-                response: '0101202165'
-              },
-              {
-                id: '16152sad',
-                type: 'question',
-                question: 'Untitled Paragraph Question',
-                questionType: 'Paragraph',
-                required: 'true',
-                response: 'Lorem Ipsum is simply dummy text of the printing and typesetting'
-              },
-              {
-                id: '16153sad',
-                type: 'question',
-                question: 'Multiple choice Question',
-                questionType: 'Multiple choice',
-                required: 'true',
-                options: [
-                  { id: '1', value: 'A', text: 'A' },
-                  { id: '2', value: 'B', text: 'B' },
-                  { id: '3', value: 'C', text: 'C' },
-                ],
-                response: 'A'
-              },
-              {
-                id: '161554sad',
-                type: 'question',
-                question: 'Checkboxes Question',
-                questionType: 'Checkboxes',
-                required: 'true',
-                options: [
-                  { id: '1', value: 'A', text: 'A' },
-                  { id: '2', value: 'B', text: 'B' },
-                  { id: '3', value: 'C', text: 'C' },
-                ],
-                response: ['B', 'A']
-              },
-              {
-                id: '16154sad',
-                type: 'question',
-                question: 'Dropdown Question',
-                questionType: 'Dropdown',
-                required: 'true',
-                options: [
-                  { id: '1', value: 'A', text: 'A' },
-                  { id: '2', value: 'B', text: 'B' },
-                  { id: '3', value: 'C', text: 'C' },
-                ],
-                response: 'A'
-              },
-              {
-                id: '16156sad',
-                type: 'question',
-                question: 'Date Question',
-                questionType: 'Date',
-                required: 'true',
-                response: ''
-              },
-              {
-                id: '16157sad',
-                type: 'question',
-                question: 'Time Question',
-                description: '',
-                questionType: 'Time',
-                required: 'true',
-                response: ''
-              },
-            ],
-          },
-          {
-            id: '15648964',
-            imageHeader: 'https://lh3.googleusercontent.com/-QdAIymxsJlwHVBm6SqFSAi0aJK57Qy2JBB0wAQ8yXI3adtbAn5Ng2S-fqShC8STrgDEHWRElyC9DKlEwEZn49_3_rtEtOosQdPfqQk02ymnNVkeJs9XoGtPdasRUrJVI7bZQj9P1gt6cS2S',
-            header: 'Untitled form',
-            description: 'Form description',
-            logo: 'https://placekitten.com/300/300',
-            styleTheme: 'default',
-            fontFamily: 'default-font',
-            questions: [
-              {
-                id: '16151sad',
-                type: 'question',
-                question: 'Untitled Short answer Question',
-                questionType: 'Short answer',
-                required: 'true',
-                response: 'Short answer 1'
-              },
-              {
-                id: '16152sad',
-                type: 'question',
-                question: 'Untitled Paragraph Question',
-                questionType: 'Paragraph',
-                required: 'true',
-                response: 'Lorem Ipsum is simply dummy text of the printing and typesetting'
-              },
-              {
-                id: '16153sad',
-                type: 'question',
-                question: 'Multiple choice Question',
-                questionType: 'Multiple choice',
-                required: 'true',
-                options: [
-                  { id: '1', value: 'A', text: 'A' },
-                  { id: '2', value: 'B', text: 'B' },
-                  { id: '3', value: 'C', text: 'C' },
-                ],
-                response: 'A'
-              },
-              {
-                id: '161554sad',
-                type: 'question',
-                question: 'Checkboxes Question',
-                questionType: 'Checkboxes',
-                required: 'true',
-                options: [
-                  { id: '1', value: 'A', text: 'A' },
-                  { id: '2', value: 'B', text: 'B' },
-                  { id: '3', value: 'C', text: 'C' },
-                ],
-                response: ['B', 'A']
-              },
-              {
-                id: '16154sad',
-                type: 'question',
-                question: 'Dropdown Question',
-                questionType: 'Dropdown',
-                required: 'true',
-                options: [
-                  { id: '1', value: 'A', text: 'A' },
-                  { id: '2', value: 'B', text: 'B' },
-                  { id: '3', value: 'C', text: 'C' },
-                ],
-                response: 'A'
-              },
-              {
-                id: '16156sad',
-                type: 'question',
-                question: 'Date Question',
-                questionType: 'Date',
-                required: 'true',
-                response: ''
-              },
-              {
-                id: '16157sad',
-                type: 'question',
-                question: 'Time Question',
-                description: '',
-                questionType: 'Time',
-                required: 'true',
-                response: ''
-              },
-            ],
-          },
-          {
-            id: '15648964',
-            imageHeader: 'https://lh3.googleusercontent.com/-QdAIymxsJlwHVBm6SqFSAi0aJK57Qy2JBB0wAQ8yXI3adtbAn5Ng2S-fqShC8STrgDEHWRElyC9DKlEwEZn49_3_rtEtOosQdPfqQk02ymnNVkeJs9XoGtPdasRUrJVI7bZQj9P1gt6cS2S',
-            header: 'Untitled form',
-            description: 'Form description',
-            logo: 'https://placekitten.com/300/300',
-            styleTheme: 'default',
-            fontFamily: 'default-font',
-            questions: [
-              {
-                id: '16151sad',
-                type: 'question',
-                question: 'Untitled Short answer Question',
-                questionType: 'Short answer',
-                required: 'true',
-                response: 'Short answer 1'
-              },
-              {
-                id: '16152sad',
-                type: 'question',
-                question: 'Untitled Paragraph Question',
-                questionType: 'Paragraph',
-                required: 'true',
-                response: 'Lorem Ipsum is simply dummy text of the printing and typesetting'
-              },
-              {
-                id: '16153sad',
-                type: 'question',
-                question: 'Multiple choice Question',
-                questionType: 'Multiple choice',
-                required: 'true',
-                options: [
-                  { id: '1', value: 'A', text: 'A' },
-                  { id: '2', value: 'B', text: 'B' },
-                  { id: '3', value: 'C', text: 'C' },
-                ],
-                response: 'A'
-              },
-              {
-                id: '161554sad',
-                type: 'question',
-                question: 'Checkboxes Question',
-                questionType: 'Checkboxes',
-                required: 'true',
-                options: [
-                  { id: '1', value: 'A', text: 'A' },
-                  { id: '2', value: 'B', text: 'B' },
-                  { id: '3', value: 'C', text: 'C' },
-                ],
-                response: ['B', 'A']
-              },
-              {
-                id: '16154sad',
-                type: 'question',
-                question: 'Dropdown Question',
-                questionType: 'Dropdown',
-                required: 'true',
-                options: [
-                  { id: '1', value: 'A', text: 'A' },
-                  { id: '2', value: 'B', text: 'B' },
-                  { id: '3', value: 'C', text: 'C' },
-                ],
-                response: 'A'
-              },
-              {
-                id: '16156sad',
-                type: 'question',
-                question: 'Date Question',
-                questionType: 'Date',
-                required: 'true',
-                response: ''
-              },
-              {
-                id: '16157sad',
-                type: 'question',
-                question: 'Time Question',
-                description: '',
-                questionType: 'Time',
-                required: 'true',
-                response: ''
-              },
-            ],
-          },
-        ]
+      form: ''
     }
   },
   created() {
     console.log(this.form.length);
-  },
-  computed: {
-    getLang() {
-      return this.$store.getters['main/getLang'];
-    },
+    this.loadFormResponses(this.$route.params.id);
   },
   methods: {
     linkGen(pageNum) {
       return `?question=${pageNum}`
     },
-  }
+
+    async exportResponseAsCSV(id) {
+
+      let requestOptions = {
+        method: 'GET',
+        redirect: 'follow',
+      };
+
+      let url = `https://ya-forms-api.herokuapp.com/api/form/response/` + id + `/summary/csv`;
+
+      fetch(url, requestOptions)
+          .then(response => response.blob())
+          .then(blob => {
+            let url = window.URL.createObjectURL(blob);
+            let a = document.createElement('a');
+            a.href = url;
+            a.download = "Response.csv";
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+          });
+    },
+
+    async loadFormResponses(id) {
+      this.isLoading = true;
+
+      let myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+
+      let requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+      };
+
+      let url = `https://ya-forms-api.herokuapp.com/api/form/` + id + `/response`;
+
+      const response = await fetch(url, requestOptions);
+      const responseData = await response.json();
+
+      if (!response.ok) {
+        const error = new Error(responseData.message || 'Failed to fetch!');
+        throw error;
+      }
+
+      this.form = responseData;
+
+      console.log(responseData)
+      console.log(this.form)
+
+      this.isLoading = false;
+
+    },
+
+  },
+  computed: {
+    getLang() {
+      return this.$store.getters['main/getLang']
+    },
+  },
 }
 </script>
 

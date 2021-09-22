@@ -25,74 +25,6 @@
               </p>
             </div>
 
-            <div class="mobile-nav">
-              <ul>
-                <li>
-                  <router-link to="/">
-                    <div class="profile mt-3 d-flex">
-                      <b-avatar :src="avatar" size="3rem"></b-avatar>
-                      <div class="dropdown-content">
-                        <h5>{{ name }}</h5>
-                        <p>See your profile</p>
-                      </div>
-                    </div>
-                  </router-link>
-                </li>
-                <li>
-                  <router-link :to="'/setting/'+id">
-                    <div class="d-flex">
-                      <i class="fas fa-cog"></i>
-                      <div class="dropdown-content">
-                        <h6>Edit profile</h6>
-                      </div>
-                    </div>
-                  </router-link>
-                </li>
-                <li>
-                  <router-link to="" @click="$store.dispatch('logout')">
-                    <div class="d-flex">
-                      <i class="fas fa-sign-out-alt"></i>
-                      <div class="dropdown-content">
-                        <h6>Log out</h6>
-                      </div>
-                    </div>
-                  </router-link>
-                </li>
-
-              </ul>
-            </div>
-
-            <b-dropdown class="dropdown" id="dropdown-left" variant="link" toggle-class="text-decoration-none" no-caret>
-              <template #button-content>
-                <b-avatar :src="avatar"></b-avatar>
-              </template>
-              <b-dropdown-item class="link" :to="'/profile/'+id">
-                <div class="profile d-flex">
-                  <b-avatar :src="avatar" size="3rem"></b-avatar>
-                  <div class="dropdown-content">
-                    <h5>{{ name }}</h5>
-                    <p>See your profile</p>
-                  </div>
-                </div>
-              </b-dropdown-item>
-              <b-dropdown-item :to="'/setting/'+id">
-                <div class="d-flex">
-                  <i class="fas fa-cog"></i>
-                  <div class="dropdown-content">
-                    <h6>Edit profile</h6>
-                  </div>
-                </div>
-              </b-dropdown-item>
-              <b-dropdown-item to="" @click="$store.dispatch('logout')">
-                <div class="d-flex">
-                  <i class="fas fa-sign-out-alt"></i>
-                  <div class="dropdown-content">
-                    <h6>Log out</h6>
-                  </div>
-                </div>
-              </b-dropdown-item>
-            </b-dropdown>
-
             <div class="languages">
             <span @click="setLang('en')" class="lang d-flex">
             <img src="../../assets/images/en-logo.png">
@@ -123,12 +55,12 @@
       </div>
 
       <div class="nav-2" v-if="showNav2">
-        <router-link :to="'/form-view/' + id">Questions</router-link>
+        <router-link :to="'/form-view/' + id" exact>Questions</router-link>
         <router-link :to="'/form/response/' + id">Responses <span v-if="responseNum" class="responseNum">{{ responseNum }}</span></router-link>
       </div>
 
       <div class="nav-2" v-if="showNav3">
-        <router-link to="/form-edit">Questions</router-link>
+        <router-link :to="'/form-edit/' + id">Questions</router-link>
       </div>
     </div>
 
@@ -156,74 +88,6 @@
                 إرسال
               </p>
             </div>
-
-            <div class="mobile-nav">
-              <ul>
-                <li>
-                  <router-link to="/">
-                    <div class="profile mt-3 d-flex">
-                      <b-avatar :src="avatar" size="3rem"></b-avatar>
-                      <div class="dropdown-content">
-                        <h5>{{ name }}</h5>
-                        <p>انظر ملفك الشخصي</p>
-                      </div>
-                    </div>
-                  </router-link>
-                </li>
-                <li>
-                  <router-link :to="'/setting/'+id">
-                    <div class="d-flex">
-                      <i class="fas fa-cog"></i>
-                      <div class="dropdown-content">
-                        <h6>تعديل الملف الشخصي</h6>
-                      </div>
-                    </div>
-                  </router-link>
-                </li>
-                <li>
-                  <router-link to="" @click="$store.dispatch('logout')">
-                    <div class="d-flex">
-                      <i class="fas fa-sign-out-alt"></i>
-                      <div class="dropdown-content">
-                        <h6>تسجيل خروج</h6>
-                      </div>
-                    </div>
-                  </router-link>
-                </li>
-
-              </ul>
-            </div>
-
-            <b-dropdown class="dropdown" id="dropdown-right" right variant="link" toggle-class="text-decoration-none" no-caret>
-              <template #button-content>
-                <b-avatar :src="avatar"></b-avatar>
-              </template>
-              <b-dropdown-item class="link" :to="'/profile-en/'+id">
-                <div class="profile d-flex">
-                  <b-avatar :src="avatar" size="3rem"></b-avatar>
-                  <div class="dropdown-content">
-                    <h5>{{ name }}</h5>
-                    <p>انظر ملفك الشخصي</p>
-                  </div>
-                </div>
-              </b-dropdown-item>
-              <b-dropdown-item :to="'/setting/'+id">
-                <div class="d-flex">
-                  <i class="fas fa-cog"></i>
-                  <div class="dropdown-content">
-                    <h6>تعديل الملف الشخصي</h6>
-                  </div>
-                </div>
-              </b-dropdown-item>
-              <b-dropdown-item to="" @click="$store.dispatch('logout')">
-                <div class="d-flex">
-                  <i class="fas fa-sign-out-alt"></i>
-                  <div class="dropdown-content">
-                    <h6>تسجيل خروج</h6>
-                  </div>
-                </div>
-              </b-dropdown-item>
-            </b-dropdown>
 
             <div class="languages">
             <span @click="setLang('en')" class="lang d-flex">
@@ -254,12 +118,12 @@
       </div>
 
       <div class="nav-2" v-if="showNav2">
-        <router-link to="/create-form" exact>الاسئلة</router-link>
+        <router-link :to="'/form-view/' + id" exact>الاسئلة</router-link>
         <router-link :to="'/form/response/' + id">الردود <span v-if="responseNum" class="responseNum">{{ responseNum }}</span></router-link>
       </div>
 
       <div class="nav-2" v-if="showNav3">
-        <router-link to="/form-edit">الاسئلة</router-link>
+        <router-link :to="'/form-edit' + id">الاسئلة</router-link>
       </div>
     </div>
   </div>
@@ -272,7 +136,7 @@ export default {
   components: {
     Logo
   },
-  props: ['avatar', 'name', 'id', 'en', 'ar', 'theme', 'show', 'responseNum', 'showNav2', 'showNav3', 'showEye', 'showSendIcon', 'showThemeIcon'],
+  props: ['id', 'en', 'ar', 'theme', 'show', 'responseNum', 'showNav2', 'showNav3', 'showEye', 'showSendIcon', 'showThemeIcon'],
   emits: ['show-theme', 'show-send'],
   data() {
     return {

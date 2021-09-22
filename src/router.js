@@ -35,6 +35,7 @@ const routes = [
     { path: '/create-form', component: CreateForm },
     { path: '/form-edit/:id', component: FormEdit },
     { path: '/form-view/:id', component: FormView },
+    { path: '/form/:id', component: Form },
     { path: '/create-template', component: CreateTemplates },
     { path: '/create-contact-form', component: null },
     { path: '/create-hiring-form', component: null },
@@ -44,7 +45,6 @@ const routes = [
             { path: '/form/response/:id/question', component: Question },
             { path: '/form/response/:id/individual', component: Individual },
         ]},
-    { path: '/form/:id', component: Form },
     { path: '/:notFound(.*)', component: NotFound }
 ]
 

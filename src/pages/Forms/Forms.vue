@@ -2,7 +2,6 @@
   <div class="home animate__animated animate__fadeIn">
     <div class="nav">
       <forms-header
-          avatar="https://pbs.twimg.com/media/E7yILDuVoAEOzoE?format=jpg&name=medium"
           :id=$store.getters.token
       ></forms-header>
     </div>
@@ -30,26 +29,26 @@
             </div>
             <div class="forms">
               <base-spinner v-if="isLoading"></base-spinner>
-              <div v-else-if="this.forms" class="w-100 forms-links">
+              <div v-else-if="this.forms.length > 0" class="w-100 forms-links">
                 <div v-for="form in forms" :key="form.id">
                   <router-link class="form-link for-big-screen" to="">
                     <div class="form-link-row row">
-                      <div class="form-link-row-header col-1">
+                      <div class="form-link-row-header col-1 d-flex align-items-center">
                         <img src="../../assets/images/formIcon.png" width="35" height="35">
                       </div>
-                      <div class="form-link-row-header col-2">
+                      <div class="form-link-row-header col-2 d-flex align-items-center">
                         {{form.header}}
                       </div>
-                      <div class="form-link-row-type col-3">
+                      <div class="form-link-row-type col-3 d-flex align-items-center">
                         {{form.description}}
                       </div>
-                      <div class="form-link-row-type col-2">
+                      <div class="form-link-row-type col-2 d-flex align-items-center">
                         {{form.formType}}
                       </div>
-                      <div class="form-link-row-date col-3">
+                      <div class="form-link-row-date col-3 d-flex align-items-center">
                         {{form.createdAt}}
                       </div>
-                      <div class="form-link-row-header col-1 d-flex justify-content-end">
+                      <div class="form-link-row-header col-1 d-flex align-items-center justify-content-end">
                         <router-link :to="'form-view/' + form._id" class="i fas fa-eye me-2"></router-link>
                         <router-link :to="'form-edit/' + form._id" class="i fas fa-edit me-2"></router-link>
                         <i @click="deleteForm(form._id)" class="i fas fa-trash me-2 "></i>
@@ -160,6 +159,7 @@ export default {
       isLoading: false,
       error: null,
       forms: [],
+      msg: ''
     }
   },
   components: {
@@ -199,8 +199,8 @@ export default {
 
       fetch(url, requestOptions)
           .then(response => response.json())
-          .then(result => console.log(result.msg))
-          .catch(error => console.log('error', error));
+          .then(result => this.msg = result.msg)
+          .catch(error => this.msg = error);
 
       this.loadForms();
 
@@ -213,7 +213,7 @@ export default {
       let token = this.$store.getters.token;
 
       let myHeaders = new Headers();
-      myHeaders.append("Authorization", "Bearer " + token);
+      myHeaders.append("Token", token);
 
       let requestOptions = {
         method: 'GET',
@@ -230,7 +230,6 @@ export default {
         throw error;
       }
 
-      console.log(responseData)
 
       this.forms = responseData;
       this.isLoading = false;

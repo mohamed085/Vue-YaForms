@@ -215,9 +215,11 @@ export default {
   components: {
     Logo
   },
-  props: ['avatar', 'name', 'id'],
+  props: ['id'],
   data() {
     return {
+      name: localStorage.getItem("name"),
+      avatar: "https://pbs.twimg.com/media/E7yILDuVoAEOzoE?format=jpg&name=medium",
       showTheme: false,
       showSend: '',
       themeStyle: 'default'

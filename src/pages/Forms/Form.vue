@@ -1,453 +1,497 @@
 <template>
   <base-spinner class="mt-5" v-if="isLoading"></base-spinner>
-  <div v-else :class="'home animate__animated animate__fadeIn ' + form.styleTheme + ' ' + form.fontFamily ">
+  <div v-else>
 
-    <div v-if="form.formType === 'classic form' && getLang === 'en'" class="form-view en animate__animated animate__backInLeft">
+    <div v-if="!form.acceptResponse" :class="'home animate__animated animate__fadeIn ' + form.styleTheme + ' ' + form.fontFamily ">
+      <div v-if="getLang === 'en'" class="form-view en animate__animated animate__backInLeft">
+        <div v-if="form.imageHeader" class="form-image-header section">
+          <img :src="form.imageHeader">
+        </div>
 
-      <div v-if="form.imageHeader" class="form-image-header section">
-        <img :src="form.imageHeader">
+        <div class="form-title section">
+          <div class="titles">
+            <p class="title">{{ form.header }}</p>
+            <p class="description">{{ form.description }}</p>
+          </div>
+          <div class="logo">
+            <img :src="form.logo">
+          </div>
+        </div>
+
+        <div class="section question">
+          This form is closed now
+        </div>
+
       </div>
 
-      <div class="form-title section">
-        <div class="titles">
-          <p class="title">{{ form.header }}</p>
-          <p class="description">{{ form.description }}</p>
+    </div>
+
+    <div v-else :class="'home animate__animated animate__fadeIn ' + form.styleTheme + ' ' + form.fontFamily ">
+
+      <div v-if="form.formType === 'classic form' && getLang === 'en'" class="form-view en animate__animated animate__backInLeft">
+
+        <div v-if="form.imageHeader" class="form-image-header section">
+          <img :src="form.imageHeader">
         </div>
-        <div class="logo">
-          <img :src="form.logo">
+
+        <div class="form-title section">
+          <div class="titles">
+            <p class="title">{{ form.header }}</p>
+            <p class="description">{{ form.description }}</p>
+          </div>
+          <div class="logo">
+            <img :src="form.logo">
+          </div>
         </div>
+
+        <div class="form-content">
+
+          <div v-for="question in form.questions" :key="question.id">
+
+            <div v-if="question.type === 'question'">
+
+              <div class="section question " v-if="question.questionType === 'Short answer'">
+                <p class="question-title short-answer-title">{{ question.question }} ?</p>
+                <b-form-input
+                    class="input question-short-answer"
+                    type="text"
+                    v-model="question.response"
+                    placeholder="Your answer"
+                    :required="question.required"
+                ></b-form-input>
+              </div>
+
+              <div class="question-title section question " v-if="question.questionType === 'Paragraph'">
+                <p class="paragraph-title">{{ question.question }} ?</p>
+                <b-form-input
+                    class="input paragraph-answer"
+                    type="text"
+                    v-model="question.response"
+                    :required="question.required"
+                    placeholder="Your answer"
+                ></b-form-input>
+              </div>
+
+              <div class="section question " v-if="question.questionType === 'Multiple choice'">
+                <p class="question-title multiple-choice-title">{{ question.question }} ?</p>
+                <b-form-radio-group
+                    :options="question.options"
+                    v-model="question.response"
+                    :required="question.required"
+                    stacked
+                ></b-form-radio-group>
+              </div>
+
+              <div class="section question " v-if="question.questionType === 'Phone number'">
+                <p class="question-title multiple-choice-title">{{ question.question }} ?</p>
+                <b-form-input
+                    class="input paragraph-answer"
+                    type="text"
+                    v-model="question.response"
+                    :required="question.required"
+                    stacked
+                ></b-form-input>
+              </div>
+
+              <div class="section question " v-if="question.questionType === 'Checkboxes'">
+                <p class="question-title checkboxes-title">{{ question.question }} ?</p>
+                <b-form-checkbox-group
+                    class="checkbox-select"
+                    :options="question.options"
+                    :required="question.required"
+                    v-model="question.response"
+                    stacked
+                ></b-form-checkbox-group>
+
+              </div>
+
+              <div class="section question " v-if="question.questionType === 'Dropdown'">
+                <p class="question-title dropdown-title">{{ question.question }} ?</p>
+                <b-form-select
+                    v-model="question.response"
+                    class="dropdown-select"
+                    :required="question.required"
+                    :options="question.options"
+                ></b-form-select>
+              </div>
+
+              <div class="section question " v-if="question.questionType === 'Date'">
+                <p class="question-title short-answer-title">{{ question.question }} ?</p>
+                <b-form-input
+                    class="input date-answer"
+                    v-model="question.response"
+                    :required="question.required"
+                    type="date"
+                ></b-form-input>
+              </div>
+
+              <div class="section question " v-if="question.questionType === 'Time'">
+                <p class="question-title short-answer-title">{{ question.question }} ?</p>
+                <b-form-input
+                    class="input time-answer"
+                    v-model="question.response"
+                    :required="question.required"
+                    type="time"
+                ></b-form-input>
+              </div>
+
+            </div>
+
+            <div v-if="question.type === 'title'" class="section question title-description">
+              <p class="question-title title">{{ question.question }}</p>
+              <p class="description">{{ question.description }}</p>
+            </div>
+
+            <div v-if="question.type === 'image'" class="section question image">
+              <p class="question-title title">{{ question.question }}</p>
+              <img :src="question.description">
+            </div>
+
+            <div v-if="question.type === 'video'" class="section question video">
+              <p class="question-title title">{{ question.question }}</p>
+              <iframe class="p-3" :src="question.description"></iframe>
+            </div>
+
+            <div v-else></div>
+
+          </div>
+
+        </div>
+
+        <b-button @click="submit" type="submit" class="submit">Submit form</b-button>
+
       </div>
 
-      <div class="form-content">
+      <div v-if="form.formType === 'classic form' && getLang === 'ar'" class="form-view ar animate__animated animate__backInRight">
 
-        <div v-for="question in form.questions" :key="question.id">
+        <div v-if="form.imageHeader" class="form-image-header section">
+          <img :src="form.imageHeader">
+        </div>
 
-          <div v-if="question.type === 'question'">
+        <div class="form-title section">
+          <div class="titles">
+            <p class="title">{{ form.header }}</p>
+            <p class="description">{{ form.description }}</p>
+          </div>
+          <div class="logo">
+            <img :src="form.logo">
+          </div>
+        </div>
 
-            <div class="section question " v-if="question.questionType === 'Short answer'">
-              <p class="question-title short-answer-title">{{ question.question }} ?</p>
-              <b-form-input
-                  class="input question-short-answer"
-                  type="text"
-                  v-model="question.response"
-                  placeholder="Your answer"
-                  :required="question.required"
-              ></b-form-input>
+        <div class="form-content">
+
+          <div v-for="question in form.questions" :key="question.id">
+
+            <div v-if="question.type === 'question'">
+
+              <div class="section question " v-if="question.questionType === 'Short answer'">
+                <p class="question-title short-answer-title">{{ question.question }} ؟</p>
+                <b-form-input
+                    class="input question-short-answer"
+                    v-model="question.response"
+                    :required="question.required"
+                    type="text"
+                    placeholder="Your answer"
+                ></b-form-input>
+              </div>
+
+              <div class="question-title section question " v-if="question.questionType === 'Paragraph'">
+                <p class="paragraph-title">{{ question.question }} ؟</p>
+                <b-form-input
+                    class="input paragraph-answer"
+                    :required="question.required"
+                    v-model="question.response"
+                    type="text"
+                    placeholder="Your answer"
+                ></b-form-input>
+              </div>
+
+              <div class="section question " v-if="question.questionType === 'Multiple choice'">
+                <p class="question-title multiple-choice-title">{{ question.question }}c</p>
+                <b-form-radio-group
+                    :options="question.options"
+                    v-model="question.response"
+                    :required="question.required"
+                    stacked
+                ></b-form-radio-group>
+              </div>
+
+              <div class="section question " v-if="question.questionType === 'Checkboxes'">
+                <p class="question-title checkboxes-title">{{ question.question }} ؟</p>
+                <b-form-checkbox-group
+                    class="checkbox-select"
+                    :required="question.required"
+                    v-model="question.response"
+                    :options="question.options"
+                    stacked
+                ></b-form-checkbox-group>
+
+              </div>
+
+              <div class="section question " v-if="question.questionType === 'Dropdown'">
+                <p class="question-title dropdown-title">{{ question.question }} ؟</p>
+                <b-form-select
+                    class="dropdown-select"
+                    v-model="question.response"
+                    :required="question.required"
+                    :options="question.options"
+                ></b-form-select>
+
+
+              </div>
+
+              <div class="section question " v-if="question.questionType === 'Date'">
+                <p class="question-title short-answer-title">{{ question.question }} ؟</p>
+                <b-form-input
+                    class="input date-answer"
+                    v-model="question.response"
+                    :required="question.required"
+                    type="date"
+                ></b-form-input>
+              </div>
+
+              <div class="section question " v-if="question.questionType === 'Time'">
+                <p class="question-title short-answer-title">{{ question.question }} ؟</p>
+                <b-form-input
+                    v-model="question.response"
+                    class="input time-answer"
+                    :required="question.required"
+                    type="time"
+                ></b-form-input>
+              </div>
+
+
             </div>
 
-            <div class="question-title section question " v-if="question.questionType === 'Paragraph'">
-              <p class="paragraph-title">{{ question.question }} ?</p>
-              <b-form-input
-                  class="input paragraph-answer"
-                  type="text"
-                  v-model="question.response"
-                  :required="question.required"
-                  placeholder="Your answer"
-              ></b-form-input>
+            <div v-if="question.type === 'title'" class="section question title-description">
+              <p class="question-title title">{{ question.question }}</p>
+              <p class="description">{{ question.description }}</p>
             </div>
 
-            <div class="section question " v-if="question.questionType === 'Multiple choice'">
-              <p class="question-title multiple-choice-title">{{ question.question }} ?</p>
-              <b-form-radio-group
-                  :options="question.options"
-                  v-model="question.response"
-                  :required="question.required"
-                  stacked
-              ></b-form-radio-group>
+            <div v-if="question.type === 'image'" class="section question image">
+              <p class="question-title title">{{ question.question }}</p>
+              <img :src="question.description">
             </div>
 
-            <div class="section question " v-if="question.questionType === 'Checkboxes'">
-              <p class="question-title checkboxes-title">{{ question.question }} ?</p>
-              <b-form-checkbox-group
-                  class="checkbox-select"
-                  :options="question.options"
-                  :required="question.required"
-                  v-model="question.response"
-                  stacked
-              ></b-form-checkbox-group>
-
+            <div v-if="question.type === 'video'" class="section question video">
+              <p class="question-title title">{{ question.question }}</p>
+              <iframe class="p-3" :src="question.description"></iframe>
             </div>
 
-            <div class="section question " v-if="question.questionType === 'Dropdown'">
-              <p class="question-title dropdown-title">{{ question.question }} ?</p>
-              <b-form-select
-                  v-model="question.response"
-                  class="dropdown-select"
-                  :required="question.required"
-                  :options="question.options"
-              ></b-form-select>
-            </div>
-
-            <div class="section question " v-if="question.questionType === 'Date'">
-              <p class="question-title short-answer-title">{{ question.question }} ?</p>
-              <b-form-input
-                  class="input date-answer"
-                  v-model="question.response"
-                  :required="question.required"
-                  type="date"
-              ></b-form-input>
-            </div>
-
-            <div class="section question " v-if="question.questionType === 'Time'">
-              <p class="question-title short-answer-title">{{ question.question }} ?</p>
-              <b-form-input
-                  class="input time-answer"
-                  v-model="question.response"
-                  :required="question.required"
-                  type="time"
-              ></b-form-input>
-            </div>
+            <div v-else></div>
 
           </div>
 
-          <div v-if="question.type === 'title'" class="section question title-description">
-            <p class="question-title title">{{ question.question }}</p>
-            <p class="description">{{ question.description }}</p>
+        </div>
+
+        <b-button @click="submit" type="submit" class="submit">Submit form</b-button>
+
+      </div>
+
+      <div class="form-view en animate__animated animate__backInLeft" v-if="form.formType === 'card form' && getLang === 'en'">
+
+        <div v-if="form.imageHeader" class="form-image-header section">
+          <img :src="form.imageHeader">
+        </div>
+
+        <div class="form-title section">
+          <div class="titles">
+            <p class="title">{{ form.header }}</p>
+            <p class="description">{{ form.description }}</p>
+          </div>
+          <div class="logo">
+            <img :src="form.logo">
+          </div>
+        </div>
+
+        <div class="section question">
+          <p class="question-title short-answer-title">{{ form.questions[currentQuestion - 1].question }} ?</p>
+
+          <div v-if="form.questions[currentQuestion - 1].type === 'question'">
+            <b-form-input
+                v-if="form.questions[currentQuestion - 1].questionType === 'Short answer'"
+                v-model="form.questions[currentQuestion - 1].response"
+                class="input question-short-answer"
+                :required="form.questions[currentQuestion - 1].required"
+                type="text"
+                placeholder="Your answer"
+            ></b-form-input>
+
+            <b-form-input
+                v-if="form.questions[currentQuestion - 1].questionType === 'Paragraph'"
+                class="input paragraph-answer"
+                type="text"
+                :required="form.questions[currentQuestion - 1].required"
+                v-model="form.questions[currentQuestion - 1].response"
+                placeholder="Your answer"
+            ></b-form-input>
+
+            <b-form-radio-group
+                v-if="form.questions[currentQuestion - 1].questionType === 'Multiple choice'"
+                :required="form.questions[currentQuestion - 1].required"
+                v-model="form.questions[currentQuestion - 1].response"
+                :options="form.questions[currentQuestion - 1].options"
+                stacked
+            ></b-form-radio-group>
+
+            <b-form-checkbox-group
+                v-if="form.questions[currentQuestion - 1].questionType === 'Checkboxes'"
+                class="checkbox-select"
+                v-model="form.questions[currentQuestion - 1].response"
+                :required="form.questions[currentQuestion - 1].required"
+                :options="form.questions[currentQuestion - 1].options"
+                stacked
+            ></b-form-checkbox-group>
+
+            <b-form-select
+                v-if="form.questions[currentQuestion - 1].questionType === 'Dropdown'"
+                class="dropdown-select"
+                v-model="form.questions[currentQuestion - 1].response"
+                :required="form.questions[currentQuestion - 1].questions[currentQuestion - 1].required"
+                :options="form.questions[currentQuestion - 1].options"
+            ></b-form-select>
+
+            <b-form-input
+                v-if="form.questions[currentQuestion - 1].questionType === 'Date'"
+                v-model="form.questions[currentQuestion - 1].response"
+                :required="form.questions[currentQuestion - 1].required"
+                class="input date-answer"
+                type="date"
+            ></b-form-input>
+
+            <b-form-input
+                :required="form.questions[currentQuestion - 1].required"
+                v-model="form.questions[currentQuestion - 1].response"
+                v-if="form.questions[currentQuestion - 1].questionType === 'Time'"
+                class="input date-answer"
+                type="time"
+            ></b-form-input>
+
           </div>
 
-          <div v-if="question.type === 'image'" class="section question image">
-            <p class="question-title title">{{ question.question }}</p>
-            <img :src="question.description">
+          <div v-if="form.questions[currentQuestion - 1].type === 'title'" class="title-description">
+            <p class="description">{{ form.questions[currentQuestion - 1].description }}</p>
           </div>
 
-          <div v-if="question.type === 'video'" class="section question video">
-            <p class="question-title title">{{ question.question }}</p>
-            <iframe class="p-3" :src="question.description"></iframe>
+          <div v-if="form.questions[currentQuestion - 1].type === 'image'" class="image">
+            <img :src="form.questions[currentQuestion - 1].description">
+          </div>
+
+          <div v-if="form.questions[currentQuestion - 1].type === 'video'" class="video">
+            <iframe class="p-3" :src="form.questions[currentQuestion - 1].description"></iframe>
           </div>
 
           <div v-else></div>
 
         </div>
 
+        <b-button @click="submit" type="submit" class="submit mb-2">Submit form</b-button>
+
+        <b-pagination-nav v-model="currentQuestion" :link-gen="linkGen" :number-of-pages="form.questions.length" use-router></b-pagination-nav>
       </div>
 
-      <b-button @click="submit" type="submit" class="submit">Submit form</b-button>
-
-    </div>
-
-    <div v-if="form.formType === 'classic form' && getLang === 'ar'" class="form-view ar animate__animated animate__backInRight">
-
-      <div v-if="form.imageHeader" class="form-image-header section">
-        <img :src="form.imageHeader">
-      </div>
-
-      <div class="form-title section">
-        <div class="titles">
-          <p class="title">{{ form.header }}</p>
-          <p class="description">{{ form.description }}</p>
+      <div class="form-view ar animate__animated animate__backInRight" v-if="form.formType === 'card form' && getLang === 'ar'">
+        <div v-if="form.imageHeader" class="form-image-header section">
+          <img :src="form.imageHeader">
         </div>
-        <div class="logo">
-          <img :src="form.logo">
+
+        <div class="form-title section">
+          <div class="titles">
+            <p class="title">{{ form.header }}</p>
+            <p class="description">{{ form.description }}</p>
+          </div>
+          <div class="logo">
+            <img :src="form.logo">
+          </div>
         </div>
-      </div>
 
-      <div class="form-content">
+        <div class="section question">
+          <p class="question-title short-answer-title">{{ form.questions[currentQuestion - 1].question }} ؟ </p>
 
-        <div v-for="question in form.questions" :key="question.id">
+          <div v-if="form.questions[currentQuestion - 1].type === 'question'">
 
-          <div v-if="question.type === 'question'">
+            <b-form-input
+                v-if="form.questions[currentQuestion - 1].questionType === 'Short answer'"
+                v-model="form.questions[currentQuestion - 1].response"
+                :required="form.questions[currentQuestion - 1].required"
+                class="input question-short-answer"
+                type="text"
+                placeholder="Your answer"
+            ></b-form-input>
 
-            <div class="section question " v-if="question.questionType === 'Short answer'">
-              <p class="question-title short-answer-title">{{ question.question }} ؟</p>
-              <b-form-input
-                  class="input question-short-answer"
-                  v-model="question.response"
-                  :required="question.required"
-                  type="text"
-                  placeholder="Your answer"
-              ></b-form-input>
-            </div>
+            <b-form-input
+                :required="form.questions[currentQuestion - 1].required"
+                v-if="form.questions[currentQuestion - 1].questionType === 'Paragraph'"
+                class="input paragraph-answer"
+                v-model="form.questions[currentQuestion - 1].response"
+                type="text"
+                placeholder="Your answer"
+            ></b-form-input>
 
-            <div class="question-title section question " v-if="question.questionType === 'Paragraph'">
-              <p class="paragraph-title">{{ question.question }} ؟</p>
-              <b-form-input
-                  class="input paragraph-answer"
-                  :required="question.required"
-                  v-model="question.response"
-                  type="text"
-                  placeholder="Your answer"
-              ></b-form-input>
-            </div>
+            <b-form-radio-group
+                v-if="form.questions[currentQuestion - 1].questionType === 'Multiple choice'"
+                :required="form.questions[currentQuestion - 1].required"
+                :options="form.questions[currentQuestion - 1].options"
+                v-model="form.questions[currentQuestion - 1].response"
+                stacked
+            ></b-form-radio-group>
 
-            <div class="section question " v-if="question.questionType === 'Multiple choice'">
-              <p class="question-title multiple-choice-title">{{ question.question }}c</p>
-              <b-form-radio-group
-                  :options="question.options"
-                  v-model="question.response"
-                  :required="question.required"
-                  stacked
-              ></b-form-radio-group>
-            </div>
+            <b-form-checkbox-group
+                v-if="form.questions[currentQuestion - 1].questionType === 'Checkboxes'"
+                :required="form.questions[currentQuestion - 1].required"
+                class="checkbox-select"
+                v-model="form.questions[currentQuestion - 1].response"
+                :options="form.questions[currentQuestion - 1].options"
+                stacked
+            ></b-form-checkbox-group>
 
-            <div class="section question " v-if="question.questionType === 'Checkboxes'">
-              <p class="question-title checkboxes-title">{{ question.question }} ؟</p>
-              <b-form-checkbox-group
-                  class="checkbox-select"
-                  :required="question.required"
-                  v-model="question.response"
-                  :options="question.options"
-                  stacked
-              ></b-form-checkbox-group>
+            <b-form-select
+                v-model="form.questions[currentQuestion - 1].response"
+                :required="form.questions[currentQuestion - 1].required"
+                v-if="form.questions[currentQuestion - 1].questionType === 'Dropdown'"
+                class="dropdown-select"
+                :options="form.questions[currentQuestion - 1].options"
+            ></b-form-select>
 
-            </div>
+            <b-form-input
+                v-if="form.questions[currentQuestion - 1].questionType === 'Date'"
+                v-model="form.questions[currentQuestion - 1].response"
+                class="input date-answer"
+                :required="form.questions[currentQuestion - 1].required"
+                type="date"
+            ></b-form-input>
 
-            <div class="section question " v-if="question.questionType === 'Dropdown'">
-              <p class="question-title dropdown-title">{{ question.question }} ؟</p>
-              <b-form-select
-                  class="dropdown-select"
-                  v-model="question.response"
-                  :required="question.required"
-                  :options="question.options"
-              ></b-form-select>
-
-
-            </div>
-
-            <div class="section question " v-if="question.questionType === 'Date'">
-              <p class="question-title short-answer-title">{{ question.question }} ؟</p>
-              <b-form-input
-                  class="input date-answer"
-                  v-model="question.response"
-                  :required="question.required"
-                  type="date"
-              ></b-form-input>
-            </div>
-
-            <div class="section question " v-if="question.questionType === 'Time'">
-              <p class="question-title short-answer-title">{{ question.question }} ؟</p>
-              <b-form-input
-                  v-model="question.response"
-                  class="input time-answer"
-                  :required="question.required"
-                  type="time"
-              ></b-form-input>
-            </div>
-
+            <b-form-input
+                :required="form.questions[currentQuestion - 1].required"
+                v-model="form.questions[currentQuestion - 1].response"
+                v-if="form.questions[currentQuestion - 1].questionType === 'Time'"
+                class="input date-answer"
+                type="time"
+            ></b-form-input>
 
           </div>
 
-          <div v-if="question.type === 'title'" class="section question title-description">
-            <p class="question-title title">{{ question.question }}</p>
-            <p class="description">{{ question.description }}</p>
+          <div v-if="form.questions[currentQuestion - 1].type === 'title'" class="title-description">
+            <p class="description">{{ form.questions[currentQuestion - 1].description }}</p>
           </div>
 
-          <div v-if="question.type === 'image'" class="section question image">
-            <p class="question-title title">{{ question.question }}</p>
-            <img :src="question.description">
+          <div v-if="form.questions[currentQuestion - 1].type === 'image'" class="image">
+            <img :src="form.questions[currentQuestion - 1].description">
           </div>
 
-          <div v-if="question.type === 'video'" class="section question video">
-            <p class="question-title title">{{ question.question }}</p>
-            <iframe class="p-3" :src="question.description"></iframe>
+          <div v-if="form.questions[currentQuestion - 1].type === 'video'" class="video">
+            <iframe class="p-3" :src="form.questions[currentQuestion - 1].description"></iframe>
           </div>
 
           <div v-else></div>
 
         </div>
 
-      </div>
+        <b-button @click="submit" type="submit" class="submit mb-2">Submit form</b-button>
 
-      <b-button type="submit" class="submit">Submit form</b-button>
-
-    </div>
-
-    <div class="form-view en animate__animated animate__backInLeft" v-if="form.formType === 'card form' && getLang === 'en'">
-
-      <div v-if="form.imageHeader" class="form-image-header section">
-        <img :src="form.imageHeader">
-      </div>
-
-      <div class="form-title section">
-        <div class="titles">
-          <p class="title">{{ form.header }}</p>
-          <p class="description">{{ form.description }}</p>
-        </div>
-        <div class="logo">
-          <img :src="form.logo">
-        </div>
-      </div>
-
-      <div class="section question">
-        <p class="question-title short-answer-title">{{ form.questions[currentQuestion - 1].question }} ?</p>
-
-        <div v-if="form.questions[currentQuestion - 1].type === 'question'">
-          <b-form-input
-              v-if="form.questions[currentQuestion - 1].questionType === 'Short answer'"
-              v-model="form.questions[currentQuestion - 1].response"
-              class="input question-short-answer"
-              :required="form.questions[currentQuestion - 1].required"
-              type="text"
-              placeholder="Your answer"
-          ></b-form-input>
-
-          <b-form-input
-              v-if="form.questions[currentQuestion - 1].questionType === 'Paragraph'"
-              class="input paragraph-answer"
-              type="text"
-              :required="form.questions[currentQuestion - 1].required"
-              v-model="form.questions[currentQuestion - 1].response"
-              placeholder="Your answer"
-          ></b-form-input>
-
-          <b-form-radio-group
-              v-if="form.questions[currentQuestion - 1].questionType === 'Multiple choice'"
-              :required="form.questions[currentQuestion - 1].required"
-              v-model="form.questions[currentQuestion - 1].response"
-              :options="form.questions[currentQuestion - 1].options"
-              stacked
-          ></b-form-radio-group>
-
-          <b-form-checkbox-group
-              v-if="form.questions[currentQuestion - 1].questionType === 'Checkboxes'"
-              class="checkbox-select"
-              v-model="form.questions[currentQuestion - 1].response"
-              :required="form.questions[currentQuestion - 1].required"
-              :options="form.questions[currentQuestion - 1].options"
-              stacked
-          ></b-form-checkbox-group>
-
-          <b-form-select
-              v-if="form.questions[currentQuestion - 1].questionType === 'Dropdown'"
-              class="dropdown-select"
-              v-model="form.questions[currentQuestion - 1].response"
-              :required="form.questions[currentQuestion - 1].questions[currentQuestion - 1].required"
-              :options="form.questions[currentQuestion - 1].options"
-          ></b-form-select>
-
-          <b-form-input
-              v-if="form.questions[currentQuestion - 1].questionType === 'Date'"
-              v-model="form.questions[currentQuestion - 1].response"
-              :required="form.questions[currentQuestion - 1].required"
-              class="input date-answer"
-              type="date"
-          ></b-form-input>
-
-          <b-form-input
-              :required="form.questions[currentQuestion - 1].required"
-              v-model="form.questions[currentQuestion - 1].response"
-              v-if="form.questions[currentQuestion - 1].questionType === 'Time'"
-              class="input date-answer"
-              type="time"
-          ></b-form-input>
-
-        </div>
-
-        <div v-if="form.questions[currentQuestion - 1].type === 'title'" class="title-description">
-          <p class="description">{{ form.questions[currentQuestion - 1].description }}</p>
-        </div>
-
-        <div v-if="form.questions[currentQuestion - 1].type === 'image'" class="image">
-          <img :src="form.questions[currentQuestion - 1].description">
-        </div>
-
-        <div v-if="form.questions[currentQuestion - 1].type === 'video'" class="video">
-          <iframe class="p-3" :src="form.questions[currentQuestion - 1].description"></iframe>
-        </div>
-
-        <div v-else></div>
+        <b-pagination-nav v-model="currentQuestion" :link-gen="linkGen" :number-of-pages="form.questions.length" use-router></b-pagination-nav>
 
       </div>
-
-      <b-pagination-nav v-model="currentQuestion" :link-gen="linkGen" :number-of-pages="form.questions.length" use-router></b-pagination-nav>
-    </div>
-
-    <div class="form-view ar animate__animated animate__backInRight" v-if="form.formType === 'card form' && getLang === 'ar'">
-      <div v-if="form.imageHeader" class="form-image-header section">
-        <img :src="form.imageHeader">
-      </div>
-
-      <div class="form-title section">
-        <div class="titles">
-          <p class="title">{{ form.header }}</p>
-          <p class="description">{{ form.description }}</p>
-        </div>
-        <div class="logo">
-          <img :src="form.logo">
-        </div>
-      </div>
-
-      <div class="section question">
-        <p class="question-title short-answer-title">{{ form.questions[currentQuestion - 1].question }} ؟ </p>
-
-        <div v-if="form.questions[currentQuestion - 1].type === 'question'">
-          <b-form-input
-              v-if="form.questions[currentQuestion - 1].questionType === 'Short answer'"
-              v-model="form.questions[currentQuestion - 1].response"
-              :required="form.questions[currentQuestion - 1].required"
-              class="input question-short-answer"
-              type="text"
-              placeholder="Your answer"
-          ></b-form-input>
-
-          <b-form-input
-              :required="form.questions[currentQuestion - 1].required"
-              v-if="form.questions[currentQuestion - 1].questionType === 'Paragraph'"
-              class="input paragraph-answer"
-              v-model="form.questions[currentQuestion - 1].response"
-              type="text"
-              placeholder="Your answer"
-          ></b-form-input>
-
-          <b-form-radio-group
-              v-if="form.questions[currentQuestion - 1].questionType === 'Multiple choice'"
-              :required="form.questions[currentQuestion - 1].required"
-              :options="form.questions[currentQuestion - 1].options"
-              v-model="form.questions[currentQuestion - 1].response"
-              stacked
-          ></b-form-radio-group>
-
-          <b-form-checkbox-group
-              v-if="form.questions[currentQuestion - 1].questionType === 'Checkboxes'"
-              :required="form.questions[currentQuestion - 1].required"
-              class="checkbox-select"
-              v-model="form.questions[currentQuestion - 1].response"
-              :options="form.questions[currentQuestion - 1].options"
-              stacked
-          ></b-form-checkbox-group>
-
-          <b-form-select
-              v-model="form.questions[currentQuestion - 1].response"
-              :required="form.questions[currentQuestion - 1].required"
-              v-if="form.questions[currentQuestion - 1].questionType === 'Dropdown'"
-              class="dropdown-select"
-              :options="form.questions[currentQuestion - 1].options"
-          ></b-form-select>
-
-          <b-form-input
-              v-if="form.questions[currentQuestion - 1].questionType === 'Date'"
-              v-model="form.questions[currentQuestion - 1].response"
-              class="input date-answer"
-              :required="form.questions[currentQuestion - 1].required"
-              type="date"
-          ></b-form-input>
-
-          <b-form-input
-              :required="form.questions[currentQuestion - 1].required"
-              v-model="form.questions[currentQuestion - 1].response"
-              v-if="form.questions[currentQuestion - 1].questionType === 'Time'"
-              class="input date-answer"
-              type="time"
-          ></b-form-input>
-
-        </div>
-
-        <div v-if="form.questions[currentQuestion - 1].type === 'title'" class="title-description">
-          <p class="description">{{ form.questions[currentQuestion - 1].description }}</p>
-        </div>
-
-        <div v-if="form.questions[currentQuestion - 1].type === 'image'" class="image">
-          <img :src="form.questions[currentQuestion - 1].description">
-        </div>
-
-        <div v-if="form.questions[currentQuestion - 1].type === 'video'" class="video">
-          <iframe class="p-3" :src="form.questions[currentQuestion - 1].description"></iframe>
-        </div>
-
-        <div v-else></div>
-
-      </div>
-
-      <b-pagination-nav v-model="currentQuestion" :link-gen="linkGen" :number-of-pages="form.questions.length" use-router></b-pagination-nav>
 
     </div>
 
@@ -463,7 +507,7 @@ export default {
     return {
       form: '',
       currentQuestion: '1',
-      isLoading: false
+      isLoading: false,
     }
   },
   computed: {
@@ -481,7 +525,7 @@ export default {
       let token = this.$store.getters.token;
 
       let myHeaders = new Headers();
-      myHeaders.append("Authorization", "Bearer " + token);
+      myHeaders.append("Token", token);
       myHeaders.append("Content-Type", "application/json");
 
 
@@ -500,8 +544,6 @@ export default {
         throw error;
       }
 
-      console.log(responseData)
-
       this.form = responseData;
 
       this.isLoading = false;
@@ -511,7 +553,44 @@ export default {
       return `?question=${pageNum}`
     },
     async submit() {
-      console.log(this.form)
+      this.isLoading = true;
+
+      let myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+
+      let url = `https://ya-forms-api.herokuapp.com/api/form/` + this.$route.params.id + `/response`;
+
+      let raw = JSON.stringify({
+        "createdAt": this.form.createdAt,
+        "description": this.form.description,
+        "fontFamily": this.form.fontFamily,
+        "formType": this.form.formType,
+        "header": this.form.header,
+        "imageHeader": this.form.imageHeader,
+        "isTemplate": this.form.isTemplate,
+        "logo": this.form.logo,
+        "questions": this.form.questions,
+        "styleTheme": this.form.styleTheme
+      })
+
+      let requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+      };
+
+      fetch(url, requestOptions)
+          .then(response => response.json())
+          .then(result => {
+            alert(result.msg)
+            this.$router.push("/forms")
+          })
+          .catch(error => alert(error.msg)
+          );
+
+      this.isLoading = false;
+
     }
   }
 }

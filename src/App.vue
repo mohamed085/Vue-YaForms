@@ -5,13 +5,9 @@
 </template>
 
 <script>
-import store from "@/store";
-
 export default {
   created() {
     this.$store.dispatch('tryLogin');
-    console.log(store.getters.isAuthenticated)
-    console.log(store.getters.token)
   }
 }
 </script>

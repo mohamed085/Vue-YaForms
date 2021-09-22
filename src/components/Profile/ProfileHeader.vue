@@ -21,7 +21,7 @@
                   <div class="profile mt-3 d-flex">
                     <b-avatar :src="avatar" size="3rem"></b-avatar>
                     <div class="dropdown-content">
-                      <h5>{{ name }}</h5>
+                      <h5></h5>
                       <p>See your profile</p>
                     </div>
                   </div>
@@ -203,7 +203,13 @@ export default {
   components: {
     Logo
   },
-  props: ['avatar', 'name', 'id', 'en', 'ar'],
+  data() {
+    return {
+      name: localStorage.getItem("name"),
+      avatar: "https://pbs.twimg.com/media/E7yILDuVoAEOzoE?format=jpg&name=medium",
+    }
+  },
+  props: ['id', 'en', 'ar'],
   computed: {
     getLang() {
       return this.$store.getters['main/getLang'];
