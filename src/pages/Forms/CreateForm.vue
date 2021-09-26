@@ -116,7 +116,7 @@
 
             <div class="form-header">
               <div class="form-title">
-                <b-form-input class="input-title" type="text" v-model="form.header" placeholder="Untitle form"></b-form-input>
+                <b-form-input class="input-title" type="text" v-model="form.header" placeholder="Untitled form"></b-form-input>
                 <b-form-input class="input-description" type="text" v-model="form.description" placeholder="Form description"></b-form-input>
               </div>
               <div class="form-logo">
@@ -175,7 +175,7 @@
                 <div v-else-if="question.questionType == 'Multiple choice'" class="form-question-row-2 choice-row">
                   <div class="multiple-choice-row" v-for="option in question.options" :key="option.id">
                     <i class="far fa-circle"></i>
-                    <b-form-input class="multiple-choice-input" type="text"  v-b-modal="option.value" v-model="option.text"></b-form-input>
+                    <b-form-input class="multiple-choice-input" type="text" @input="setSelectValue($event.target.value, option, question)"></b-form-input>
                     <i class="fas fa-times close" @click="removeChoice(option, question)"></i>
                   </div>
                   <h6 @click="addOtherOption(question)">Add other option</h6>
@@ -184,7 +184,7 @@
                 <div v-else-if="question.questionType == 'Checkboxes'" class="form-question-row-2 choice-row">
                   <div class="multiple-choice-row" v-for="option in question.options" :key="option.id">
                     <i class="far fa-square"></i>
-                    <b-form-input class="multiple-choice-input" type="text" v-b-modal="option.value" v-model="option.text"></b-form-input>
+                    <b-form-input class="multiple-choice-input" type="text" v-modal="option.value" v-model="option.text"></b-form-input>
                     <i class="fas fa-times close" @click="removeChoice(option, question)"></i>
                   </div>
                   <h6 @click="addOtherOption(question)">Add other option</h6>
@@ -192,7 +192,7 @@
 
                 <div v-else-if="question.questionType == 'Dropdown'" class="form-question-row-2 choice-row">
                   <div class="multiple-choice-row" v-for="option in question.options" :key="option.id">
-                    <b-form-input class="multiple-choice-input" type="text" v-b-modal="option.value" v-model="option.text"></b-form-input>
+                    <b-form-input class="multiple-choice-input" type="text" v-modal="option.value" v-model="option.text"></b-form-input>
                     <i class="fas fa-times close" @click="removeChoice(option, question)"></i>
                   </div>
                   <h6 @click="addOtherOption(question)">Add other option</h6>
@@ -682,7 +682,7 @@ export default {
             options: [
               {
                 id: Date.now(),
-                value: 'option 1',
+                value: '',
                 text: 'option 1'
               }
             ],
@@ -740,7 +740,7 @@ export default {
             options: [
               {
                 id: Date.now(),
-                value: 'option 1',
+                value: '',
                 text: 'option 1'
               }
             ],
@@ -801,7 +801,7 @@ export default {
             options: [
               {
                 id: Date.now(),
-                value: 'option 1',
+                value: '',
                 text: 'option 1'
               }
             ],
@@ -817,7 +817,7 @@ export default {
         if (value.id === questionId) {
           value.options.push({
             id: Date.now(),
-            value: 'new option',
+            value: '',
             text: 'new option'
           })
         }
@@ -871,6 +871,20 @@ export default {
         }
       })
 
+    },
+    setSelectValue(event, option, question) {
+      console.log(event)
+
+      const questionId = question.id;
+      this.form.questions.find(value => {
+        if (value.id === questionId) {
+          value.options.add({
+            id: Date.now(),
+            text: event,
+            value: event,
+          })
+        }
+      })
     },
     async addForm() {
       this.isLoading = true;

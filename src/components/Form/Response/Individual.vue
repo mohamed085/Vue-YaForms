@@ -171,7 +171,6 @@ export default {
     }
   },
   created() {
-    console.log(this.form.length);
     this.loadFormResponses(this.$route.params.id);
   },
   methods: {

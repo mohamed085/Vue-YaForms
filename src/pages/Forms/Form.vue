@@ -108,7 +108,7 @@
               <div class="section question " v-if="question.questionType === 'Dropdown'">
                 <p class="question-title dropdown-title">{{ question.question }} ?</p>
                 <b-form-select
-                    v-model="question.response"
+                    v-model="question.response.text"
                     class="dropdown-select"
                     :required="question.required"
                     :options="question.options"

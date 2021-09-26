@@ -4,8 +4,7 @@
     <div v-if="getLang === 'en'" class="form-view en animate__animated animate__backInLeft">
       <div class="form-content">
 
-        <div v-for="question in form.questions" :key="question.id">
-
+        <div v-for="question in questions" :key="question.id">
           <div v-if="question.type === 'question'">
 
             <div class="section question-section" v-if="question.questionType === 'Short answer'">
@@ -18,6 +17,33 @@
             </div>
 
             <div class="section question-section" v-if="question.questionType === 'Paragraph'">
+              <p class="question-title">{{ question.question }} ?</p>
+              <p class="response-num">{{ question.responses.num }} responses</p>
+              <p class="answers">Answers</p>
+              <p class="answer short-answer" v-for="answer in question.responses.responseAnswer" :key="answer.id">
+                {{ answer.answer }} <span style="color: var(--var-main-color)" v-if="answer.repeat"> - Repeated {{ answer.repeat }}</span>
+              </p>
+            </div>
+
+            <div class="section question-section" v-if="question.questionType === 'Date'">
+              <p class="question-title">{{ question.question }} ?</p>
+              <p class="response-num">{{ question.responses.num }} responses</p>
+              <p class="answers">Answers</p>
+              <p class="answer short-answer" v-for="answer in question.responses.responseAnswer" :key="answer.id">
+                {{ answer.answer }} <span style="color: var(--var-main-color)" v-if="answer.repeat"> - Repeated {{ answer.repeat }}</span>
+              </p>
+            </div>
+
+            <div class="section question-section" v-if="question.questionType === 'Time'">
+              <p class="question-title">{{ question.question }} ?</p>
+              <p class="response-num">{{ question.responses.num }} responses</p>
+              <p class="answers">Answers</p>
+              <p class="answer short-answer" v-for="answer in question.responses.responseAnswer" :key="answer.id">
+                {{ answer.answer }} <span style="color: var(--var-main-color)" v-if="answer.repeat"> - Repeated {{ answer.repeat }}</span>
+              </p>
+            </div>
+
+            <div class="section question-section" v-if="question.questionType === 'Phone number'">
               <p class="question-title">{{ question.question }} ?</p>
               <p class="response-num">{{ question.responses.num }} responses</p>
               <p class="answers">Answers</p>
@@ -44,109 +70,13 @@
               <v-chart class="chart" :option="question.option" />
             </div>
 
-            <div class="section question-section" v-if="question.questionType === 'Date'">
-              <p class="question-title">{{ question.question }} ?</p>
-              <p class="response-num">{{ question.responses.num }} responses</p>
-              <p class="answers">Answers</p>
-              <p class="answer short-answer" v-for="answer in question.responses.responseAnswer" :key="answer.id">
-                {{ answer.answer }} <span style="color: var(--var-main-color)" v-if="answer.repeat"> - Repeated {{ answer.repeat }}</span>
-              </p>
-            </div>
-
-            <div class="section question-section" v-if="question.questionType === 'Time'">
-              <p class="question-title">{{ question.question }} ?</p>
-              <p class="response-num">{{ question.responses.num }} responses</p>
-              <p class="answers">Answers</p>
-              <p class="answer short-answer" v-for="answer in question.responses.responseAnswer" :key="answer.id">
-                {{ answer.answer }} <span style="color: var(--var-main-color)" v-if="answer.repeat"> - Repeated {{ answer.repeat }}</span>
-              </p>
-            </div>
 
 
           </div>
-
-          <div v-if="question.type === 'title'" class="section question-section">
-            <p class="question-title">{{ question.question }}</p>
-          </div>
-
-        </div>
-
-        </div>
-    </div>
-
-    <div v-if="getLang === 'ar'" class="form-view ar animate__animated animate__backInRight">
-      <div class="form-content">
-
-        <div v-for="question in form.questions" :key="question.id">
-
-          <div v-if="question.type === 'question'">
-
-            <div class="section question-section" v-if="question.questionType === 'Short answer'">
-              <p class="question-title">{{ question.question }} ؟</p>
-              <p class="response-num">{{ question.responses.num }} ردود</p>
-              <p class="answers">الاجابات</p>
-              <p class="answer short-answer" v-for="answer in question.responses.responseAnswer" :key="answer.id">
-                {{ answer.answer }} <span style="color: var(--var-main-color)" v-if="answer.repeat"> - عدد تكرار الاجابة {{ answer.repeat }}</span>
-              </p>
-            </div>
-
-            <div class="section question-section" v-if="question.questionType === 'Paragraph'">
-              <p class="question-title">{{ question.question }} ؟</p>
-              <p class="response-num">{{ question.responses.num }} ردود</p>
-              <p class="answers">الاجابات</p>
-              <p class="answer short-answer" v-for="answer in question.responses.responseAnswer" :key="answer.id">
-                {{ answer.answer }}  <span style="color: var(--var-main-color)" v-if="answer.repeat"> - عدد تكرار الاجابة {{ answer.repeat }}</span>
-              </p>
-            </div>
-
-            <div class="section question-section" v-if="question.questionType === 'Multiple choice'">
-              <p class="question-title">{{ question.question }} ؟</p>
-              <p class="response-num">{{ question.responses.num }} ردود</p>
-              <v-chart class="chart" :option="question.option" />
-            </div>
-
-            <div class="section question-section" v-if="question.questionType === 'Checkboxes'">
-              <p class="question-title">{{ question.question }} ؟</p>
-              <p class="response-num">{{ question.responses.num }} ردود</p>
-              <v-chart class="chart" :option="question.option" />
-            </div>
-
-            <div class="section question-section" v-if="question.questionType === 'Dropdown'">
-              <p class="question-title">{{ question.question }} ؟</p>
-              <p class="response-num">{{ question.responses.num }} ردود</p>
-              <v-chart class="chart" :option="question.option" />
-            </div>
-
-            <div class="section question-section" v-if="question.questionType === 'Date'">
-              <p class="question-title">{{ question.question }} ؟</p>
-              <p class="response-num">{{ question.responses.num }} ردود</p>
-              <p class="answers">الاجابات</p>
-              <p class="answer short-answer" v-for="answer in question.responses.responseAnswer" :key="answer.id">
-                {{ answer.answer }} <span style="color: var(--var-main-color)" v-if="answer.repeat"> - عدد تكرار الاجابة {{ answer.repeat }}</span>
-              </p>
-            </div>
-
-            <div class="section question-section" v-if="question.questionType === 'Time'">
-              <p class="question-title">{{ question.question }} ؟</p>
-              <p class="response-num">{{ question.responses.num }} ردود</p>
-              <p class="answers">الاجابات</p>
-              <p class="answer short-answer" v-for="answer in question.responses.responseAnswer" :key="answer.id">
-                {{ answer.answer }} <span style="color: var(--var-main-color)" v-if="answer.repeat"> - عدد تكرار الاجابة {{ answer.repeat }}</span>
-              </p>
-            </div>
-
-
-          </div>
-
-          <div v-if="question.type === 'title'" class="section question-section">
-            <p class="question-title">{{ question.question }}</p>
-          </div>
-
-        </div>
 
       </div>
     </div>
-
+    </div>
   </div>
 </template>
 
@@ -175,7 +105,8 @@ export default {
   },
   data() {
     return {
-      form: '',
+      questions: [],
+      isLoading: false
     }
   },
   computed: {
@@ -183,6 +114,142 @@ export default {
       return this.$store.getters['main/getLang']
     },
   },
+  created() {
+    this.loadFormResponses(this.$route.params.id);
+  },
+  methods: {
+    async loadFormResponses(id) {
+      this.isLoading = true;
+
+      let myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+
+      let requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+      };
+
+      let url = `https://ya-forms-api.herokuapp.com/api/form/` + id + `/responses/summary`;
+
+      const response = await fetch(url, requestOptions);
+      const responseData = await response.json();
+
+      if (!response.ok) {
+        const error = new Error(responseData.message || 'Failed to fetch!');
+        throw error;
+      }
+
+      responseData.forEach(question => {
+        // eslint-disable-next-line no-constant-condition
+        if (question.questionType === "Short answer" || question.questionType === "Paragraph" || question.questionType === "Time" || question.questionType === "Date" || question.questionType === "Phone number") {
+          let newQuestion = {
+            id: question.id,
+            question: question.question,
+            type: question.type,
+            questionType: question.questionType,
+            required: question.required,
+            responses: {
+              num: question.response.length,
+              responseAnswer: []
+            }
+          }
+          question.response.forEach(response => {
+            if (newQuestion.responses.responseAnswer.length === 0) {
+              let newResponses = { id: response.id, answer: response.answer };
+              newQuestion.responses.responseAnswer.push(newResponses);
+            }
+            else {
+              newQuestion.responses.responseAnswer.forEach(value => {
+                let newResponses = '';
+                if (value.answer === response.answer) {
+                  if (value.repeat) value.repeat++;
+                  else value.repeat = 2;
+                } else {
+
+                  newResponses = { id: response.id, answer: response.answer };
+                  newQuestion.responses.responseAnswer.push(newResponses);
+                }
+              })
+            }
+          })
+          this.questions.push(newQuestion)
+        }
+
+
+        // else if (question.questionType === "Checkboxes" || question.questionType === "Multiple choice" || question.questionType === "Dropdown" ) {
+        //   let newDiagramQuestion = {
+        //     id: question.id,
+        //     question: question.question,
+        //     type: question.type,
+        //     questionType: question.questionType,
+        //     required: question.required,
+        //     responses: {num: question.response.length},
+        //     option: {
+        //       title: {
+        //         text: question.question,
+        //         left: "center"
+        //       },
+        //       tooltip: {
+        //         trigger: "item",
+        //         formatter: "{a} <br/>{b} : {c} ({d}%)"
+        //       },
+        //       legend: {
+        //         orient: "vertical",
+        //         left: "left",
+        //         data: question.options.text
+        //       },
+        //       series: [
+        //         {
+        //           name: question.question,
+        //           type: "pie",
+        //           radius: "55%",
+        //           center: ["50%", "60%"],
+        //           data: [],
+        //           emphasis: {
+        //             itemStyle: {
+        //               shadowBlur: 10,
+        //               shadowOffsetX: 0,
+        //               shadowColor: "rgba(0, 0, 0, 0.5)"
+        //             }
+        //           }
+        //         }
+        //       ]
+        //     },
+        //   }
+        //
+        //   // { value: 1, name: "A" },
+        //   question.response.forEach(response => {
+        //     if (newDiagramQuestion.responses.responseAnswer.length === 0) {
+        //       let newResponses = { id: response.id, answer: response.answer };
+        //       newDiagramQuestion.responses.responseAnswer.push(newResponses);
+        //     }
+        //     else {
+        //       newDiagramQuestion.responses.responseAnswer.forEach(value => {
+        //         let newResponses = '';
+        //         if (value.answer === response.answer) {
+        //           if (value.repeat) value.repeat++;
+        //           else value.repeat = 2;
+        //         } else {
+        //           newResponses = { id: response.id, answer: response.answer };
+        //           newDiagramQuestion.responses.responseAnswer.push(newResponses);
+        //         }
+        //       })
+        //     }
+        //   })
+        //
+        //
+        //   this.questions.push(newDiagramQuestion)
+        // }
+        });
+
+      this.questions.responses.responseAnswer.forEach(answer => {
+
+      })
+      this.isLoading = false;
+
+    }
+  }
 }
 </script>
 
