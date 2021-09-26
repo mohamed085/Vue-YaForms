@@ -3,6 +3,7 @@
     <div class="nav">
       <forms-header
           :id=$store.getters.token
+          @search-forms="setForms"
       ></forms-header>
     </div>
 
@@ -230,10 +231,12 @@ export default {
         throw error;
       }
 
-
       this.forms = responseData;
       this.isLoading = false;
 
+    },
+    async setForms(result) {
+      this.forms = result
     }
   }
 }

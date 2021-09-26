@@ -13,8 +13,8 @@
 
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <div class="navbar-nav">
-              <form class="d-flex" @submit="search">
-                <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+              <form class="d-flex" @submit.prevent="search">
+                <input class="form-control" type="search" v-model="key" required placeholder="Search" aria-label="Search">
                 <button class="btn" type="submit"><i class="fas fa-search"></i></button>
               </form>
             </div>
@@ -216,9 +216,11 @@ export default {
     Logo
   },
   props: ['id'],
+  emits: ['search-forms'],
   data() {
     return {
       name: localStorage.getItem("name"),
+      key: '',
       avatar: "https://pbs.twimg.com/media/E7yILDuVoAEOzoE?format=jpg&name=medium",
       showTheme: false,
       showSend: '',
@@ -234,7 +236,28 @@ export default {
     setLang(lang) {
       this.$store.dispatch('main/setLang', lang);
     },
-    search() {
+    async search() {
+      let myHeaders = new Headers();
+      let token = this.$store.getters.token;
+
+      myHeaders.append("Token", token);
+
+      let requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+      };
+
+      let url = `https://ya-forms-api.herokuapp.com/api/form/search/` + this.key;
+
+      fetch(url, requestOptions)
+          .then(response => response.json())
+          .then(result => {
+            console.log(result)
+            this.$emit('search-forms', result);
+          })
+          .catch(error => console.log('error', error));
+
 
     },
   }

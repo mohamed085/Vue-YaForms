@@ -234,18 +234,21 @@ export default {
     },
 
     async deleteAllResponses() {
+      console.log("delete")
       let requestOptions = {
         method: 'DELETE',
         redirect: 'follow'
       };
 
       let id = this.$route.params.id;
-      let url = `https://ya-forms-api.herokuapp.com/API/form/` + id + `response`;
+      let url = `https://ya-forms-api.herokuapp.com/API/form/` + id + `/response`;
 
 
       fetch(url, requestOptions)
           .then(response => response.json())
           .catch(error => console.log('error', error));
+
+      await this.$router.go(this.$router.currentRoute);
     },
   }
 

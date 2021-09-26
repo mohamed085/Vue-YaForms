@@ -262,7 +262,7 @@ export default {
   },
   data() {
     return {
-      form: '',
+      form: [],
       currentQuestion: '1',
       isLoading: false,
       displayTheme: false,
@@ -328,8 +328,7 @@ export default {
       let token = this.$store.getters.token;
 
       let myHeaders = new Headers();
-      myHeaders.append("Authorization", "Bearer " + token);
-      myHeaders.append("Content-Type", "application/json");
+      myHeaders.append("Token", token);
 
       let raw = JSON.stringify({
         "formType": this.form.formType,
