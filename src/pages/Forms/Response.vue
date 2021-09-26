@@ -37,9 +37,6 @@
               <b-button class="export-btn" >Export as pdf</b-button>
               <b-button class="export-btn" @click="exportResponseAsCSV">Export as excel</b-button>
             </div>
-            <div>
-              <b-button class="export-btn" @click="deleteAllResponses">Delete all responses</b-button>
-            </div>
           </div>
           <div v-if="form.responseNum !== 0" class="responseNum-section-row3">
             <div class="response-type">
@@ -233,23 +230,6 @@ export default {
 
     },
 
-    async deleteAllResponses() {
-      console.log("delete")
-      let requestOptions = {
-        method: 'DELETE',
-        redirect: 'follow'
-      };
-
-      let id = this.$route.params.id;
-      let url = `https://ya-forms-api.herokuapp.com/API/form/` + id + `/response`;
-
-
-      fetch(url, requestOptions)
-          .then(response => response.json())
-          .catch(error => console.log('error', error));
-
-      await this.$router.go(this.$router.currentRoute);
-    },
   }
 
 }
@@ -481,7 +461,7 @@ input:checked + .slider:before {
 .responseNum-section-row3 a.active,
 .responseNum-section-row3 a:hover,
 .responseNum-section-row3 a.router-link-active {
-  border-bottom: 3px solid #9d55a0;
+  border-bottom: 3px solid var(--var-main-color);
   border-radius: 3px;
 }
 

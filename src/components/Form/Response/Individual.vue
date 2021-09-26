@@ -7,9 +7,12 @@
         </div>
       </div>
 
-      <div class="d-flex">
+      <div class="d-flex justify-content-between">
         <div v-if="form.responses[currentQuestion - 1].question == Phone" class="csv">
           <button @click="exportResponseAsCSV(form.responses[currentQuestion - 1]._id)" class="phone-btn">Export numbers as csv</button>
+        </div>
+        <div>
+          <b-button class="phone-btn" @click="deleteResponse(form.responses[currentQuestion - 1]._id)">Delete response</b-button>
         </div>
 
       </div>
@@ -227,6 +230,22 @@ export default {
 
       this.isLoading = false;
 
+    },
+
+    async deleteResponse(id) {
+      console.log("delete response")
+      let requestOptions = {
+        method: 'DELETE',
+        redirect: 'follow'
+      };
+
+      let url = `https://ya-forms-api.herokuapp.com/API/form/` + id + `/response`;
+
+      fetch(url, requestOptions)
+          .then(response => response.json())
+          .catch(error => console.log('error', error));
+
+      await this.$router.push(`/form/response/`+ this.$route.params.id )
     },
 
   },
