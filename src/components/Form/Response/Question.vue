@@ -96,7 +96,10 @@ export default {
   name: "Question",
   data() {
     return {
-      form: '',
+      form: {
+        questionNum: '',
+        questions: []
+      },
       currentQuestion: 1,
       viewOptions: false,
     }
@@ -106,13 +109,88 @@ export default {
       return this.$store.getters['main/getLang']
     },
   },
+  created() {
+    this.loadFormResponses(this.$route.params.id);
+  },
   methods: {
     linkGen(pageNum) {
       return `?question=${pageNum}`
     },
     displayOptions() {
       this.viewOptions = !this.viewOptions
-    }
+    },
+    async loadFormResponses(id) {
+        this.isLoading = true;
+
+        let myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        let requestOptions = {
+          method: 'GET',
+          headers: myHeaders,
+          redirect: 'follow'
+        };
+
+        let url = `https://ya-forms-api.herokuapp.com/api/form/` + id + `/responses/summary`;
+
+        const response = await fetch(url, requestOptions);
+        const responseData = await response.json();
+
+        if (!response.ok) {
+          const error = new Error(responseData.message || 'Failed to fetch!');
+          throw error;
+        }
+
+        responseData.forEach(question => {
+          // eslint-disable-next-line no-constant-condition
+          if (question.questionType === "Short answer" || question.questionType === "Paragraph" || question.questionType === "Time" || question.questionType === "Date" || question.questionType === "Phone number") {
+            let count = 0;
+            let newQuestion = {
+              id: question.id,
+              question: question.question,
+              type: question.type,
+              questionType: question.questionType,
+              required: question.required,
+              responses: {
+                num: '',
+                responseAnswer: []
+              }
+            }
+            question.response.forEach(response => {
+              let newResponses;
+              if (response.answer !== undefined) {
+                if (newQuestion.responses.responseAnswer.length === 0) {
+                  count ++;
+                  newResponses = { id: response.id, answer: response.answer };
+                  newQuestion.responses.responseAnswer.push(newResponses);
+                }
+                else {
+                  let flag = 0;
+                  newQuestion.responses.responseAnswer.forEach(responseAnswer => {
+                    if (response.answer === responseAnswer.answer) {
+                      flag = 1;
+                      count ++;
+                      if (responseAnswer.repeat) responseAnswer.repeat++;
+                      else responseAnswer.repeat = 2;
+                    }
+                  })
+                  if (flag === 0) {
+                    count ++;
+                    newResponses = { id: response.id, answer: response.answer };
+                    newQuestion.responses.responseAnswer.push(newResponses);
+                  }
+                }
+
+              }
+            })
+            newQuestion.responses.num = count;
+            this.form.questions.push(newQuestion)
+            this.form.questionNum = responseData.length
+          }
+
+        });
+        this.isLoading = false;
+      }
   }
 }
 </script>

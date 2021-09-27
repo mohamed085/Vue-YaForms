@@ -140,9 +140,12 @@ export default {
         throw error;
       }
 
+      console.log(responseData)
+
       responseData.forEach(question => {
         // eslint-disable-next-line no-constant-condition
         if (question.questionType === "Short answer" || question.questionType === "Paragraph" || question.questionType === "Time" || question.questionType === "Date" || question.questionType === "Phone number") {
+          let count = 0;
           let newQuestion = {
             id: question.id,
             question: question.question,
@@ -150,104 +153,192 @@ export default {
             questionType: question.questionType,
             required: question.required,
             responses: {
-              num: question.response.length,
+              num: '',
               responseAnswer: []
             }
           }
           question.response.forEach(response => {
-            if (newQuestion.responses.responseAnswer.length === 0) {
-              let newResponses = { id: response.id, answer: response.answer };
-              newQuestion.responses.responseAnswer.push(newResponses);
-            }
-            else {
-              newQuestion.responses.responseAnswer.forEach(value => {
-                let newResponses = '';
-                if (value.answer === response.answer) {
-                  if (value.repeat) value.repeat++;
-                  else value.repeat = 2;
-                } else {
-
+            let newResponses;
+            if (response.answer !== undefined) {
+              if (newQuestion.responses.responseAnswer.length === 0) {
+                count ++;
+                newResponses = { id: response.id, answer: response.answer };
+                newQuestion.responses.responseAnswer.push(newResponses);
+              }
+              else {
+                let flag = 0;
+                newQuestion.responses.responseAnswer.forEach(responseAnswer => {
+                  if (response.answer === responseAnswer.answer) {
+                    flag = 1;
+                    count ++;
+                    if (responseAnswer.repeat) responseAnswer.repeat++;
+                    else responseAnswer.repeat = 2;
+                  }
+                })
+                if (flag === 0) {
+                  count ++;
                   newResponses = { id: response.id, answer: response.answer };
                   newQuestion.responses.responseAnswer.push(newResponses);
                 }
-              })
+              }
+
             }
           })
+          newQuestion.responses.num = count;
+          this.questions.push(newQuestion)
+        }
+
+        if (question.questionType === "Multiple choice" || question.questionType === "Dropdown") {
+          let count = 0;
+          let newQuestion = {
+            id: question.id,
+            question: question.question,
+            type: question.type,
+            questionType: question.questionType,
+            required: question.required,
+            responses: {
+              num: '',
+            },
+            option: {
+              title: {
+                text: question.question,
+                left: "center"
+              },
+              tooltip: {
+                trigger: "item",
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+              },
+              legend: {
+                orient: "vertical",
+                left: "left",
+                data: question.options.value
+              },
+              series: [
+                {
+                  name: question.question,
+                  type: "pie",
+                  radius: "55%",
+                  center: ["50%", "60%"],
+                  data: [],
+                  emphasis: {
+                    itemStyle: {
+                      shadowBlur: 10,
+                      shadowOffsetX: 0,
+                      shadowColor: "rgba(0, 0, 0, 0.5)"
+                    }
+                  }
+                }
+              ]
+            },
+          }
+          question.response.forEach(response => {
+            let newData;
+            if (response.answer !== undefined) {
+              if (newQuestion.option.series[0].data.length === 0) {
+                count ++;
+                newData = { value: 1, name: response.answer };
+                newQuestion.option.series[0].data.push(newData);
+              }
+              else {
+                let flag = 0;
+                newQuestion.option.series[0].data.forEach(data => {
+                  if (response.answer === data.name) {
+                    flag = 1;
+                    count ++;
+                    newData = { value: data.value++, name: data.name };
+                  }
+                })
+                if (flag === 0) {
+                  count ++;
+                  newData = { value: 1, name: response.answer };
+                  newQuestion.option.series[0].data.push(newData);
+                }
+              }
+            }
+          })
+
+          newQuestion.responses.num = count
+          this.questions.push(newQuestion)
+        }
+
+        if (question.questionType === "Checkboxes") {
+          let count = 0;
+          let newQuestion = {
+            id: question.id,
+            question: question.question,
+            type: question.type,
+            questionType: question.questionType,
+            required: question.required,
+            responses: {
+              num: '',
+            },
+            option: {
+              title: {
+                text: question.question,
+                left: "center"
+              },
+              tooltip: {
+                trigger: "item",
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+              },
+              legend: {
+                orient: "vertical",
+                left: "left",
+                data: question.options.value
+              },
+              series: [
+                {
+                  name: question.question,
+                  type: "pie",
+                  radius: "55%",
+                  center: ["50%", "60%"],
+                  data: [],
+                  emphasis: {
+                    itemStyle: {
+                      shadowBlur: 10,
+                      shadowOffsetX: 0,
+                      shadowColor: "rgba(0, 0, 0, 0.5)"
+                    }
+                  }
+                }
+              ]
+            },
+          }
+          question.response.forEach(response => {
+            response.answer.forEach(answer => {
+              let newData;
+              if (response.answer !== undefined) {
+                if (newQuestion.option.series[0].data.length === 0) {
+                  count ++;
+                  newData = { value: 1, name: answer };
+                  newQuestion.option.series[0].data.push(newData);
+                }
+                else {
+                  let flag = 0;
+                  newQuestion.option.series[0].data.forEach(data => {
+                    if (answer === data.name) {
+                      flag = 1;
+                      count ++;
+                      newData = { value: data.value++, name: data.name };
+                    }
+                  })
+                  if (flag === 0) {
+                    count ++;
+                    newData = { value: 1, name: answer };
+                    newQuestion.option.series[0].data.push(newData);
+                  }
+                }
+              }
+            })
+          })
+
+          newQuestion.responses.num = count
           this.questions.push(newQuestion)
         }
 
 
-        // else if (question.questionType === "Checkboxes" || question.questionType === "Multiple choice" || question.questionType === "Dropdown" ) {
-        //   let newDiagramQuestion = {
-        //     id: question.id,
-        //     question: question.question,
-        //     type: question.type,
-        //     questionType: question.questionType,
-        //     required: question.required,
-        //     responses: {num: question.response.length},
-        //     option: {
-        //       title: {
-        //         text: question.question,
-        //         left: "center"
-        //       },
-        //       tooltip: {
-        //         trigger: "item",
-        //         formatter: "{a} <br/>{b} : {c} ({d}%)"
-        //       },
-        //       legend: {
-        //         orient: "vertical",
-        //         left: "left",
-        //         data: question.options.text
-        //       },
-        //       series: [
-        //         {
-        //           name: question.question,
-        //           type: "pie",
-        //           radius: "55%",
-        //           center: ["50%", "60%"],
-        //           data: [],
-        //           emphasis: {
-        //             itemStyle: {
-        //               shadowBlur: 10,
-        //               shadowOffsetX: 0,
-        //               shadowColor: "rgba(0, 0, 0, 0.5)"
-        //             }
-        //           }
-        //         }
-        //       ]
-        //     },
-        //   }
-        //
-        //   // { value: 1, name: "A" },
-        //   question.response.forEach(response => {
-        //     if (newDiagramQuestion.responses.responseAnswer.length === 0) {
-        //       let newResponses = { id: response.id, answer: response.answer };
-        //       newDiagramQuestion.responses.responseAnswer.push(newResponses);
-        //     }
-        //     else {
-        //       newDiagramQuestion.responses.responseAnswer.forEach(value => {
-        //         let newResponses = '';
-        //         if (value.answer === response.answer) {
-        //           if (value.repeat) value.repeat++;
-        //           else value.repeat = 2;
-        //         } else {
-        //           newResponses = { id: response.id, answer: response.answer };
-        //           newDiagramQuestion.responses.responseAnswer.push(newResponses);
-        //         }
-        //       })
-        //     }
-        //   })
-        //
-        //
-        //   this.questions.push(newDiagramQuestion)
-        // }
-        });
-
-      this.questions.responses.responseAnswer.forEach(answer => {
-
-      })
+      });
       this.isLoading = false;
-
     }
   }
 }

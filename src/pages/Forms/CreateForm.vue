@@ -175,7 +175,7 @@
                 <div v-else-if="question.questionType == 'Multiple choice'" class="form-question-row-2 choice-row">
                   <div class="multiple-choice-row" v-for="option in question.options" :key="option.id">
                     <i class="far fa-circle"></i>
-                    <b-form-input class="multiple-choice-input" type="text" @input="setSelectValue($event.target.value, option, question)"></b-form-input>
+                    <b-form-input class="multiple-choice-input" type="text" v-model="option.value" @input="setSelectValue(option, question)"></b-form-input>
                     <i class="fas fa-times close" @click="removeChoice(option, question)"></i>
                   </div>
                   <h6 @click="addOtherOption(question)">Add other option</h6>
@@ -184,7 +184,7 @@
                 <div v-else-if="question.questionType == 'Checkboxes'" class="form-question-row-2 choice-row">
                   <div class="multiple-choice-row" v-for="option in question.options" :key="option.id">
                     <i class="far fa-square"></i>
-                    <b-form-input class="multiple-choice-input" type="text" v-modal="option.value" v-model="option.text"></b-form-input>
+                    <b-form-input class="multiple-choice-input" type="text" v-model="option.value" @input="setSelectValue(option, question)"></b-form-input>
                     <i class="fas fa-times close" @click="removeChoice(option, question)"></i>
                   </div>
                   <h6 @click="addOtherOption(question)">Add other option</h6>
@@ -192,7 +192,7 @@
 
                 <div v-else-if="question.questionType == 'Dropdown'" class="form-question-row-2 choice-row">
                   <div class="multiple-choice-row" v-for="option in question.options" :key="option.id">
-                    <b-form-input class="multiple-choice-input" type="text" v-modal="option.value" v-model="option.text"></b-form-input>
+                    <b-form-input class="multiple-choice-input" type="text" v-model="option.value" @input="setSelectValue(option, question)"></b-form-input>
                     <i class="fas fa-times close" @click="removeChoice(option, question)"></i>
                   </div>
                   <h6 @click="addOtherOption(question)">Add other option</h6>
@@ -681,8 +681,8 @@ export default {
             displayVideo: false,
             options: [
               {
-                id: Date.now(),
-                value: '',
+                id: Date.now() + 65132,
+                value: 'option 1',
                 text: 'option 1'
               }
             ],
@@ -740,7 +740,7 @@ export default {
             options: [
               {
                 id: Date.now(),
-                value: '',
+                value: 'option 1',
                 text: 'option 1'
               }
             ],
@@ -801,7 +801,7 @@ export default {
             options: [
               {
                 id: Date.now(),
-                value: '',
+                value: 'option 1',
                 text: 'option 1'
               }
             ],
@@ -817,7 +817,7 @@ export default {
         if (value.id === questionId) {
           value.options.push({
             id: Date.now(),
-            value: '',
+            value: 'new option',
             text: 'new option'
           })
         }
@@ -872,19 +872,19 @@ export default {
       })
 
     },
-    setSelectValue(event, option, question) {
-      console.log(event)
-
-      const questionId = question.id;
-      this.form.questions.find(value => {
-        if (value.id === questionId) {
-          value.options.add({
-            id: Date.now(),
-            text: event,
-            value: event,
+    setSelectValue(option, question) {
+      let questionId = question.id;
+      let optionId = option.id;
+      this.form.questions.find(question => {
+        if (question.id === questionId) {
+          question.options.find(option => {
+            if (option.id === optionId) {
+              option.text = option.value
+            }
           })
         }
       })
+      console.log(this.form)
     },
     async addForm() {
       this.isLoading = true;
