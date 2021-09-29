@@ -12,23 +12,26 @@
             <div class="contact-form">
               <h3>Contact Form</h3>
               <div class="container">
-                <b-form @submit="sendMail">
+                <b-form @submit.prevent="sendMail">
                   <b-form-input
                       class="mt-4"
                       v-model="contact.mail"
                       placeholder="Email address"
+                      required
                   ></b-form-input>
                   <b-form-input
                       class="mt-4"
                       v-model="contact.subject"
                       placeholder="Subject"
+                      required
                   ></b-form-input>
                   <b-form-input
                       class="mt-4"
                       v-model="contact.message"
                       placeholder="Message"
+                      required
                   ></b-form-input>
-                  <b-button class="mt-4 btn">Submit Message</b-button>
+                  <b-button type="submit" class="mt-4 btn">Submit Message</b-button>
                 </b-form>
               </div>
             </div>
@@ -76,16 +79,19 @@
                       class="mt-4"
                       v-model="contact.mail"
                       placeholder="عنوان البريد الإلكتروني"
+                      required
                   ></b-form-input>
                   <b-form-input
                       class="mt-4"
                       v-model="contact.subject"
                       placeholder="موضوع"
+                      required
                   ></b-form-input>
                   <b-form-input
                       class="mt-4"
                       v-model="contact.message"
                       placeholder="رسالة"
+                      required
                   ></b-form-input>
                   <b-button class="btn">تقديم رسالة</b-button>
                 </b-form>
@@ -144,6 +150,7 @@ export default {
       locationAr: 'الخبر ، المملكة العربية السعودية',
       phone: '015616306',
       email: 'test@gmail.com',
+      error: '',
       contact: {
         mail: '',
         subject: '',
@@ -158,6 +165,28 @@ export default {
   },
   methods: {
     sendMail() {
+      let url = `https://ya-forms-api.herokuapp.com/api/contactus`
+
+      let myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+
+      let raw = JSON.stringify({
+        "mail": this.contact.mail,
+        "subject": this.contact.subject,
+        "message": this.contact.message
+      });
+
+      let requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+      };
+
+      fetch(url, requestOptions)
+          .then(response => response.text())
+          .then(result => console.log(result))
+          .catch(error => this.error = error);
 
     }
   }
@@ -172,6 +201,7 @@ export default {
 .nav {
   position: fixed;
   top: 0;
+  z-index: 1000;
   width: 100%;
 }
 
@@ -182,7 +212,7 @@ export default {
 }
 
 main {
-  margin-top: 80px;
+  margin: 80px 0 50px;
 }
 
 .contact-content {

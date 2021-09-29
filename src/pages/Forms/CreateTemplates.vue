@@ -1,18 +1,109 @@
 <template>
   <div :class="'home animate__animated animate__fadeIn ' + form.styleTheme + ' ' + form.fontFamily ">
 
-    <div>
-      <create-form-header
-          @show-theme="showTheme"
-          @show-send="showSend"
-          :theme="form.styleTheme"
-          :id=$store.getters.token
-          show="true"
-          shownav2=true
+    <div class="select-form-type" v-if="form.formType === ''">
+
+      <div class="animate__animated animate__backInLeft" v-if="getLang === 'en'">
+
+        <main-header></main-header>
+
+        <div class="container ">
+          <div class="select-form-type-header">
+            <h1>Select your form layout</h1>
+            <p>Choose a layout according to your needs</p>
+          </div>
+
+          <div class="select-form-type-content">
+            <div @click="setFormType('classic form')" class="select-form-type-classic">
+              <div class="classic-form">
+                <div class="svg">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 121 125" class="jfWizard-list-item-icon-svg" width="187" height="204"><g fill="none" fill-rule="evenodd"><path d="M4.417 0h112a4 4 0 014 4v121h-120V4a4 4 0 014-4z" fill="#FFF" fill-rule="nonzero"></path><g transform="translate(10.417 13)"><path d="M17.001 31.122h79.14a2.858 2.858 0 010 5.716h-79.14a2.858 2.858 0 110-5.716z" fill="#DAE2ED" fill-rule="nonzero"></path><rect fill="#DAE2ED" fill-rule="nonzero" y="20.324" width="74.571" height="5.716" rx="2.858"></rect><rect fill="#DAE2ED" fill-rule="nonzero" width="99" height="8.257" rx="3"></rect><path d="M17.001 41.284h79.14a2.858 2.858 0 010 5.716h-79.14a2.858 2.858 0 110-5.716z" fill="#DAE2ED" fill-rule="nonzero"></path><g transform="translate(0 30.486)"><rect fill="#2F90FF" fill-rule="nonzero" width="6.429" height="6.351" rx="2"></rect><path d="M2.734 4.765a.33.33 0 01-.238-.103L1.304 3.424a.36.36 0 010-.495.328.328 0 01.477 0l.953.99L4.878 1.69a.328.328 0 01.477 0 .36.36 0 010 .496L2.972 4.662a.33.33 0 01-.238.103" fill="#FFF"></path></g><rect fill="#DAE2ED" fill-rule="nonzero" y="40.649" width="6.429" height="6.351" rx="2"></rect></g><g transform="translate(10.417 72)"><path d="M17.036 10.929h79.071a2.893 2.893 0 010 5.785H17.036a2.893 2.893 0 110-5.785zM2.893 0h68.786a2.893 2.893 0 110 5.786H2.893a2.893 2.893 0 010-5.786zm14.143 21.214h79.071a2.893 2.893 0 010 5.786H17.036a2.893 2.893 0 110-5.786z" fill="#DAE2ED" fill-rule="nonzero"></path><g transform="translate(0 10.286)"><rect fill="#2F90FF" fill-rule="nonzero" width="6.429" height="6.429" rx="2"></rect><path d="M2.734 4.823a.327.327 0 01-.238-.104L1.304 3.465a.367.367 0 010-.5.325.325 0 01.477 0l.953 1.002L4.878 1.71a.325.325 0 01.477 0 .367.367 0 010 .501L2.972 4.72a.328.328 0 01-.238.104" fill="#FFF"></path></g><rect fill="#DAE2ED" fill-rule="nonzero" y="20.571" width="6.429" height="6.429" rx="2"></rect><g transform="translate(0 20.571)"><rect fill="#2F90FF" fill-rule="nonzero" width="6.429" height="6.429" rx="2"></rect><path d="M2.734 4.823a.327.327 0 01-.238-.104L1.304 3.465a.367.367 0 010-.5.325.325 0 01.477 0l.953 1.002L4.878 1.71a.325.325 0 01.477 0 .367.367 0 010 .501L2.972 4.72a.328.328 0 01-.238.104" fill="#FFF"></path></g></g><rect fill="#2F90FF" fill-rule="nonzero" x="77.417" y="109" width="32" height="10" rx="4"></rect></g></svg>
+                </div>
+              </div>
+              <div class="classic-footer">
+                <h3>Classic form</h3>
+                <p>Show all question</p>
+              </div>
+            </div>
+            <div @click="setFormType('card form')" class="select-form-type-card">
+              <div class="card-form">
+                <div class="svg">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 121 92" class="jfWizard-list-item-icon-svg" width="166" height="146"><g fill="none" fill-rule="evenodd"><rect fill="#FFF" fill-rule="nonzero" x="7.934" width="105.131" height="62.153" rx="4"></rect><path d="M7.934 49.59h105.132v9.224a4 4 0 01-4 4H11.934a4 4 0 01-4-4V49.59z" fill="#2A5ACA" fill-rule="nonzero"></path><g transform="translate(15.208 11.24)"><rect fill="#DAE2ED" fill-rule="nonzero" x="10.579" y="11.24" width="80.667" height="5.951" rx="2.975"></rect><rect fill="#DAE2ED" fill-rule="nonzero" width="50.913" height="5.951" rx="2.975"></rect><path d="M13.555 21.82H88.27a2.975 2.975 0 010 5.95H13.555a2.975 2.975 0 010-5.95z" fill="#DAE2ED" fill-rule="nonzero"></path><g transform="translate(0 10.58)"><rect fill="#2F90FF" fill-rule="nonzero" width="6.612" height="6.612" rx="2"></rect><path d="M2.812 4.96a.337.337 0 01-.245-.107L1.34 3.564a.378.378 0 010-.515.334.334 0 01.49 0l.98 1.031 2.206-2.32a.334.334 0 01.49 0 .378.378 0 010 .515l-2.45 2.578a.337.337 0 01-.245.107" fill="#FFF"></path></g><rect fill="#DAE2ED" fill-rule="nonzero" y="21.158" width="6.612" height="6.612" rx="2"></rect></g><rect fill="#FFF" fill-rule="nonzero" width="121" height="62.153" rx="4"></rect><path d="M0 49.59h121v9.224a4 4 0 01-4 4H4a4 4 0 01-4-4V49.59z" fill="#51DCA9" fill-rule="nonzero"></path><g transform="translate(9.257 11.24)"><path d="M14.877 11.24H98.85a2.975 2.975 0 010 5.951H14.877a2.975 2.975 0 110-5.95zM2.975 0h50.913a2.975 2.975 0 110 5.95H2.975a2.975 2.975 0 110-5.95zm11.902 21.82H98.85a2.975 2.975 0 010 5.95H14.877a2.975 2.975 0 110-5.95z" fill="#DAE2ED" fill-rule="nonzero"></path><g transform="translate(0 10.58)"><rect fill="#2F90FF" fill-rule="nonzero" width="6.612" height="6.612" rx="2"></rect><path d="M2.812 4.96a.337.337 0 01-.245-.107L1.34 3.564a.378.378 0 010-.515.334.334 0 01.49 0l.98 1.031 2.206-2.32a.334.334 0 01.49 0 .378.378 0 010 .515l-2.45 2.578a.337.337 0 01-.245.107" fill="#FFF"></path></g><rect fill="#DAE2ED" fill-rule="nonzero" y="21.158" width="6.612" height="6.612" rx="2"></rect></g><path stroke="#319BF3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8.596 86.646h104.47"></path><circle stroke="#319BF3" stroke-width="1.5" fill="#51DCA9" fill-rule="nonzero" cx="60.831" cy="86.646" r="3.967"></circle><circle fill="#319BF3" fill-rule="nonzero" cx="9.918" cy="86.646" r="3.967"></circle><circle fill="#319BF3" fill-rule="nonzero" cx="111.743" cy="86.646" r="3.967"></circle></g></svg>
+                </div>
+              </div>
+              <div class="card-form-footer">
+                <h3>Card form</h3>
+                <p>Show all question</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="ar animate__animated animate__backInRight" v-if="getLang === 'ar'">
+
+        <main-header></main-header>
+
+        <div class="container mt-4">
+          <div class="select-form-type-header">
+            <h1>حدد تخطيط النموذج الخاص بك</h1>
+            <p>اختر تخطيطًا وفقًا لاحتياجاتك</p>
+          </div>
+
+          <div class="select-form-type-content">
+            <div @click="setFormType('classic form')" class="select-form-type-classic">
+              <div class="classic-form">
+                <div class="svg">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 121 125" class="jfWizard-list-item-icon-svg" width="187" height="204"><g fill="none" fill-rule="evenodd"><path d="M4.417 0h112a4 4 0 014 4v121h-120V4a4 4 0 014-4z" fill="#FFF" fill-rule="nonzero"></path><g transform="translate(10.417 13)"><path d="M17.001 31.122h79.14a2.858 2.858 0 010 5.716h-79.14a2.858 2.858 0 110-5.716z" fill="#DAE2ED" fill-rule="nonzero"></path><rect fill="#DAE2ED" fill-rule="nonzero" y="20.324" width="74.571" height="5.716" rx="2.858"></rect><rect fill="#DAE2ED" fill-rule="nonzero" width="99" height="8.257" rx="3"></rect><path d="M17.001 41.284h79.14a2.858 2.858 0 010 5.716h-79.14a2.858 2.858 0 110-5.716z" fill="#DAE2ED" fill-rule="nonzero"></path><g transform="translate(0 30.486)"><rect fill="#2F90FF" fill-rule="nonzero" width="6.429" height="6.351" rx="2"></rect><path d="M2.734 4.765a.33.33 0 01-.238-.103L1.304 3.424a.36.36 0 010-.495.328.328 0 01.477 0l.953.99L4.878 1.69a.328.328 0 01.477 0 .36.36 0 010 .496L2.972 4.662a.33.33 0 01-.238.103" fill="#FFF"></path></g><rect fill="#DAE2ED" fill-rule="nonzero" y="40.649" width="6.429" height="6.351" rx="2"></rect></g><g transform="translate(10.417 72)"><path d="M17.036 10.929h79.071a2.893 2.893 0 010 5.785H17.036a2.893 2.893 0 110-5.785zM2.893 0h68.786a2.893 2.893 0 110 5.786H2.893a2.893 2.893 0 010-5.786zm14.143 21.214h79.071a2.893 2.893 0 010 5.786H17.036a2.893 2.893 0 110-5.786z" fill="#DAE2ED" fill-rule="nonzero"></path><g transform="translate(0 10.286)"><rect fill="#2F90FF" fill-rule="nonzero" width="6.429" height="6.429" rx="2"></rect><path d="M2.734 4.823a.327.327 0 01-.238-.104L1.304 3.465a.367.367 0 010-.5.325.325 0 01.477 0l.953 1.002L4.878 1.71a.325.325 0 01.477 0 .367.367 0 010 .501L2.972 4.72a.328.328 0 01-.238.104" fill="#FFF"></path></g><rect fill="#DAE2ED" fill-rule="nonzero" y="20.571" width="6.429" height="6.429" rx="2"></rect><g transform="translate(0 20.571)"><rect fill="#2F90FF" fill-rule="nonzero" width="6.429" height="6.429" rx="2"></rect><path d="M2.734 4.823a.327.327 0 01-.238-.104L1.304 3.465a.367.367 0 010-.5.325.325 0 01.477 0l.953 1.002L4.878 1.71a.325.325 0 01.477 0 .367.367 0 010 .501L2.972 4.72a.328.328 0 01-.238.104" fill="#FFF"></path></g></g><rect fill="#2F90FF" fill-rule="nonzero" x="77.417" y="109" width="32" height="10" rx="4"></rect></g></svg>
+                </div>
+              </div>
+              <div class="classic-footer">
+                <h3>شكل كلاسيكي</h3>
+                <p>عرض كل الأسئلة</p>
+              </div>
+            </div>
+            <div @click="setFormType('card form')" class="select-form-type-card">
+              <div class="card-form">
+                <div class="svg">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 121 92" class="jfWizard-list-item-icon-svg" width="166" height="146"><g fill="none" fill-rule="evenodd"><rect fill="#FFF" fill-rule="nonzero" x="7.934" width="105.131" height="62.153" rx="4"></rect><path d="M7.934 49.59h105.132v9.224a4 4 0 01-4 4H11.934a4 4 0 01-4-4V49.59z" fill="#2A5ACA" fill-rule="nonzero"></path><g transform="translate(15.208 11.24)"><rect fill="#DAE2ED" fill-rule="nonzero" x="10.579" y="11.24" width="80.667" height="5.951" rx="2.975"></rect><rect fill="#DAE2ED" fill-rule="nonzero" width="50.913" height="5.951" rx="2.975"></rect><path d="M13.555 21.82H88.27a2.975 2.975 0 010 5.95H13.555a2.975 2.975 0 010-5.95z" fill="#DAE2ED" fill-rule="nonzero"></path><g transform="translate(0 10.58)"><rect fill="#2F90FF" fill-rule="nonzero" width="6.612" height="6.612" rx="2"></rect><path d="M2.812 4.96a.337.337 0 01-.245-.107L1.34 3.564a.378.378 0 010-.515.334.334 0 01.49 0l.98 1.031 2.206-2.32a.334.334 0 01.49 0 .378.378 0 010 .515l-2.45 2.578a.337.337 0 01-.245.107" fill="#FFF"></path></g><rect fill="#DAE2ED" fill-rule="nonzero" y="21.158" width="6.612" height="6.612" rx="2"></rect></g><rect fill="#FFF" fill-rule="nonzero" width="121" height="62.153" rx="4"></rect><path d="M0 49.59h121v9.224a4 4 0 01-4 4H4a4 4 0 01-4-4V49.59z" fill="#51DCA9" fill-rule="nonzero"></path><g transform="translate(9.257 11.24)"><path d="M14.877 11.24H98.85a2.975 2.975 0 010 5.951H14.877a2.975 2.975 0 110-5.95zM2.975 0h50.913a2.975 2.975 0 110 5.95H2.975a2.975 2.975 0 110-5.95zm11.902 21.82H98.85a2.975 2.975 0 010 5.95H14.877a2.975 2.975 0 110-5.95z" fill="#DAE2ED" fill-rule="nonzero"></path><g transform="translate(0 10.58)"><rect fill="#2F90FF" fill-rule="nonzero" width="6.612" height="6.612" rx="2"></rect><path d="M2.812 4.96a.337.337 0 01-.245-.107L1.34 3.564a.378.378 0 010-.515.334.334 0 01.49 0l.98 1.031 2.206-2.32a.334.334 0 01.49 0 .378.378 0 010 .515l-2.45 2.578a.337.337 0 01-.245.107" fill="#FFF"></path></g><rect fill="#DAE2ED" fill-rule="nonzero" y="21.158" width="6.612" height="6.612" rx="2"></rect></g><path stroke="#319BF3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8.596 86.646h104.47"></path><circle stroke="#319BF3" stroke-width="1.5" fill="#51DCA9" fill-rule="nonzero" cx="60.831" cy="86.646" r="3.967"></circle><circle fill="#319BF3" fill-rule="nonzero" cx="9.918" cy="86.646" r="3.967"></circle><circle fill="#319BF3" fill-rule="nonzero" cx="111.743" cy="86.646" r="3.967"></circle></g></svg>
+                </div>
+              </div>
+              <div class="card-form-footer">
+                <h3>نموذج البطاقة</h3>
+                <p>عرض كل الأسئلة</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="footer">
+        <main-footer></main-footer>
+      </div>
+
+    </div>
+
+    <div v-else>
+      <create-form-header class="mb-4"
+                          @show-theme="showTheme"
+                          @show-send="showSend"
+                          :theme="form.styleTheme"
+                          :id=$store.getters.token
+                          show=true
+                          show-theme-icon=true
       >
       </create-form-header>
 
-      <div class="main-content en animate__animated animate__backInLeft mt-3" v-if="getLang === 'en'">
+      <send-form
+          @close-send="closeSend"
+          v-if="displaySend"
+          :formId="form.id"
+          :theme="form.styleTheme"
+      ></send-form>
+
+      <div class="main-content en animate__animated animate__backInLeft">
         <base-spinner v-if="isLoading"></base-spinner>
 
         <div v-else class="container">
@@ -25,8 +116,8 @@
 
             <div class="form-header">
               <div class="form-title">
-                <b-form-input class="input-title" type="text" v-model="form.header" placeholder="Untitled template"></b-form-input>
-                <b-form-input class="input-description" type="text" v-model="form.description" placeholder="Template description"></b-form-input>
+                <b-form-input class="input-title" type="text" v-model="form.header" placeholder="Untitled form"></b-form-input>
+                <b-form-input class="input-description" type="text" v-model="form.description" placeholder="Form description"></b-form-input>
               </div>
               <div class="form-logo">
                 <img :src="form.logo">
@@ -84,7 +175,7 @@
                 <div v-else-if="question.questionType == 'Multiple choice'" class="form-question-row-2 choice-row">
                   <div class="multiple-choice-row" v-for="option in question.options" :key="option.id">
                     <i class="far fa-circle"></i>
-                    <b-form-input class="multiple-choice-input" type="text" v-model="option.value"></b-form-input>
+                    <b-form-input class="multiple-choice-input" type="text" v-model="option.value" @input="setSelectValue(option, question)"></b-form-input>
                     <i class="fas fa-times close" @click="removeChoice(option, question)"></i>
                   </div>
                   <h6 @click="addOtherOption(question)">Add other option</h6>
@@ -93,7 +184,7 @@
                 <div v-else-if="question.questionType == 'Checkboxes'" class="form-question-row-2 choice-row">
                   <div class="multiple-choice-row" v-for="option in question.options" :key="option.id">
                     <i class="far fa-square"></i>
-                    <b-form-input class="multiple-choice-input" type="text" v-model="option.value"></b-form-input>
+                    <b-form-input class="multiple-choice-input" type="text" v-model="option.value" @input="setSelectValue(option, question)"></b-form-input>
                     <i class="fas fa-times close" @click="removeChoice(option, question)"></i>
                   </div>
                   <h6 @click="addOtherOption(question)">Add other option</h6>
@@ -101,7 +192,7 @@
 
                 <div v-else-if="question.questionType == 'Dropdown'" class="form-question-row-2 choice-row">
                   <div class="multiple-choice-row" v-for="option in question.options" :key="option.id">
-                    <b-form-input class="multiple-choice-input" type="text" v-model="option.value"></b-form-input>
+                    <b-form-input class="multiple-choice-input" type="text" v-model="option.value" @input="setSelectValue(option, question)"></b-form-input>
                     <i class="fas fa-times close" @click="removeChoice(option, question)"></i>
                   </div>
                   <h6 @click="addOtherOption(question)">Add other option</h6>
@@ -167,7 +258,7 @@
                 <div v-if="question.type === 'video'" class="video-type-content">
 
                   <div v-if="question.displayVideo" class="video">
-                    <iframe class="m-4" src="https://www.youtube.com/embed/tgbNymZ7vqY?controls=0"></iframe>
+                    <iframe class="m-4" src="https://www.youtube.com/embed/NdZrlP5G-vk?controls=0"></iframe>
                   </div>
 
                   <div v-else class="video-url d-flex">
@@ -186,7 +277,7 @@
 
             </div>
 
-            <b-button class="btn" @click="addForm">Add Template</b-button>
+            <b-button class="btn" @click="addForm">Add Form</b-button>
           </div>
 
           <div class="right-elements">
@@ -273,258 +364,6 @@
 
       </div>
 
-      <div class="main-content ar animate__animated animate__backInRight" v-if="getLang === 'ar'">
-
-        <base-spinner v-if="isLoading"></base-spinner>
-
-        <div v-else class="container">
-
-          <div class="create-form">
-
-            <div class="form-image-header" v-if="form.imageHeader">
-              <img :src="form.imageHeader">
-            </div>
-
-            <div class="form-header">
-              <div class="form-title">
-                <b-form-input class="input-title" type="text" v-model="form.header" placeholder="نموذج بدون عنوان"></b-form-input>
-                <b-form-input class="input-description" type="text" v-model="form.description" placeholder="وصف النموذج"></b-form-input>
-              </div>
-              <div class="form-logo">
-                <img :src="form.logo">
-              </div>
-            </div>
-
-            <div @click="divFocus(question)" v-for="question in form.questions" :key="question.id" :class="'form-question ' + question.focus ">
-
-              <div v-if="question.type === 'question'" class="question-type">
-
-                <div class="form-question-row-1">
-                  <b-form-input class="input-question" type="text" v-model="question.question" placeholder="السؤال"></b-form-input>
-                  <b-form-select class="select-answer" v-model="question.questionType">
-                    <b-form-select-option :value="null">الرجاء تحديد نوع السؤال</b-form-select-option>
-                    <b-form-select-option value="Short answer">اجابة قصيرة</b-form-select-option>
-                    <b-form-select-option value="Paragraph">فقرة</b-form-select-option>
-                    <b-form-select-option value="Multiple choice">متعدد الخيارات</b-form-select-option>
-                    <b-form-select-option value="Checkboxes">مربعات الاختيار</b-form-select-option>
-                    <b-form-select-option value="Dropdown">اسقاط</b-form-select-option>
-                    <b-form-select-option value="Date">التاريخ</b-form-select-option>
-                    <b-form-select-option value="Time">الوقت</b-form-select-option>
-                  </b-form-select>
-                </div>
-
-                <div v-if="question.questionType == 'null'" class="form-question-row-2"></div>
-
-                <div v-else-if="question.questionType == 'Short answer'" class="form-question-row-2 short-answer-row">
-                  <b-form-input
-                      type="text"
-                      class="input-answer"
-                      placeholder="نص إجابة قصيرة"
-                      disabled
-                  ></b-form-input>
-                </div>
-
-                <div v-else-if="question.questionType == 'Paragraph'" class="form-question-row-2 paragraph-row">
-                  <b-form-textarea
-                      type="text"
-                      class="input-paragraph"
-                      placeholder="نص الفقرة"
-                      disabled
-                  ></b-form-textarea>
-                </div>
-
-                <div v-else-if="question.questionType == 'Multiple choice'" class="form-question-row-2 choice-row">
-                  <div class="multiple-choice-row" v-for="option in question.options" :key="option.id">
-                    <i class="far fa-circle"></i>
-                    <b-form-input class="multiple-choice-input" type="text" v-model="option.value"></b-form-input>
-                    <i class="fas fa-times close" @click="removeChoice(option, question)"></i>
-                  </div>
-                  <h6 @click="addOtherOption(question)">أضف خيارًا آخر</h6>
-                </div>
-
-                <div v-else-if="question.questionType == 'Checkboxes'" class="form-question-row-2 choice-row">
-                  <div class="multiple-choice-row" v-for="option in question.options" :key="option.id">
-                    <i class="far fa-square"></i>
-                    <b-form-input class="multiple-choice-input" type="text" v-model="option.value"></b-form-input>
-                    <i class="fas fa-times close" @click="removeChoice(option, question)"></i>
-                  </div>
-                  <h6 @click="addOtherOption(question)">أضف خيارًا آخر</h6>
-                </div>
-
-                <div v-else-if="question.questionType == 'Dropdown'" class="form-question-row-2 choice-row">
-                  <div class="multiple-choice-row" v-for="option in question.options" :key="option.id">
-                    <b-form-input class="multiple-choice-input" type="text" v-model="option.value"></b-form-input>
-                    <i class="fas fa-times close" @click="removeChoice(option, question)"></i>
-                  </div>
-                  <h6 @click="addOtherOption(question)">أضف خيارًا آخر</h6>
-                </div>
-
-                <div v-else-if="question.questionType == 'Date'" class="form-question-row-2 date-row">
-                  <b-form-input
-                      type="date"
-                      disabled
-                  ></b-form-input>
-                </div>
-
-                <div v-else-if="question.questionType == 'Time'" class="form-question-row-2 time-row">
-                  <b-form-input
-                      type="time"
-                      disabled
-                  ></b-form-input>
-                </div>
-
-                <div v-else class="form-question-row-2"></div>
-
-                <div class="question-footer">
-                  <div class="hidden-class"></div>
-                  <div class="question-footer-content">
-                    <i class="far fa-copy duplicate" @click="duplicate(question)"></i>
-                    <i class="fas fa-trash-alt remove" @click="remove(question)"></i>
-                    <div class="required d-flex">
-                      <p>مطلوب</p>
-                      <label class="switch mt-auto mb-auto">
-                        <input type="checkbox" v-model="question.required">
-                        <span class="slider round"></span>
-                      </label>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-
-              <div v-else class="else-type-content">
-
-                <div class="else-type-header">
-                  <b-form-input class="else-type-header-input" type="text" v-model="question.question" placeholder="عنوان"></b-form-input>
-                  <div class="else-type-header-icons">
-                    <i class="far fa-copy duplicate" @click="duplicate(question)"></i>
-                    <i class="fas fa-trash-alt remove" @click="remove(question)"></i>
-                  </div>
-                </div>
-
-                <div v-if="question.type === 'title'" class="title-type-content">
-                  <b-form-input
-                      class="title-description-input"
-                      type="text"
-                      v-model="question.description"
-                      placeholder="اضف وصفا"
-                  ></b-form-input>
-                </div>
-
-                <div v-if="question.type === 'image'" class="image-type-content">
-
-                  <img :src="question.description">
-
-                </div>
-
-                <div v-if="question.type === 'video'" class="video-type-content">
-
-                  <div v-if="question.displayVideo" class="video">
-                    <iframe class="m-4" src="https://www.youtube.com/embed/tgbNymZ7vqY?controls=0"></iframe>
-                  </div>
-
-                  <div v-else class="video-url d-flex">
-                    <b-form-input
-                        class="title-description-input"
-                        type="text"
-                        v-model="question.description"
-                        placeholder="أضف رابط فيديو youtube"
-                    ></b-form-input>
-                    <b-button @click="addVideo(question.id)" type="reset">أضف الفيديو</b-button>
-                  </div>
-
-                </div>
-
-              </div>
-
-            </div>
-
-            <b-button class="btn" @click="addForm">أضف النموذج</b-button>
-          </div>
-
-          <div class="right-elements">
-            <div class="top">
-              <input type="file" accept="image/" class="hidden" ref="logoFile" @change="addLogo">
-              <div v-b-popover.hover.left="'أضف الشعار'" class="add-logo">
-                <button type="reset" class="add-logo-btn" @click="browse">
-                  <i class="fas fa-plus-circle"></i>شعار
-                </button>
-              </div>
-            </div>
-            <div class="bottom">
-              <i @click="addNewQuestion" class="fas fa-plus-circle" v-b-popover.hover.left="'أضف سؤال جديد'"></i>
-              <i @click="addNewTitle" v-b-popover.hover.left="'أضف عنوانًا ووصفًا جديدين'" class="fas fa-heading"></i>
-              <input type="file" accept="image/" class="hidden" ref="imageFile" @change="addImage">
-              <i @click="addNewImage" v-b-popover.hover.left="'أضف صورة جديدة'" class="far fa-image"></i>
-              <i @click="addNewVideo" v-b-popover.hover.left="'أضف فيديو جديد'" class="fas fa-video"></i>
-            </div>
-          </div>
-
-        </div>
-
-        <div v-if="displayTheme" class="theme">
-
-          <div class="theme-header">
-            <i class="fas fa-palette"></i>
-            <p>Theme options</p>
-            <i @click="closeTheme" class="fas fa-times close"></i>
-          </div>
-
-          <div class="image-header">
-            <p class="p-header">HEADER</p>
-            <div class="image-header-content">
-              <div v-if="form.imageHeader === ''">
-                <input type="file" accept="image/" class="hidden" ref="file" @change="changeFormHeaderImage">
-                <button type="reset" @click="browseFormHeaderImage" class="btn-image-header d-flex">
-                  <i class="fas fa-image"></i>
-                  <p>Choose image</p>
-                </button>
-              </div>
-              <div v-else>
-                <button type="reset" class="btn-remove-image-header d-flex">
-                  <i class="fas fa-image"></i>
-                  <p>Image uploaded</p>
-                  <i @click="removeFormHeaderImage" class="fas fa-times"></i>
-                </button>
-              </div>
-
-            </div>
-          </div>
-
-          <div class="theme-color">
-            <p class="p-header">THEME COLOR</p>
-            <div class="theme-color-content">
-              <i @click="editTheme('default')" v-b-popover.hover.top="'Default #9d55a0'" class="fas fa-circle color-1"></i>
-              <i @click="editTheme('theme-1')" v-b-popover.hover.top="'Red #db4437'" class="fas fa-circle color-2"></i>
-              <i @click="editTheme('theme-2')" v-b-popover.hover.top="'Purple #673ab7'" class="fas fa-circle color-3"></i>
-              <i @click="editTheme('theme-3')" v-b-popover.hover.top="'Indigo #3f51b5'" class="fas fa-circle color-4"></i>
-              <i @click="editTheme('theme-4')" v-b-popover.hover.top="'Blue #4285f4'" class="fas fa-circle color-5"></i>
-              <i @click="editTheme('theme-5')" v-b-popover.hover.top="'Light Blue #03a9f4'" class="fas fa-circle color-6"></i>
-              <i @click="editTheme('theme-6')" v-b-popover.hover.top="'Red Orange #ff5722'" class="fas fa-circle color-7"></i>
-              <i @click="editTheme('theme-7')" v-b-popover.hover.top="'Orange #ff9800'" class="fas fa-circle color-8"></i>
-              <i @click="editTheme('theme-8')" v-b-popover.hover.top="'Teal #009688'" class="fas fa-circle color-9"></i>
-              <i @click="editTheme('theme-9')" v-b-popover.hover.top="'Green #4caf50'" class="fas fa-circle color-10"></i>
-              <i @click="editTheme('theme-10')" v-b-popover.hover.top="'Blue Gray #607d8b'" class="fas fa-circle color-11"></i>
-              <i @click="editTheme('theme-11')" v-b-popover.hover.top="'Gray #9e9e9e'" class="fas fa-circle color-12"></i>
-            </div>
-          </div>
-
-          <div class="text-font">
-            <p class="p-header">FONT STYLE</p>
-            <div class="text-font-content">
-              <b-form-select v-model="form.fontFamily" class="mb-3">
-                <b-form-select-option value="default-font">Basic</b-form-select-option>
-                <b-form-select-option value="Playful">Playful</b-form-select-option>
-                <b-form-select-option value="Roboto-Mono">Roboto Mono</b-form-select-option>
-              </b-form-select>
-
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-
       <div class="mobile-add">
         <div class="mobile-add-content">
           <input type="file" accept="image/" class="hidden" ref="file" @change="addLogo">
@@ -550,10 +389,16 @@ import CreateFormHeader from "../../components/Form/CreateFormHeader";
 import BaseSpinner from "@/components/Ui/BaseSpinner";
 import store from "@/store";
 import router from "@/router";
+import MainFooter from "@/components/Main/MainFooter";
+import MainHeader from "@/components/Main/MainHeader";
+import SendForm from "@/pages/Forms/SendForm";
 export default {
   name: "CreateForm",
   components: {
+    MainFooter,
     BaseSpinner,
+    MainHeader,
+    SendForm,
     CreateFormHeader
   },
   computed: {
@@ -566,7 +411,7 @@ export default {
       form: {
         formType: '',
         imageHeader: '',
-        header: 'Untitled Template',
+        header: 'Untitled form',
         isTemplate: true,
         description: 'Form description',
         logo: 'https://placekitten.com/300/300',
@@ -584,7 +429,7 @@ export default {
             displayVideo: false,
             options: [
               {
-                id: Date.now(),
+                id: Date.now() + 65132,
                 value: 'option 1',
                 text: 'option 1'
               }
@@ -598,7 +443,7 @@ export default {
     }
   },
   created() {
-    if (!store.getters.isAuthenticated && !store.getters.isAdmin) {
+    if (!store.getters.isAuthenticated) {
       router.push('/login')
     }
   },
@@ -720,7 +565,8 @@ export default {
         if (value.id === questionId) {
           value.options.push({
             id: Date.now(),
-            value: 'new option'
+            value: 'new option',
+            text: 'new option'
           })
         }
       })
@@ -769,10 +615,28 @@ export default {
       this.form.questions.find(value => {
         if (value.id === id) {
           value.displayVideo = true;
-          console.log(value.displayVideo)
+          const youtube = `https://www.youtube.com/embed/${value.description.slice(value.description.indexOf("=") + 1)}?controls=0`
+
+          console.log(value.description)
+          value.description = youtube
+          console.log(value.description)
         }
       })
 
+    },
+    setSelectValue(option, question) {
+      let questionId = question.id;
+      let optionId = option.id;
+      this.form.questions.find(question => {
+        if (question.id === questionId) {
+          question.options.find(option => {
+            if (option.id === optionId) {
+              option.text = option.value
+            }
+          })
+        }
+      })
+      console.log(this.form)
     },
     async addForm() {
       this.isLoading = true;
@@ -799,6 +663,8 @@ export default {
 
       });
 
+      console.log(this.form.questions)
+
       let requestOptions = {
         method: 'POST',
         headers: myHeaders,
@@ -818,6 +684,8 @@ export default {
       console.log(responseData)
 
       this.isLoading = false;
+
+      await this.$router.push('/forms')
 
     }
   }

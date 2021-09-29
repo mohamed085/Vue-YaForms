@@ -6,7 +6,7 @@
       </div>
     </div>
 
-    <div v-if="getLang === 'en'" class="form-view en animate__animated animate__backInLeft">
+    <div class="form-view en animate__animated animate__backInLeft">
       <div class="form-content">
         <div class="section question-section">
           <div class="question-header">
@@ -47,46 +47,6 @@
       </div>
     </div>
 
-    <div v-if="getLang === 'ar'" class="form-view ar animate__animated animate__backInRight">
-      <div class="form-content">
-        <div class="section question-section">
-          <div class="question-header">
-            <p>السؤال الـ {{ currentQuestion }}</p>
-            <div v-if="!viewOptions" class="options">
-              <span @click="displayOptions" v-if="form.questions[currentQuestion - 1].questionType === 'Multiple choice'" class="view-options">عرض الخيارات <i class="fas fa-chevron-down"></i></span>
-              <span @click="displayOptions" v-if="form.questions[currentQuestion - 1].questionType === 'Checkboxes'" class="view-options">عرض الخيارات <i class="fas fa-chevron-down"></i></span>
-              <span @click="displayOptions" v-if="form.questions[currentQuestion - 1].questionType === 'Dropdown'" class="view-options">عرض الخيارات <i class="fas fa-chevron-down"></i></span>
-            </div>
-            <div v-else class="options">
-              <span @click="displayOptions" v-if="form.questions[currentQuestion - 1].questionType === 'Multiple choice'" class="view-options">إخفاء الخيارات <i class="fas fa-chevron-up"></i></span>
-              <span @click="displayOptions" v-if="form.questions[currentQuestion - 1].questionType === 'Checkboxes'" class="view-options">إخفاء الخيارات <i class="fas fa-chevron-up"></i></span>
-              <span @click="displayOptions" v-if="form.questions[currentQuestion - 1].questionType === 'Dropdown'" class="view-options">إخفاء الخيارات <i class="fas fa-chevron-up"></i></span>
-
-            </div>
-          </div>
-          <p class="question-title">{{ form.questions[currentQuestion - 1].question }} ؟</p>
-          <div v-if="viewOptions" class="options-display">
-            <p class="option" v-for="option in form.questions[currentQuestion - 1].options" :key="option.id">
-              {{ option.value }}
-            </p>
-          </div>
-        </div>
-        <div v-if="form.questions[currentQuestion - 1].responses" class="response-content">
-          <h4 class="section question-section">الاجابات</h4>
-          <div class="section question-section" v-for="answer in form.questions[currentQuestion - 1].responses.responseAnswer" :key="answer.id">
-            {{ answer.answer }}
-            <div class="section-footer">
-              الردود: {{ answer.responsenum }}
-            </div>
-          </div>
-        </div>
-        <div v-else>
-          <div class="section question-section no-response">
-            لا جواب بعد
-          </div>
-        </div>
-      </div>
-    </div>
 
   </div>
 </template>
@@ -143,7 +103,7 @@ export default {
 
         responseData.forEach(question => {
           // eslint-disable-next-line no-constant-condition
-          if (question.questionType === "Short answer" || question.questionType === "Paragraph" || question.questionType === "Time" || question.questionType === "Date" || question.questionType === "Phone number") {
+          if (question.questionType === "Short answer" || question.questionType === "Paragraph" || question.questionType === "Time" || question.questionType === "Date" || question.questionType === "Phone number" || question.questionType === "Multiple choice" || question.questionType === "Dropdown") {
             let count = 0;
             let newQuestion = {
               id: question.id,
@@ -151,6 +111,7 @@ export default {
               type: question.type,
               questionType: question.questionType,
               required: question.required,
+              options: question.options,
               responses: {
                 num: '',
                 responseAnswer: []
@@ -188,6 +149,54 @@ export default {
             this.form.questionNum = responseData.length
           }
 
+          if (question.questionType === "Checkboxes") {
+            let count = 0;
+            console.log(question)
+            let newQuestion = {
+              id: question.id,
+              question: question.question,
+              type: question.type,
+              questionType: question.questionType,
+              required: question.required,
+              options: question.options,
+              responses: {
+                num: '',
+                responseAnswer: []
+              }
+            }
+            question.response.forEach(response => {
+              response.answer.forEach(answer => {
+                let newResponses;
+                if (answer !== undefined) {
+                  if (newQuestion.responses.responseAnswer.length === 0) {
+                    count ++;
+                    newResponses = { id: response.id, answer: answer };
+                    newQuestion.responses.responseAnswer.push(newResponses);
+                  }
+                  else {
+                    let flag = 0;
+                    newQuestion.responses.responseAnswer.forEach(responseAnswer => {
+                      if (answer === responseAnswer.answer) {
+                        flag = 1;
+                        count ++;
+                        if (responseAnswer.repeat) responseAnswer.repeat++;
+                        else responseAnswer.repeat = 2;
+                      }
+                    })
+                    if (flag === 0) {
+                      count ++;
+                      newResponses = { id: response.id, answer: answer };
+                      newQuestion.responses.responseAnswer.push(newResponses);
+                    }
+                  }
+
+                }
+              })
+            })
+            newQuestion.responses.num = count;
+            this.form.questions.push(newQuestion)
+            this.form.questionNum = responseData.length
+          }
         });
         this.isLoading = false;
       }

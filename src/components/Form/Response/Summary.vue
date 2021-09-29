@@ -1,7 +1,7 @@
 <template>
   <div class="summary">
 
-    <div v-if="getLang === 'en'" class="form-view en animate__animated animate__backInLeft">
+    <div class="form-view en animate__animated animate__backInLeft">
       <div class="form-content">
 
         <div v-for="question in questions" :key="question.id">

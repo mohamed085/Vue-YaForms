@@ -1,6 +1,6 @@
 <template>
   <div class="individual">
-    <div v-if="getLang === 'en'" class="form-view en animate__animated animate__backInLeft">
+    <div class="form-view en animate__animated animate__backInLeft">
       <div v-if="form.length !== 0" class="section pagination-section">
         <div class="overflow-auto">
           <b-pagination-nav v-model="currentQuestion" :link-gen="linkGen" :number-of-pages="form.responses.length" use-router></b-pagination-nav>
@@ -155,10 +155,7 @@
       </div>
 
     </div>
-
-
   </div>
-
 </template>
 
 <script>

@@ -19,54 +19,56 @@
               </div>
             </div>
             <div v-if="activeShare" class="send-content">
-              <b-form-group
-                  class="label"
-                  id="input-group-1"
-                  label="Email address:"
-                  label-for="input-1"
-              >
-                <b-form-input
-                    class="input"
-                    id="input-1"
-                    v-model="email"
-                    type="email"
-                    placeholder="Enter email"
-                    required
-                ></b-form-input>
-              </b-form-group>
-              <b-form-group
-                  class="label"
-                  id="input-group-2"
-                  label="Subject:"
-                  label-for="input-2"
-              >
-                <b-form-input
-                    class="input"
-                    id="input-2"
-                    v-model="subject"
-                    type="email"
-                    placeholder="Enter subject"
-                    required
-                ></b-form-input>
-              </b-form-group>
-              <b-form-group
-                  class="label"
-                  id="input-group-3"
-                  label="Message:"
-                  label-for="input-3"
-              >
-                <b-form-input
-                    class="input"
-                    id="input-3"
-                    v-model="message"
-                    type="email"
-                    placeholder="Enter message"
-                    required
-                ></b-form-input>
-              </b-form-group>
-              <div class="send-div-btn">
-                <b-button class="send-btn" @click="send">Send</b-button>
-              </div>
+              <b-form @submit.prevent="send">
+                <b-form-group
+                    class="label"
+                    id="input-group-1"
+                    label="Email address:"
+                    label-for="input-1"
+                >
+                  <b-form-input
+                      class="input"
+                      id="input-1"
+                      v-model="email"
+                      type="email"
+                      placeholder="Enter email"
+                      required
+                  ></b-form-input>
+                </b-form-group>
+                <b-form-group
+                    class="label"
+                    id="input-group-2"
+                    label="Subject:"
+                    label-for="input-2"
+                >
+                  <b-form-input
+                      class="input"
+                      id="input-2"
+                      v-model="subject"
+                      type="text"
+                      placeholder="Enter subject"
+                      required
+                  ></b-form-input>
+                </b-form-group>
+                <b-form-group
+                    class="label"
+                    id="input-group-3"
+                    label="Message:"
+                    label-for="input-3"
+                >
+                  <b-form-input
+                      class="input"
+                      id="input-3"
+                      v-model="message"
+                      type="text"
+                      placeholder="Enter message"
+                      required
+                  ></b-form-input>
+                </b-form-group>
+                <div class="send-div-btn">
+                  <b-button class="send-btn" type="submit">Send</b-button>
+                </div>
+              </b-form>
             </div>
             <div v-else-if="activeLink" class="link-content">
               <b-form-group
@@ -109,54 +111,56 @@
               </div>
             </div>
             <div v-if="activeShare" class="send-content">
-              <b-form-group
-                  class="label"
-                  id="input-group-1"
-                  label="عنوان البريد الإلكتروني:"
-                  label-for="input-1"
-              >
-                <b-form-input
-                    class="input"
-                    id="input-1"
-                    v-model="email"
-                    type="email"
-                    placeholder="أدخل البريد الإلكتروني"
-                    required
-                ></b-form-input>
-              </b-form-group>
-              <b-form-group
-                  class="label"
-                  id="input-group-2"
-                  label="موضوع:"
-                  label-for="input-2"
-              >
-                <b-form-input
-                    class="input"
-                    id="input-2"
-                    v-model="subject"
-                    type="email"
-                    placeholder="أدخل الموضوع"
-                    required
-                ></b-form-input>
-              </b-form-group>
-              <b-form-group
-                  class="label"
-                  id="input-group-3"
-                  label="رسالة:"
-                  label-for="input-3"
-              >
-                <b-form-input
-                    class="input"
-                    id="input-3"
-                    v-model="message"
-                    type="email"
-                    placeholder="أدخل رسالة"
-                    required
-                ></b-form-input>
-              </b-form-group>
-              <div class="send-div-btn">
-                <b-button class="send-btn" @click="send">إرسال</b-button>
-              </div>
+              <b-form @submit.prevent="send">
+                <b-form-group
+                    class="label"
+                    id="input-group-1"
+                    label="عنوان البريد الإلكتروني:"
+                    label-for="input-1"
+                >
+                  <b-form-input
+                      class="input"
+                      id="input-1"
+                      v-model="email"
+                      type="email"
+                      placeholder="أدخل البريد الإلكتروني"
+                      required
+                  ></b-form-input>
+                </b-form-group>
+                <b-form-group
+                    class="label"
+                    id="input-group-2"
+                    label="موضوع:"
+                    label-for="input-2"
+                >
+                  <b-form-input
+                      class="input"
+                      id="input-2"
+                      v-model="subject"
+                      type="text"
+                      placeholder="أدخل الموضوع"
+                      required
+                  ></b-form-input>
+                </b-form-group>
+                <b-form-group
+                    class="label"
+                    id="input-group-3"
+                    label="رسالة:"
+                    label-for="input-3"
+                >
+                  <b-form-input
+                      class="input"
+                      id="input-3"
+                      v-model="message"
+                      type="text"
+                      placeholder="أدخل رسالة"
+                      required
+                  ></b-form-input>
+                </b-form-group>
+                <div class="send-div-btn">
+                  <b-button type="submit" class="send-btn" @click="send">إرسال</b-button>
+                </div>
+              </b-form>
             </div>
             <div v-else-if="activeLink" class="link-content">
               <b-form-group
@@ -197,7 +201,7 @@ export default {
       email: '',
       subject: '',
       message: '',
-      url: 'https://localhost8080/forms/' + this.formId
+      url: 'http://localhost:8080/form/' + this.formId
     }
   },
   created() {
@@ -222,7 +226,30 @@ export default {
       this.activeLink = true;
       this.activeShare = false;
     },
-    send() {}
+    send() {
+      let myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+
+      let raw = JSON.stringify({
+        "meessage": this.message,
+        "subject": this.subject,
+        "email": this.email,
+        "link": this.url
+      });
+
+      let requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+      };
+
+
+      fetch("https://ya-forms-api.herokuapp.com/api/form/send", requestOptions)
+          .then(response => response.text())
+          .then(result => console.log(result))
+          .catch(error => console.log('error', error));
+    }
   }
 }
 </script>
