@@ -817,6 +817,7 @@ export default {
         body: raw,
         redirect: 'follow'
       };
+
       let url = `https://ya-forms-api.herokuapp.com/api/form/` + id;
 
       const response = await fetch(url, requestOptions);

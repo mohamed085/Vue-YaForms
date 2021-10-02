@@ -1,7 +1,9 @@
 <template>
   <base-spinner v-if="isLoading"></base-spinner>
   <div v-else :class="'home animate__animated animate__backInRight ' + form.styleTheme + ' ' + form.fontFamily ">
+
     <create-form-header
+        class="hidePdf"
         :theme="form.styleTheme"
         :id=$route.params.id
         show=false
@@ -17,7 +19,7 @@
 
       <div v-if="getLang === 'en'" class="en animate__animated animate__backInLeft">
 
-        <div class="section responseNum-section">
+        <div class="hidePdf section responseNum-section">
           <div class="responseNum-section-row1">
             <div class="responseCount">
               {{ form.responseNum }} responses
@@ -34,7 +36,7 @@
           </div>
           <div v-if="form.responseNum !== 0" class="responseExport-section d-flex justify-content-between">
             <div>
-              <b-button class="export-btn" >Export as pdf</b-button>
+              <b-button class="export-btn" @click="exportAsPDF">Export as pdf</b-button>
               <b-button class="export-btn" @click="exportResponseAsCSV">Export as excel</b-button>
             </div>
           </div>
@@ -51,14 +53,11 @@
           </div>
         </div>
 
-
-
         <div v-if="form.responseNum !== 0" class="response-content">
 
           <router-view></router-view>
 
         </div>
-
 
         <div v-if="form.responseNum === 0" >
           <div class="section no-response-section">
@@ -69,7 +68,7 @@
 
       <div v-if="getLang === 'ar'" class="ar animate__animated animate__backInRight">
 
-        <div class="section responseNum-section">
+        <div class="hidePdf section responseNum-section">
           <div class="responseNum-section-row1">
             <div class="responseCount">
               {{ form.responseNum }} ردود
@@ -79,20 +78,20 @@
             <div class="accepting-responses d-flex">
               <p>قبول الردود</p>
               <label class="switch mt-auto mb-auto">
-                <input type="checkbox" v-model="form.acceptingResponses">
+                <input type="checkbox" v-model="form.acceptResponse">
                 <span class="slider round"></span>
               </label>
             </div>
           </div>
           <div v-if="form.responseNum !== 0" class="responseNum-section-row3">
             <div class="response-type">
-              <router-link exact :to="'/form/response/' + form.id  ">ملخص</router-link>
+              <router-link exact :to="'/form/response/' + form._id  ">ملخص</router-link>
             </div>
             <div class="response-type">
-              <router-link :to="'/form/response/' + form.id + '/question' ">الأسئلة</router-link>
+              <router-link :to="'/form/response/' + form._id + '/question' ">الأسئلة</router-link>
             </div>
             <div class="response-type">
-              <router-link :to="'/form/response/' + form.id + '/individual' ">الفورمز</router-link>
+              <router-link :to="'/form/response/' + form._id + '/individual' ">الفورمز</router-link>
             </div>
           </div>
         </div>
@@ -180,7 +179,7 @@ export default {
         redirect: 'follow',
       };
 
-      let url = `c/api/form/` + id + `/responses/summary/csv`;
+      let url = `https://ya-forms-api.herokuapp.com/api/form/` + id + `/responses/summary/csv`;
 
       fetch(url, requestOptions)
           .then(response => response.blob())
@@ -229,6 +228,20 @@ export default {
       this.isLoading = false;
 
     },
+
+    exportAsPDF() {
+      const element = document.getElementsByClassName("hidePdf");
+      for (const l of element) {
+        l.style.display = "none"
+      }
+      window.addEventListener("afterprint", function() {
+        for (const l of element) {
+          l.style.display = "block"
+        }
+      });
+      window.print()
+
+    }
 
   }
 

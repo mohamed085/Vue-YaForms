@@ -1,6 +1,5 @@
 <template>
-  <div class="home">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light en animate__animated animate__backInLeft" v-if="getLang === 'en'">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light en animate__animated animate__backInLeft" v-if="getLang === 'en'">
       <div class="container-fluid">
         <router-link to="/forms" class="navbar-brand">
           <logo></logo>
@@ -96,7 +95,7 @@
       </div>
     </nav>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light ar animate__animated animate__backInRight" v-if="getLang === 'ar'">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light ar animate__animated animate__backInRight" v-else-if="getLang === 'ar'">
       <div class="container-fluid">
         <router-link to="/forms" class="navbar-brand">
           <logo></logo>
@@ -193,7 +192,6 @@
       </div>
     </nav>
 
-  </div>
 </template>
 
 <script>
@@ -205,11 +203,10 @@ export default {
   },
   data() {
     return {
-      name: localStorage.getItem("name"),
-      avatar: "https://pbs.twimg.com/media/E7yILDuVoAEOzoE?format=jpg&name=medium",
+      avatar: "htlocalStoragetps://pbs.twimg.com/media/E7yILDuVoAEOzoE?format=jpg&name=medium",
     }
   },
-  props: ['id', 'en', 'ar'],
+  props: ['id', 'en', 'ar', 'name'],
   computed: {
     getLang() {
       return this.$store.getters['main/getLang'];

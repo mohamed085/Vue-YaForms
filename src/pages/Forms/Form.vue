@@ -3,7 +3,7 @@
   <div v-else>
 
     <div v-if="!form.acceptResponse" :class="'home animate__animated animate__fadeIn ' + form.styleTheme + ' ' + form.fontFamily ">
-      <div v-if="getLang === 'en'" class="form-view en animate__animated animate__backInLeft">
+      <div class="form-view en animate__animated animate__backInLeft">
         <div v-if="form.imageHeader" class="form-image-header section">
           <img :src="form.imageHeader">
         </div>
@@ -99,7 +99,6 @@
                   <b-form-checkbox-group
                       class="checkbox-select"
                       :options="question.options"
-                      :required="question.required"
                       v-model="question.response"
                       stacked
                   ></b-form-checkbox-group>
@@ -223,7 +222,6 @@
                   <p class="question-title checkboxes-title">{{ question.question }} ؟</p>
                   <b-form-checkbox-group
                       class="checkbox-select"
-                      :required="question.required"
                       v-model="question.response"
                       :options="question.options"
                       stacked
@@ -342,7 +340,6 @@
                   v-if="form.questions[currentQuestion - 1].questionType === 'Checkboxes'"
                   class="checkbox-select"
                   v-model="form.questions[currentQuestion - 1].response"
-                  :required="form.questions[currentQuestion - 1].required"
                   :options="form.questions[currentQuestion - 1].options"
                   stacked
               ></b-form-checkbox-group>
@@ -444,7 +441,6 @@
 
             <b-form-checkbox-group
                 v-if="form.questions[currentQuestion - 1].questionType === 'Checkboxes'"
-                :required="form.questions[currentQuestion - 1].required"
                 class="checkbox-select"
                 v-model="form.questions[currentQuestion - 1].response"
                 :options="form.questions[currentQuestion - 1].options"
@@ -500,7 +496,6 @@
       </div>
 
     </div>
-
   </div>
 </template>
 

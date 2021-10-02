@@ -1,5 +1,4 @@
 <template>
-  <div class="home">
     <div class="form-header en animate__animated animate__backInLeft" v-if="getLang === 'en'">
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
@@ -102,7 +101,7 @@
       </nav>
     </div>
 
-    <div class="form-header ar animate__animated animate__backInRight" v-if="getLang === 'ar'">
+    <div class="form-header ar animate__animated animate__backInRight" v-else-if="getLang === 'ar'">
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
           <router-link to="/forms" class="navbar-brand">
@@ -204,7 +203,6 @@
         </div>
       </nav>
     </div>
-  </div>
 </template>
 
 <script>

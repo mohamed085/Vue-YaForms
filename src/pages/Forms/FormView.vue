@@ -94,14 +94,14 @@
                   <div class="multiple-choice-row" v-for="option in question.options" :key="option.id">
                     <i class="far fa-square"></i>
                     <b-form-input class="multiple-choice-input" type="text" v-model="option.value" disabled></b-form-input>
-                    <i class="fas fa-times close" @click="removeChoice(option, question)"></i>
+                    <i class="fas fa-times close"></i>
                   </div>
                 </div>
 
                 <div v-else-if="question.questionType == 'Dropdown'" class="form-question-row-2 choice-row">
                   <div class="multiple-choice-row" v-for="option in question.options" :key="option.id">
                     <b-form-input class="multiple-choice-input" type="text" v-model="option.value" disabled></b-form-input>
-                    <i class="fas fa-times close" @click="removeChoice(option, question)"></i>
+                    <i class="fas fa-times close"></i>
                   </div>
                 </div>
 
@@ -122,6 +122,23 @@
                 <div v-else class="form-question-row-2"></div>
 
               </div>
+
+              <div v-if="question.type === 'title'" class="question-type">
+                <p class="form-question-row-1 question-title">{{ question.question }}</p>
+                <p class="form-question-row-2 mb-3">{{ question.description }}</p>
+              </div>
+
+              <div v-if="question.type === 'image'" class="section question image">
+                <p class="form-question-row-1 question-title">{{ question.question }}</p>
+                <img :src="question.description">
+              </div>
+
+              <div v-if="question.type === 'video'" class="section question video">
+                <p class="form-question-row-1 question-title">{{ question.question }}</p>
+                <iframe class="form-question-row-2 mb-3" :src="question.description"></iframe>
+              </div>
+
+              <div v-else></div>
 
             </div>
 
@@ -233,6 +250,23 @@
                 <div v-else class="form-question-row-2"></div>
 
               </div>
+
+              <div v-if="question.type === 'title'" class="question-type">
+                <p class="form-question-row-1 question-title">{{ question.question }}</p>
+                <p class="form-question-row-2 mb-3">{{ question.description }}</p>
+              </div>
+
+              <div v-if="question.type === 'image'" class="section question image">
+                <p class="form-question-row-1 question-title">{{ question.question }}</p>
+                <img :src="question.description">
+              </div>
+
+              <div v-if="question.type === 'video'" class="section question video">
+                <p class="form-question-row-1 question-title">{{ question.question }}</p>
+                <iframe class="form-question-row-2 mb-3" :src="question.description"></iframe>
+              </div>
+
+              <div v-else></div>
 
             </div>
 
@@ -504,6 +538,24 @@ export default {
   align-items: center;
 }
 
+.image img {
+  border-radius: 15px;
+  width: calc(100% - 20px);
+  max-height: 500px;
+  margin: 0 10px 10px;
+}
+
+.question-title {
+  font-size: 16px;
+  letter-spacing: .1px;
+  line-height: 24px;
+  color: #202124;
+  font-weight: 400;
+  word-break: break-word;
+  font-family: var(--var-font);
+}
+
+
 .classic-footer h3,
 .card-form-footer h3 {
   font-weight: 500;
@@ -754,6 +806,11 @@ export default {
   margin-right: 20px;
   font-family: var(--var-font);
   font-size: 20px;
+}
+
+.ar .input-question {
+  margin-left: 20px;
+  margin-right: 0;
 }
 
 .input-question:focus {
@@ -1016,55 +1073,6 @@ input:checked + .slider:before {
   width: 100%;
   max-height: 100%;
   border-radius: 15px;
-}
-
-.theme {
-  position: fixed;
-  right: 0;
-  background: #FFFFFF;
-  border-left: 1px solid #c4c4c4;
-  top: -19px;
-  z-index: 999;
-  width: 300px;
-  padding: 0 20px 50px;
-}
-
-.theme-header {
-  display: flex;
-  padding: 16px 0;
-  box-shadow: 0 4px 2px -2px rgba(0,0,0,.2);
-  margin-bottom: 10px;
-}
-
-.theme-header p {
-  margin: auto 0;
-  font-family: 'Google Sans',Roboto,Arial,sans-serif;
-  font-size: 16px;
-  font-weight: 500;
-  letter-spacing: .1px;
-  line-height: 24px;
-  color: #202124;
-
-}
-
-.theme-header i {
-  margin: auto 10px;
-  color: var(--var-main-color);
-}
-
-.theme-header .close {
-  color: #111111;
-  cursor: pointer;
-  margin: auto 10px auto auto;
-}
-
-.theme .p-header {
-  font-family: Roboto,Arial,sans-serif;
-  font-size: 12px;
-  font-weight: 400;
-  letter-spacing: .3px;
-  line-height: 16px;
-  color: #202124;
 }
 
 .image-header {

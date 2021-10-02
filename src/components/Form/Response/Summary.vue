@@ -1,7 +1,6 @@
 <template>
   <div class="summary">
-
-    <div class="form-view en animate__animated animate__backInLeft">
+    <div v-if="getLang === 'en'" class="form-view en animate__animated animate__backInLeft">
       <div class="form-content">
 
         <div v-for="question in questions" :key="question.id">
@@ -71,6 +70,81 @@
             </div>
 
 
+
+          </div>
+
+      </div>
+    </div>
+    </div>
+
+    <div v-if="getLang === 'ar'" class="ar form-view en animate__animated animate__backInLeft">
+      <div class="form-content">
+
+        <div v-for="question in questions" :key="question.id">
+          <div v-if="question.type === 'question'">
+
+            <div class="section question-section" v-if="question.questionType === 'Short answer'">
+              <p class="question-title">{{ question.question }} ؟</p>
+              <p class="response-num">{{ question.responses.num }} ردود</p>
+              <p class="answers">الاجابات</p>
+              <p class="answer short-answer" v-for="answer in question.responses.responseAnswer" :key="answer.id">
+                {{ answer.answer }} <span style="color: var(--var-main-color)" v-if="answer.repeat"> - Repeated {{ answer.repeat }}</span>
+              </p>
+            </div>
+
+            <div class="section question-section" v-if="question.questionType === 'Paragraph'">
+              <p class="question-title">{{ question.question }} ?</p>
+              <p class="response-num">{{ question.responses.num }} ردود</p>
+              <p class="answers">الاجابات</p>
+              <p class="answer short-answer" v-for="answer in question.responses.responseAnswer" :key="answer.id">
+                {{ answer.answer }} <span style="color: var(--var-main-color)" v-if="answer.repeat"> - Repeated {{ answer.repeat }}</span>
+              </p>
+            </div>
+
+            <div class="section question-section" v-if="question.questionType === 'Date'">
+              <p class="question-title">{{ question.question }} ?</p>
+              <p class="response-num">{{ question.responses.num }} ردود</p>
+              <p class="answers">الاجابات</p>
+              <p class="answer short-answer" v-for="answer in question.responses.responseAnswer" :key="answer.id">
+                {{ answer.answer }} <span style="color: var(--var-main-color)" v-if="answer.repeat"> - Repeated {{ answer.repeat }}</span>
+              </p>
+            </div>
+
+            <div class="section question-section" v-if="question.questionType === 'Time'">
+              <p class="question-title">{{ question.question }} ?</p>
+              <p class="response-num">{{ question.responses.num }} ردود</p>
+              <p class="answers">الاجابات</p>
+              <p class="answer short-answer" v-for="answer in question.responses.responseAnswer" :key="answer.id">
+                {{ answer.answer }} <span style="color: var(--var-main-color)" v-if="answer.repeat"> - Repeated {{ answer.repeat }}</span>
+              </p>
+            </div>
+
+            <div class="section question-section" v-if="question.questionType === 'Phone number'">
+              <p class="question-title">{{ question.question }} ?</p>
+              <p class="response-num">{{ question.responses.num }} ردود</p>
+              <p class="answers">الاجابات</p>
+              <p class="answer short-answer" v-for="answer in question.responses.responseAnswer" :key="answer.id">
+                {{ answer.answer }} <span style="color: var(--var-main-color)" v-if="answer.repeat"> - Repeated {{ answer.repeat }}</span>
+              </p>
+            </div>
+
+            <div class="section question-section" v-if="question.questionType === 'Multiple choice'">
+              <p class="question-title">{{ question.question }} ?</p>
+              <p class="response-num">{{ question.responses.num }} ردود</p>
+              <v-chart class="chart" :option="question.option" />
+            </div>
+
+            <div class="section question-section" v-if="question.questionType === 'Checkboxes'">
+              <p class="question-title">{{ question.question }} ?</p>
+              <p class="response-num">{{ question.responses.num }} ردود</p>
+              <v-chart class="chart" :option="question.option" />
+            </div>
+
+            <div class="section question-section" v-if="question.questionType === 'Dropdown'">
+              <p class="question-title">{{ question.question }} ?</p>
+              <p class="response-num">{{ question.responses.num }} ردود</p>
+              <v-chart class="chart" :option="question.option" />
+            </div>
 
           </div>
 

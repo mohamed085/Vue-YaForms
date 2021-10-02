@@ -19,6 +19,7 @@ import Individual from "./components/Form/Response/Individual";
 import CreateTemplates from "@/pages/Forms/CreateTemplates";
 import FormEdit from "@/pages/Forms/FormEdit";
 import FormView from "@/pages/Forms/FormView";
+import Template from "@/pages/Forms/Template";
 
 Vue.use(VueRouter)
 
@@ -36,6 +37,7 @@ const routes = [
     { path: '/form-edit/:id', component: FormEdit },
     { path: '/form-view/:id', component: FormView },
     { path: '/form/:id', component: Form },
+    { path: '/template/:id', component: Template },
     { path: '/create-template', component: CreateTemplates },
     { path: '/create-contact-form', component: null },
     { path: '/create-hiring-form', component: null },

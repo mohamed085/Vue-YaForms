@@ -22,39 +22,14 @@
 
     </div>
   </router-link>
-  <router-link v-else-if="contactForm" class="form-content" to="/create-form">
+  <router-link v-else-if="displayForm" class="form-content" :to="'/template/' + id">
     <div class="form-content">
       <div class="form-img">
-        <img src="../../assets/images/form-3.png">
+        <img :src="imgSrc">
       </div>
       <div class="form-footer">
-        <p v-if="getLang === 'en'">Contact Form</p>
-        <p v-if="getLang === 'ar'">نموذج الاتصال</p>
+        <p>{{ title }}</p>
       </div>
-    </div>
-  </router-link>
-  <router-link v-else-if="hiringForm" class="form-content" to="/create-form">
-    <div class="form-content">
-      <div class="form-img">
-        <img src="../../assets/images/form-4.png">
-      </div>
-      <div class="form-footer">
-        <p v-if="getLang === 'en'">Hiring Form</p>
-        <p v-if="getLang === 'ar'">نموذج التوظيف</p>
-      </div>
-
-    </div>
-  </router-link>
-  <router-link v-else-if="orderForm" class="form-content" to="/create-form">
-    <div class="form-content">
-      <div class="form-img">
-        <img src="../../assets/images/form-2.png">
-      </div>
-      <div class="form-footer">
-        <p v-if="getLang === 'en'">Order Form</p>
-        <p v-if="getLang === 'ar'">نموذج الطلب</p>
-      </div>
-
     </div>
   </router-link>
 </template>
@@ -63,6 +38,15 @@
 export default {
   name: "Form",
   props: {
+    id: {
+      type: String,
+    },
+    title: {
+      type: String,
+    },
+    imgSrc: {
+      type: String,
+    },
     addForm: {
       type: String,
       required: false,
@@ -71,15 +55,7 @@ export default {
       type: String,
       required: false,
     },
-    contactForm: {
-      type: String,
-      required: false,
-    },
-    hiringForm: {
-      type: String,
-      required: false,
-    },
-    orderForm: {
+    displayForm: {
       type: String,
       required: false,
     },

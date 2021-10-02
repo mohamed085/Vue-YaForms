@@ -6,7 +6,7 @@
       </div>
     </div>
 
-    <div class="form-view en animate__animated animate__backInLeft">
+    <div v-if="getLang === 'en'" class="form-view en animate__animated animate__backInLeft">
       <div class="form-content">
         <div class="section question-section">
           <div class="question-header">
@@ -42,6 +42,45 @@
         <div v-else>
           <div class="section question-section no-response">
             No response yet
+          </div>
+        </div>
+      </div>
+    </div>
+    <div v-if="getLang === 'ar'" class="form-view en animate__animated animate__backInRight">
+      <div class="form-content">
+        <div class="section question-section">
+          <div class="question-header">
+            <p>السؤال {{ currentQuestion }}</p>
+            <div v-if="!viewOptions" class="options">
+              <span @click="displayOptions" v-if="form.questions[currentQuestion - 1].questionType === 'Multiple choice'" class="view-options">عرض الخيارات <i class="fas fa-chevron-down"></i></span>
+              <span @click="displayOptions" v-if="form.questions[currentQuestion - 1].questionType === 'Checkboxes'" class="view-options">عرض الخيارات <i class="fas fa-chevron-down"></i></span>
+              <span @click="displayOptions" v-if="form.questions[currentQuestion - 1].questionType === 'Dropdown'" class="view-options">عرض الخيارات <i class="fas fa-chevron-down"></i></span>
+            </div>
+            <div v-else class="options">
+              <span @click="displayOptions" v-if="form.questions[currentQuestion - 1].questionType === 'Multiple choice'" class="view-options">إخفاء الخيارات <i class="fas fa-chevron-up"></i></span>
+              <span @click="displayOptions" v-if="form.questions[currentQuestion - 1].questionType === 'Checkboxes'" class="view-options">إخفاء الخيارات <i class="fas fa-chevron-up"></i></span>
+              <span @click="displayOptions" v-if="form.questions[currentQuestion - 1].questionType === 'Dropdown'" class="view-options">إخفاء الخيارات <i class="fas fa-chevron-up"></i></span>
+            </div>
+          </div>
+          <p class="question-title">{{ form.questions[currentQuestion - 1].question }} ?</p>
+          <div v-if="viewOptions" class="options-display">
+            <p class="option" v-for="option in form.questions[currentQuestion - 1].options" :key="option.id">
+              {{ option.value }}
+            </p>
+          </div>
+        </div>
+        <div v-if="form.questions[currentQuestion - 1].responses" class="response-content">
+          <h4 class="section question-section">الاجابات</h4>
+          <div class="section question-section" v-for="answer in form.questions[currentQuestion - 1].responses.responseAnswer" :key="answer.id">
+            {{ answer.answer }}
+            <div class="section-footer">
+              {{ answer.responsenum }} رد
+            </div>
+          </div>
+        </div>
+        <div v-else>
+          <div class="section question-section no-response">
+            لا يوجد ردود بعد
           </div>
         </div>
       </div>

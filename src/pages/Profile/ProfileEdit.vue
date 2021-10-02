@@ -1,13 +1,11 @@
 <template>
   <div class="home animate__animated animate__fadeIn">
 
-    <div class="nav">
-      <profile-header
-          :avatar="user.imgSrc"
-          :name="user.name"
-          :id=$store.getters.token
-      ></profile-header>
-    </div>
+    <profile-header
+        :avatar="user.imgSrc"
+        :name="user.name"
+        :id=$store.getters.token
+    ></profile-header>
 
     <main class="main-content en animate__animated animate__backInLeft" v-if="getLang === 'en'">
       <div class="main-content-container container">
@@ -57,7 +55,7 @@
               </div>
             </div>
 
-            <b-button class="mt-3 btn" @click="editPersonalInfo">Edit personal information</b-button>
+            <b-button class="mt-3 btn mb-5" @click="editPersonalInfo">Edit personal information</b-button>
           </b-form >
         </div>
       </div>
@@ -85,15 +83,15 @@
               <label>تاريح الميلاد</label>
               <div class="select-dob">
                 <b-form-select v-model="user.yearDOB" :options="YearOptions"></b-form-select>
-                <b-form-select v-model="user.monthDOB" :options="monthOptions"></b-form-select>
-                <b-form-select v-model="user.dayDOB" :options="dayOptions"></b-form-select>
+                <b-form-select v-model="user.monthDOB" :options="monthOptionAr"></b-form-select>
+                <b-form-select v-model="user.dayBOB" :options="dayOptionAr"></b-form-select>
               </div>
             </div>
 
             <div class="form-group">
               <label>البلد</label>
               <div>
-                <b-form-select class="w-100" v-model="user.country" :options="countryOptions"></b-form-select>
+                <b-form-select class="w-100" v-model="user.country" :options="countryOptionsAr"></b-form-select>
               </div>
             </div>
 
@@ -107,7 +105,7 @@
             <div class="form-group">
               <label>رقم الهاتف</label>
               <div>
-                <b-form-input v-model="user.mobileNumber"></b-form-input>
+                <b-form-input v-model="user.phone"></b-form-input>
               </div>
             </div>
 
@@ -149,6 +147,36 @@ export default {
       error: '',
       YearOptions:  [
         { value: null, text: 'Year' },
+        { value: '1960', text: '1960' },
+        { value: '1961', text: '1961' },
+        { value: '1962', text: '1962' },
+        { value: '1963', text: '1963' },
+        { value: '1964', text: '1964' },
+        { value: '1965', text: '1965' },
+        { value: '1966', text: '1966' },
+        { value: '1967', text: '1967' },
+        { value: '1968', text: '1968' },
+        { value: '1969', text: '1969' },
+        { value: '1970', text: '1970' },
+        { value: '1971', text: '1971' },
+        { value: '1972', text: '1972' },
+        { value: '1973', text: '1973' },
+        { value: '1974', text: '1974' },
+        { value: '1975', text: '1975' },
+        { value: '1976', text: '1976' },
+        { value: '1977', text: '1977' },
+        { value: '1978', text: '1978' },
+        { value: '1979', text: '1979' },
+        { value: '1980', text: '1980' },
+        { value: '1981', text: '1981' },
+        { value: '1982', text: '1982' },
+        { value: '1983', text: '1983' },
+        { value: '1984', text: '1984' },
+        { value: '1985', text: '1985' },
+        { value: '1986', text: '1986' },
+        { value: '1987', text: '1987' },
+        { value: '1988', text: '1988' },
+        { value: '1989', text: '1989' },
         { value: '1990', text: '1990' },
         { value: '1991', text: '1991' },
         { value: '1992', text: '1992' },
@@ -185,6 +213,36 @@ export default {
       ],
       YearOptionsAr:  [
         { value: null, text: 'سنه' },
+        { value: '1960', text: '1960' },
+        { value: '1961', text: '1961' },
+        { value: '1962', text: '1962' },
+        { value: '1963', text: '1963' },
+        { value: '1964', text: '1964' },
+        { value: '1965', text: '1965' },
+        { value: '1966', text: '1966' },
+        { value: '1967', text: '1967' },
+        { value: '1968', text: '1968' },
+        { value: '1969', text: '1969' },
+        { value: '1970', text: '1970' },
+        { value: '1971', text: '1971' },
+        { value: '1972', text: '1972' },
+        { value: '1973', text: '1973' },
+        { value: '1974', text: '1974' },
+        { value: '1975', text: '1975' },
+        { value: '1976', text: '1976' },
+        { value: '1977', text: '1977' },
+        { value: '1978', text: '1978' },
+        { value: '1979', text: '1979' },
+        { value: '1980', text: '1980' },
+        { value: '1981', text: '1981' },
+        { value: '1982', text: '1982' },
+        { value: '1983', text: '1983' },
+        { value: '1984', text: '1984' },
+        { value: '1985', text: '1985' },
+        { value: '1986', text: '1986' },
+        { value: '1987', text: '1987' },
+        { value: '1988', text: '1988' },
+        { value: '1989', text: '1989' },
         { value: '1990', text: '1990' },
         { value: '1991', text: '1991' },
         { value: '1992', text: '1992' },
@@ -285,10 +343,37 @@ export default {
       ],
       dayOptionAr:  [
         { value: null, text: 'يوم' },
-        { value: 'a', text: 'This is First option' },
-        { value: 'b', text: 'Selected Option' },
-        { value: { C: '3PO' }, text: 'This is an option with object value' },
-        { value: 'd', text: 'This one is disabled', disabled: true }
+        { value: '1', text: '1' },
+        { value: '12', text: '2' },
+        { value: '13', text: '3' },
+        { value: '14', text: '4' },
+        { value: '15', text: '5' },
+        { value: '16', text: '6' },
+        { value: '17', text: '7' },
+        { value: '18', text: '8' },
+        { value: '19', text: '9' },
+        { value: '10', text: '10' },
+        { value: '11', text: '11' },
+        { value: '12', text: '12' },
+        { value: '13', text: '13' },
+        { value: '14', text: '14' },
+        { value: '15', text: '15' },
+        { value: '16', text: '16' },
+        { value: '17', text: '17' },
+        { value: '18', text: '18' },
+        { value: '19', text: '19' },
+        { value: '20', text: '20' },
+        { value: '21', text: '21' },
+        { value: '22', text: '22' },
+        { value: '23', text: '23' },
+        { value: '24', text: '24' },
+        { value: '25', text: '25' },
+        { value: '26', text: '26' },
+        { value: '27', text: '27' },
+        { value: '28', text: '28' },
+        { value: '29', text: '29' },
+        { value: '30', text: '30' },
+        { value: '31', text: '31' },
       ],
       genderOptionsAr: [
         { value: null, text: 'النوع' },
@@ -302,9 +387,29 @@ export default {
       ],
       countryOptions: [
         { value: null, text: 'Country' },
+        { value: 'Egypt', text: 'Egypt' },
+        { value: 'Saudi Arabia', text: 'Saudi Arabia' },
+        { value: 'Algeria', text: 'Algeria' },
+        { value: 'Bahrain', text: 'Bahrain' },
+        { value: 'Iraq', text: 'Iraq ' },
+        { value: 'Jordan', text: 'Jordan ' },
+        { value: 'Lebanon', text: 'Lebanon' },
+        { value: 'Morocco', text: 'Morocco' },
+        { value: 'Oman', text: 'Oman' },
+        { value: 'Qatar', text: 'Qatar' },
       ],
       countryOptionsAr: [
         { value: null, text: 'البلد' },
+        { value: 'Egypt', text: 'مصر' },
+        { value: 'Saudi Arabia', text: 'السعودية' },
+        { value: 'Algeria', text: 'الجزائر' },
+        { value: 'Bahrain', text: 'البحرين' },
+        { value: 'Iraq', text: 'العراق ' },
+        { value: 'Jordan', text: 'الاردن ' },
+        { value: 'Lebanon', text: 'لبنان ' },
+        { value: 'Morocco', text: 'المغرب ' },
+        { value: 'Oman', text: 'سلطنة عًمان ' },
+        { value: 'Qatar', text: 'قطر' },
       ],
       businessCategoryOptions: [
         { value: null, text: 'Business Category' },
@@ -352,7 +457,8 @@ export default {
         "dayBOB" : this.user.dayBOB,
         "gender" : this.user.gender,
         "phone" : this.user.phone,
-        "email" : this.user.email
+        "email" : this.user.email,
+        "country" : this.user.country
       });
 
       let requestOptions = {
@@ -382,11 +488,6 @@ export default {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@700&display=swap');
-
-main {
-  margin-top: 80px;
-  padding: 20px 0 60px;
-}
 
 .nav {
   position: fixed;
@@ -464,6 +565,10 @@ main {
 }
 
 @media (max-width:1024px)  {
+  main {
+    margin-bottom: 40px;
+  }
+
   .home {
     min-height: 100vh;
   }

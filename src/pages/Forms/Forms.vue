@@ -1,11 +1,9 @@
 <template>
   <div class="home animate__animated animate__fadeIn">
-    <div class="nav">
-      <forms-header
-          :id=$store.getters.token
-          @search-forms="setForms"
-      ></forms-header>
-    </div>
+    <forms-header
+        :id=$store.getters.token
+        @search-forms="setForms"
+    ></forms-header>
 
     <main class="en animate__animated animate__backInLeft" v-if="getLang === 'en'">
       <div class="container">
@@ -18,9 +16,9 @@
           <div class="forms">
             <Form v-if="$store.getters.isAdmin === 'true'" add-template="true"></Form>
             <Form add-form="true"></Form>
-            <Form contact-form="true"></Form>
-            <Form hiring-form="true"></Form>
-            <Form order-form="true"></Form>
+            <div v-for="template in templates" :key="template._id">
+              <Form display-form="true" :id="template._id" :title="template.header" :img-src="template.logo"></Form>
+            </div>
           </div>
           <div class="recent-form mt-5">
             <div class="header d-flex justify-content-between">
@@ -35,7 +33,7 @@
                   <router-link class="form-link for-big-screen" to="">
                     <div class="form-link-row row">
                       <div class="form-link-row-header col-1 d-flex align-items-center">
-                        <img src="../../assets/images/formIcon.png" width="35" height="35">
+                        <img :src="form.logo" width="35" height="35">
                       </div>
                       <div class="form-link-row-header col-2 d-flex align-items-center">
                         {{form.header}}
@@ -98,10 +96,11 @@
             </div>
           </div>
           <div class="forms">
+            <Form v-if="$store.getters.isAdmin === 'true'" add-template="true"></Form>
             <Form add-form="true"></Form>
-            <Form contact-form="true"></Form>
-            <Form hiring-form="true"></Form>
-            <Form order-form="true"></Form>
+            <div v-for="template in templates" :key="template._id">
+              <Form display-form="true" :id="template._id" :title="template.header" :img-src="template.logo"></Form>
+            </div>
           </div>
           <div class="recent-form mt-5">
             <div class="header d-flex justify-content-between">
@@ -111,26 +110,52 @@
             </div>
             <div class="forms">
               <base-spinner v-if="isLoading"></base-spinner>
-              <base-spinner v-if="isLoading"></base-spinner>
               <div v-else-if="this.forms" class="w-100 forms-links">
                 <div v-for="form in forms" :key="form.id">
                   <router-link class="form-link for-big-screen" to="">
                     <div class="form-link-row row">
-                      <div class="form-link-row-header col-2">
+                      <div class="form-link-row-header col-1 d-flex align-items-center">
+                        <img :src="form.logo" width="35" height="35">
+                      </div>
+                      <div class="form-link-row-header col-2 d-flex align-items-center">
                         {{form.header}}
                       </div>
-                      <div class="form-link-row-type col-4">
+                      <div class="form-link-row-type col-3 d-flex align-items-center">
                         {{form.description}}
                       </div>
-                      <div class="form-link-row-type col-2">
+                      <div class="form-link-row-type col-2 d-flex align-items-center">
                         {{form.formType}}
                       </div>
-                      <div class="form-link-row-date col-3">
+                      <div class="form-link-row-date col-3 d-flex align-items-center">
                         {{form.createdAt}}
                       </div>
-                      <div class="form-link-row-header col-1 d-flex justify-content-end">
-                        <i @click="deleteForm(form._id)" class="i fas fa-trash me-2 "></i>
+                      <div class="form-link-row-header col-1 d-flex align-items-center justify-content-end">
                         <router-link :to="'form-view/' + form._id" class="i fas fa-eye me-2"></router-link>
+                        <router-link :to="'form-edit/' + form._id" class="i fas fa-edit me-2"></router-link>
+                        <i @click="deleteForm(form._id)" class="i fas fa-trash me-2 "></i>
+                      </div>
+                    </div>
+                  </router-link>
+                  <router-link class="form-link little-data w-100" to="">
+                    <div class="form-link-row">
+                      <div class="row form-link-row-header">
+                        <div class="col-10">
+                          {{ form.header }}
+                        </div>
+                        <div class="form-link-row-header col-2 d-flex justify-content-end">
+                          <i @click="deleteForm(form._id)" class="i fas fa-trash me-2 "></i>
+                          <router-link :to="'form/' + form._id" class="i fas fa-eye me-2"></router-link>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col">
+                          {{ form.description }}
+                        </div>
+                      </div>
+                      <div class="form-link-row-date row">
+                        <div class="col">
+                          {{form.createdAt}}
+                        </div>
                       </div>
                     </div>
                   </router-link>
@@ -157,6 +182,7 @@ export default {
   name: "Forms",
   data() {
     return {
+      templates: [],
       isLoading: false,
       error: null,
       forms: [],
@@ -173,6 +199,7 @@ export default {
       router.push('/login')
     }
     this.loadForms();
+    this.loadTemplates();
   },
   computed: {
     getLang() {
@@ -180,6 +207,28 @@ export default {
     },
   },
   methods: {
+    async loadTemplates() {
+      this.isLoading = true;
+
+      let requestOptions = {
+        method: 'GET',
+        redirect: 'follow'
+      };
+
+      let url = "https://ya-forms-api.herokuapp.com/api/form/templates";
+      const response = await fetch(url, requestOptions);
+      const responseData = await response.json();
+
+      if (!response.ok) {
+        const error = new Error(responseData.message || 'Failed to fetch!');
+        throw error;
+      }
+
+      this.templates = responseData;
+      this.isLoading = false;
+
+
+    },
     async deleteForm(id) {
 
       this.isLoading = true;
@@ -203,7 +252,8 @@ export default {
           .then(result => this.msg = result.msg)
           .catch(error => this.msg = error);
 
-      this.loadForms();
+      await this.loadForms();
+      await this.loadTemplates();
 
       this.isLoading = false;
 
@@ -247,27 +297,9 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Oswald&family=Rubik:wght@500&display=swap');
 
-main {
-  margin-top: 80px;
-}
-
 .ar {
   direction: rtl;
   text-align: right;
-}
-
-.nav {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 1000;
-}
-
-
-
-.footer {
-  position: fixed;
-  bottom: 0;
 }
 
 .header {
