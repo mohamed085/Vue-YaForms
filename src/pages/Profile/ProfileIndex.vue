@@ -9,179 +9,184 @@
       ></profile-header>
     </div>
 
-    <main class="main-content en animate__animated animate__backInLeft" v-if="getLang === 'en'">
-      <div class="main-content-container container">
-        <div class="img">
-          <b-button class="avatar-btn" v-b-modal.modal-1>
-            <b-avatar class="avatar" :src=user.imgSrc></b-avatar>
-          </b-button>
+    <base-spinner v-if="isLoading"></base-spinner>
 
-          <b-modal id="modal-1" title="Profile image" ok-only>
-            <div class="img-container">
-              <img class="model-img" :src=user.imgSrc>
-            </div>
-          </b-modal>
-          <h2 class="name mt-2">{{user.name}}</h2>
-        </div>
-        <div class="personalInfo p-4">
-          <h2>Personal Info</h2>
-          <div class="container">
-            <div class="personalInfo-row mt-4 mb-4">
-              <i class="fas fa-user-edit"></i>
-              <h4>Name: <span>{{user.name}}</span></h4>
-            </div>
-            <div class="personalInfo-row mt-4 mb-4">
-              <i class="fas fa-user-edit"></i>
-              <h4>E-mail: <span>{{user.email}}</span></h4>
-            </div>
-            <div class="personalInfo-row mt-4 mb-4">
-              <i class="fas fa-baby"></i>
-              <h4>Birth of date: <span>{{user.yearDOB + " " + user.monthDOB + " " + user.dayBOB}}</span></h4>
-            </div>
-            <div class="personalInfo-row mt-4 mb-4">
-              <i class="far fa-flag"></i>
-              <h4>Country: <span>{{user.country}}</span></h4>
-            </div>
-            <div class="personalInfo-row mt-4 mb-4">
-              <i class="fas fa-venus-mars"></i>
-              <h4>Gender: <span>{{user.gender}}</span></h4>
-            </div>
-            <div class="personalInfo-row mt-4 mb-4">
-              <i class="fas fa-mobile-alt"></i>
-              <h4>Mobile number: <span>{{user.phone}}</span></h4>
+    <div v-else>
+      <main class="main-content en animate__animated animate__backInLeft" v-if="getLang === 'en'">
+        <div class="main-content-container container">
+          <div class="img">
+            <b-button class="avatar-btn" v-b-modal.modal-1>
+              <b-avatar class="avatar" :src=user.imgSrc></b-avatar>
+            </b-button>
+
+            <b-modal id="modal-1" title="Profile image" ok-only>
+              <div class="img-container">
+                <img class="model-img" :src=user.imgSrc>
+              </div>
+            </b-modal>
+            <h2 class="name mt-2">{{user.name}}</h2>
+          </div>
+          <div class="personalInfo p-4">
+            <h2>Personal Info</h2>
+            <div class="container">
+              <div class="personalInfo-row mt-4 mb-4">
+                <i class="fas fa-user-edit"></i>
+                <h4>Name: <span>{{user.name}}</span></h4>
+              </div>
+              <div class="personalInfo-row mt-4 mb-4">
+                <i class="fas fa-user-edit"></i>
+                <h4>E-mail: <span>{{user.email}}</span></h4>
+              </div>
+              <div class="personalInfo-row mt-4 mb-4">
+                <i class="fas fa-baby"></i>
+                <h4>Birth of date: <span>{{user.yearDOB + " " + user.monthDOB + " " + user.dayBOB}}</span></h4>
+              </div>
+              <div class="personalInfo-row mt-4 mb-4">
+                <i class="far fa-flag"></i>
+                <h4>Country: <span>{{user.country}}</span></h4>
+              </div>
+              <div class="personalInfo-row mt-4 mb-4">
+                <i class="fas fa-venus-mars"></i>
+                <h4>Gender: <span>{{user.gender}}</span></h4>
+              </div>
+              <div class="personalInfo-row mt-4 mb-4">
+                <i class="fas fa-mobile-alt"></i>
+                <h4>Mobile number: <span>{{user.phone}}</span></h4>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div v-if="user.accountType === 'BusinessAccount'" class="main-content-container container">
-        <div class="img">
-          <b-button class="avatar-btn" v-b-modal.modal-1>
-            <b-avatar class="avatar" :src=user.companyImgSrc></b-avatar>
-          </b-button>
+        <div v-if="user.accountType === 'BusinessAccount'" class="main-content-container container">
+          <div class="img">
+            <b-button class="avatar-btn" v-b-modal.modal-1>
+              <b-avatar class="avatar" :src=user.companyImgSrc></b-avatar>
+            </b-button>
 
-          <b-modal id="modal-1" title="Profile image" ok-only>
-            <div class="img-container">
-              <img class="model-img" :src=user.companyImgSrc>
-            </div>
-          </b-modal>
-          <h2 class="name mt-2">{{user.companyName}}</h2>
-        </div>
-        <div class="personalInfo p-4">
-          <h2>Company Info</h2>
-          <div class="container">
-            <div class="personalInfo-row mt-4 mb-4">
-              <i class="fas fa-user-edit"></i>
-              <h4>Name: <span>{{user.companyName}}</span></h4>
-            </div>
-            <div class="personalInfo-row mt-4 mb-4">
-              <i class="fas fa-baby"></i>
-              <h4>Company number of employees: <span>{{user.companyNumOfEmployees}}</span></h4>
-            </div>
-            <div class="personalInfo-row mt-4 mb-4">
-              <i class="far fa-flag"></i>
-              <h4>Country: <span>{{user.companyCountry}}</span></h4>
-            </div>
-            <div class="personalInfo-row mt-4 mb-4">
-              <i class="fas fa-venus-mars"></i>
-              <h4>Company business category: <span>{{user.companyBusinessCategory}}</span></h4>
-            </div>
-            <div class="personalInfo-row mt-4 mb-4">
-              <i class="fas fa-mobile-alt"></i>
-              <h4>Company url: <span>{{user.companyUrl}}</span></h4>
+            <b-modal id="modal-1" title="Profile image" ok-only>
+              <div class="img-container">
+                <img class="model-img" :src=user.companyImgSrc>
+              </div>
+            </b-modal>
+            <h2 class="name mt-2">{{user.companyName}}</h2>
+          </div>
+          <div class="personalInfo p-4">
+            <h2>Company Info</h2>
+            <div class="container">
+              <div class="personalInfo-row mt-4 mb-4">
+                <i class="fas fa-user-edit"></i>
+                <h4>Name: <span>{{user.companyName}}</span></h4>
+              </div>
+              <div class="personalInfo-row mt-4 mb-4">
+                <i class="fas fa-baby"></i>
+                <h4>Company number of employees: <span>{{user.companyNumOfEmployees}}</span></h4>
+              </div>
+              <div class="personalInfo-row mt-4 mb-4">
+                <i class="far fa-flag"></i>
+                <h4>Country: <span>{{user.companyCountry}}</span></h4>
+              </div>
+              <div class="personalInfo-row mt-4 mb-4">
+                <i class="fas fa-venus-mars"></i>
+                <h4>Company business category: <span>{{user.companyBusinessCategory}}</span></h4>
+              </div>
+              <div class="personalInfo-row mt-4 mb-4">
+                <i class="fas fa-mobile-alt"></i>
+                <h4>Company url: <span>{{user.companyUrl}}</span></h4>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-    </main>
+      </main>
 
-    <main class="main-content ar animate__animated animate__backInRight" v-if="getLang === 'ar'">
-      <div class="main-content-container container">
-        <div class="img">
-          <b-button class="avatar-btn" v-b-modal.modal-1>
-            <b-avatar class="avatar" :src=user.imgSrc></b-avatar>
-          </b-button>
+      <main class="main-content ar animate__animated animate__backInRight" v-if="getLang === 'ar'">
+        <div class="main-content-container container">
+          <div class="img">
+            <b-button class="avatar-btn" v-b-modal.modal-1>
+              <b-avatar class="avatar" :src=user.imgSrc></b-avatar>
+            </b-button>
 
-          <b-modal id="modal-1" title="الصورة الشخصية" ok-only>
-            <div class="img-container">
-              <img class="model-img" :src=user.imgSrc>
-            </div>
-          </b-modal>
-          <h2 class="name mt-3">{{user.name}}</h2>
-        </div>
-        <div class="personalInfo p-4">
-          <h2 class="mb-4" style="font-family: 'Cairo', sans-serif;">معلومات شخصية</h2>
-          <div class="container">
-            <div class="personalInfo-row mt-4 mb-4">
-              <i class="fas fa-user-edit"></i>
-              <h4>الاسم: <span>{{user.name}}</span></h4>
-            </div>
-            <div class="personalInfo-row mt-4 mb-4">
-              <i class="fas fa-user-edit"></i>
-              <h4>البريد الالكتروني: <span>{{user.email}}</span></h4>
-            </div>
+            <b-modal id="modal-1" title="الصورة الشخصية" ok-only>
+              <div class="img-container">
+                <img class="model-img" :src=user.imgSrc>
+              </div>
+            </b-modal>
+            <h2 class="name mt-3">{{user.name}}</h2>
+          </div>
+          <div class="personalInfo p-4">
+            <h2 class="mb-4" style="font-family: 'Cairo', sans-serif;">معلومات شخصية</h2>
+            <div class="container">
+              <div class="personalInfo-row mt-4 mb-4">
+                <i class="fas fa-user-edit"></i>
+                <h4>الاسم: <span>{{user.name}}</span></h4>
+              </div>
+              <div class="personalInfo-row mt-4 mb-4">
+                <i class="fas fa-user-edit"></i>
+                <h4>البريد الالكتروني: <span>{{user.email}}</span></h4>
+              </div>
 
-            <div class="personalInfo-row mt-4 mb-4">
-              <i class="fas fa-baby"></i>
-              <h4>تاريخ الميلاد: <span>{{user.yearDOB + " " + user.monthDOB + " " + user.dayBOB}}</span></h4>
-            </div>
-            <div class="personalInfo-row mt-4 mb-4">
-              <i class="far fa-flag"></i>
-              <h4>البلد: <span>{{user.country}}</span></h4>
-            </div>
-            <div class="personalInfo-row mt-4 mb-4">
-              <i class="fas fa-venus-mars"></i>
-              <h4>الجنس: <span>{{user.gender}}</span></h4>
-            </div>
-            <div class="personalInfo-row mt-4 mb-4">
-              <i class="fas fa-mobile-alt"></i>
-              <h4>رقم الهاتف: <span>{{user.phone}}</span></h4>
+              <div class="personalInfo-row mt-4 mb-4">
+                <i class="fas fa-baby"></i>
+                <h4>تاريخ الميلاد: <span>{{user.yearDOB + " " + user.monthDOB + " " + user.dayBOB}}</span></h4>
+              </div>
+              <div class="personalInfo-row mt-4 mb-4">
+                <i class="far fa-flag"></i>
+                <h4>البلد: <span>{{user.country}}</span></h4>
+              </div>
+              <div class="personalInfo-row mt-4 mb-4">
+                <i class="fas fa-venus-mars"></i>
+                <h4>الجنس: <span>{{user.gender}}</span></h4>
+              </div>
+              <div class="personalInfo-row mt-4 mb-4">
+                <i class="fas fa-mobile-alt"></i>
+                <h4>رقم الهاتف: <span>{{user.phone}}</span></h4>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div v-if="user.accountType === 'BusinessAccount'" class="main-content-container container">
-        <div class="img">
-          <b-button class="avatar-btn" v-b-modal.modal-1>
-            <b-avatar class="avatar" :src=user.companyImgSrc></b-avatar>
-          </b-button>
+        <div v-if="user.accountType === 'BusinessAccount'" class="main-content-container container">
+          <div class="img">
+            <b-button class="avatar-btn" v-b-modal.modal-1>
+              <b-avatar class="avatar" :src=user.companyImgSrc></b-avatar>
+            </b-button>
 
-          <b-modal id="modal-1" title="Profile image" ok-only>
-            <div class="img-container">
-              <img class="model-img" :src=user.companyImgSrc>
-            </div>
-          </b-modal>
-          <h2 class="name mt-2">{{user.companyName}}</h2>
-        </div>
-        <div class="personalInfo p-4">
-          <h2 class="mb-4" style="font-family: 'Cairo', sans-serif;">معلومات الشركة</h2>
-          <div class="container">
-            <div class="personalInfo-row mt-4 mb-4">
-              <i class="fas fa-user-edit"></i>
-              <h4>الاسم: <span>{{user.companyName}}</span></h4>
-            </div>
-            <div class="personalInfo-row mt-4 mb-4">
-              <i class="fas fa-baby"></i>
-              <h4>عدد موظفي الشركة: <span>{{user.companyNumOfEmployees}}</span></h4>
-            </div>
-            <div class="personalInfo-row mt-4 mb-4">
-              <i class="far fa-flag"></i>
-              <h4>البلد: <span>{{user.companyCountry}}</span></h4>
-            </div>
-            <div class="personalInfo-row mt-4 mb-4">
-              <i class="fas fa-venus-mars"></i>
-              <h4>فئة أعمال الشركة:<span>{{user.companyBusinessCategory}}</span></h4>
-            </div>
-            <div class="personalInfo-row mt-4 mb-4">
-              <i class="fas fa-mobile-alt"></i>
-              <h4>رابط الشركة: <span>{{user.companyUrl}}</span></h4>
+            <b-modal id="modal-1" title="Profile image" ok-only>
+              <div class="img-container">
+                <img class="model-img" :src=user.companyImgSrc>
+              </div>
+            </b-modal>
+            <h2 class="name mt-2">{{user.companyName}}</h2>
+          </div>
+          <div class="personalInfo p-4">
+            <h2 class="mb-4" style="font-family: 'Cairo', sans-serif;">معلومات الشركة</h2>
+            <div class="container">
+              <div class="personalInfo-row mt-4 mb-4">
+                <i class="fas fa-user-edit"></i>
+                <h4>الاسم: <span>{{user.companyName}}</span></h4>
+              </div>
+              <div class="personalInfo-row mt-4 mb-4">
+                <i class="fas fa-baby"></i>
+                <h4>عدد موظفي الشركة: <span>{{user.companyNumOfEmployees}}</span></h4>
+              </div>
+              <div class="personalInfo-row mt-4 mb-4">
+                <i class="far fa-flag"></i>
+                <h4>البلد: <span>{{user.companyCountry}}</span></h4>
+              </div>
+              <div class="personalInfo-row mt-4 mb-4">
+                <i class="fas fa-venus-mars"></i>
+                <h4>فئة أعمال الشركة:<span>{{user.companyBusinessCategory}}</span></h4>
+              </div>
+              <div class="personalInfo-row mt-4 mb-4">
+                <i class="fas fa-mobile-alt"></i>
+                <h4>رابط الشركة: <span>{{user.companyUrl}}</span></h4>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </main>
+      </main>
+
+    </div>
 
   </div>
 </template>
@@ -480,8 +485,8 @@ export default {
   },
   methods: {
     async loadUser() {
+      this.isLoading = true
       let token = this.$route.params.id;
-
 
       let myHeaders = new Headers();
       myHeaders.append("Token", token);
@@ -498,7 +503,7 @@ export default {
 
       this.user = responseData;
 
-      console.log(this.user)
+      this.isLoading = false
 
     }
   }

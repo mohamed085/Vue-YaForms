@@ -21,7 +21,7 @@
             <div class="mobile-nav">
               <ul>
                 <li>
-                  <router-link to="/">
+                  <router-link :to="'/profile/'+id">
                     <div class="profile mt-3 d-flex">
                       <b-avatar :src="avatar" size="3rem"></b-avatar>
                       <div class="dropdown-content">
@@ -299,6 +299,10 @@ form {
 
 form input {
   border: none;
+}
+
+.navbar-collapse {
+  z-index: 1000;
 }
 
 .navbar-nav {

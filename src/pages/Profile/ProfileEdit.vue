@@ -1,11 +1,13 @@
 <template>
   <div class="home animate__animated animate__fadeIn">
 
-    <profile-header
-        :avatar="user.imgSrc"
-        :name="user.name"
-        :id=$store.getters.token
-    ></profile-header>
+    <div class="nav">
+      <profile-header
+          :avatar="user.imgSrc"
+          :name="user.name"
+          :id=$store.getters.token
+      ></profile-header>
+    </div>
 
     <main class="main-content en animate__animated animate__backInLeft" v-if="getLang === 'en'">
       <div class="main-content-container container">
@@ -494,6 +496,10 @@ export default {
   top: 0;
   width: 100%;
   z-index: 1000;
+}
+
+main {
+  margin-top: 90px;
 }
 
 .main-content {

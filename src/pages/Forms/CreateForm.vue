@@ -114,7 +114,8 @@
               <img :src="form.imageHeader">
             </div>
 
-            <div class="form-header">
+
+            <div class="form-header d-flex">
               <div class="form-title">
                 <b-form-input class="input-title" type="text" v-model="form.header" placeholder="Untitled form"></b-form-input>
                 <b-form-input class="input-description" type="text" v-model="form.description" placeholder="Form description"></b-form-input>
@@ -1880,9 +1881,8 @@ input:checked + .slider:before {
   }
 
   .form-logo img {
-    width: 100px;
-    height: 100px;
-    margin: 0 10px;
+    width: 70px;
+    height: 60px;
   }
 
   .form-question-row-1 {

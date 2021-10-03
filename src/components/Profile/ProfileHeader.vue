@@ -20,7 +20,7 @@
                   <div class="profile mt-3 d-flex">
                     <b-avatar :src="avatar" size="3rem"></b-avatar>
                     <div class="dropdown-content">
-                      <h5></h5>
+                      <h5>{{ name }}</h5>
                       <p>See your profile</p>
                     </div>
                   </div>

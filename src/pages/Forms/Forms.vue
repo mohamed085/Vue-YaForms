@@ -1,9 +1,11 @@
 <template>
   <div class="home animate__animated animate__fadeIn">
-    <forms-header
+    <div class="nav">
+      <forms-header
         :id=$store.getters.token
         @search-forms="setForms"
     ></forms-header>
+    </div>
 
     <main class="en animate__animated animate__backInLeft" v-if="getLang === 'en'">
       <div class="container">
@@ -61,8 +63,9 @@
                           {{ form.header }}
                         </div>
                         <div class="form-link-row-header col-2 d-flex justify-content-end">
+                          <router-link :to="'form-view/' + form._id" class="i fas fa-eye me-2"></router-link>
+                          <router-link :to="'form-edit/' + form._id" class="i fas fa-edit me-2"></router-link>
                           <i @click="deleteForm(form._id)" class="i fas fa-trash me-2 "></i>
-                          <router-link :to="'form/' + form._id" class="i fas fa-eye me-2"></router-link>
                         </div>
                       </div>
                       <div class="row">
@@ -143,8 +146,9 @@
                           {{ form.header }}
                         </div>
                         <div class="form-link-row-header col-2 d-flex justify-content-end">
+                          <router-link :to="'form-view/' + form._id" class="i fas fa-eye me-2"></router-link>
+                          <router-link :to="'form-edit/' + form._id" class="i fas fa-edit me-2"></router-link>
                           <i @click="deleteForm(form._id)" class="i fas fa-trash me-2 "></i>
-                          <router-link :to="'form/' + form._id" class="i fas fa-eye me-2"></router-link>
                         </div>
                       </div>
                       <div class="row">
@@ -296,6 +300,18 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Oswald&family=Rubik:wght@500&display=swap');
+
+
+.nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+main {
+  margin-top: 90px;
+}
 
 .ar {
   direction: rtl;
