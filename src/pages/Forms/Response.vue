@@ -38,6 +38,7 @@
             <div>
               <b-button class="export-btn" @click="exportAsPDF">Export as pdf</b-button>
               <b-button class="export-btn" @click="exportResponseAsCSV">Export as excel</b-button>
+              <b-button class="export-btn" @click="exportNumbersASVCF">Export numbers as VCF</b-button>
             </div>
           </div>
           <div v-if="form.responseNum !== 0" class="responseNum-section-row3">
@@ -81,6 +82,13 @@
                 <input type="checkbox" v-model="form.acceptResponse">
                 <span class="slider round"></span>
               </label>
+            </div>
+          </div>
+          <div v-if="form.responseNum !== 0" class="responseExport-section d-flex justify-content-between">
+            <div>
+              <b-button class="export-btn" @click="exportAsPDF">تصدير في ملف pdf</b-button>
+              <b-button class="export-btn" @click="exportResponseAsCSV">تصدير في ملف excel</b-button>
+              <b-button class="export-btn" @click="exportNumbersASVCF">تصدير جهات الاتصال في ملف ال VCF</b-button>
             </div>
           </div>
           <div v-if="form.responseNum !== 0" class="responseNum-section-row3">
@@ -240,6 +248,30 @@ export default {
         }
       });
       window.print()
+
+    },
+
+    async exportNumbersASVCF() {
+      let id = this.$route.params.id
+
+      let requestOptions = {
+        method: 'GET',
+        redirect: 'follow',
+      };
+
+      let url = `https://ya-forms-api.herokuapp.com/api/form/` + id + `/responses/contacts`;
+
+      fetch(url, requestOptions)
+          .then(response => response.blob())
+          .then(blob => {
+            let url = window.URL.createObjectURL(blob);
+            let a = document.createElement('a');
+            a.href = url;
+            a.download = "contacts " + Date.now() + ".vcf";
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+          });
 
     }
 

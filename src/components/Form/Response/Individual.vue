@@ -8,8 +8,8 @@
       </div>
 
       <div class="d-flex justify-content-between">
-        <div v-if="form.responses[currentQuestion - 1].question == Phone" class="csv">
-          <button @click="exportResponseAsCSV(form.responses[currentQuestion - 1]._id)" class="phone-btn">Export numbers as csv</button>
+        <div class="csv">
+          <button @click="exportResponseAsCSV(form.responses[currentQuestion - 1]._id)" class="phone-btn">Export numbers as excel</button>
         </div>
         <div>
           <b-button class="phone-btn" @click="deleteResponse(form.responses[currentQuestion - 1]._id)">Delete response</b-button>
@@ -163,8 +163,8 @@
       </div>
 
       <div class="d-flex justify-content-between">
-        <div v-if="form.responses[currentQuestion - 1].question == Phone" class="csv">
-          <button @click="exportResponseAsCSV(form.responses[currentQuestion - 1]._id)" class="phone-btn">تصدير الأرقام كملف CSV</button>
+        <div class="csv">
+          <button @click="exportResponseAsCSV(form.responses[currentQuestion - 1]._id)" class="phone-btn">excel تصدير الرد في ملف </button>
         </div>
         <div>
           <b-button class="phone-btn" @click="deleteResponse(form.responses[currentQuestion - 1]._id)">حذف الرد</b-button>

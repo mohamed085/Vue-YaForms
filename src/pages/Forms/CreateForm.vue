@@ -278,7 +278,7 @@
 
             </div>
 
-            <b-button class="btn mb-3" @click="addForm">Add Form</b-button>
+            <b-button class="btn mb-3" @click="addForm">Save Form</b-button>
           </div>
 
           <div class="right-elements">
