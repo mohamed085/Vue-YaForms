@@ -16,9 +16,18 @@
 
     <base-spinner class="mt-4" v-if="isLoading"></base-spinner>
 
-    <div v-else>
+    <div class="container form-response" v-else>
       <div class="main-content en animate__animated animate__backInLeft" v-if="getLang === 'en'">
-
+        <div class="hidePdf section responseNum-section">
+          <div class="responseNum-section-row1 mb-3">
+            <div class="responseCount">From settings</div>
+          </div>
+          <div class="mt-3 mb-3 p-3">
+            <b-form>
+              <b-form-input placeholder="Response send message"></b-form-input>
+            </b-form>
+          </div>
+        </div>
 
       </div>
 
@@ -108,9 +117,6 @@ export default {
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Style+Script&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
-
 .default {
   --var-main-color: #9d55a0;
   --var-second-color: #dddddd;
@@ -191,4 +197,176 @@ export default {
   text-align: right;
 }
 
+.form-response {
+  width: 60%;
+  padding-bottom: 60px;
+}
+
+.section {
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #c4c4c4;
+  background-color: #FFFFFF;
+  margin-bottom: 20px;
+}
+
+.responseNum-section {
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+.responseCount {
+  font-family: 'Google Sans',Roboto,Arial,sans-serif;
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 36px;
+  color: #202124;
+}
+
+.accepting-responses {
+  margin-bottom: 20px;
+}
+
+.accepting-responses p {
+  margin: auto 0 auto auto;
+  font-weight: 500;
+}
+
+.ar .accepting-responses p {
+  margin: auto auto auto 0;
+  font-weight: 500;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 24px;
+  margin: 0 18px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: var(--var-main-color);
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px var(--var-main-color);
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(16px);
+  -ms-transform: translateX(16px);
+  transform: translateX(16px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.no-response-section {
+  margin-top: 20px;
+  font-family: Roboto,Arial,sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: .3px;
+  line-height: 16px;
+  color: #70757a;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  padding: 24px;
+  text-align: center;
+}
+
+.no-response-section p {
+  margin: auto 0;
+}
+
+.responseNum-section-row3 {
+  display: flex;
+  margin: 30px 0 0;
+}
+
+.responseNum-section-row3 .response-type {
+  width: 33%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Roboto,RobotoDraft,Helvetica,Arial,sans-serif;
+}
+
+.responseNum-section-row3 a {
+  text-decoration: none;
+  color: #111111;
+  padding: 0 4px 10px;
+  margin: 0;
+}
+
+.responseNum-section-row3 a.active,
+.responseNum-section-row3 a:hover,
+.responseNum-section-row3 a.router-link-active {
+  border-bottom: 3px solid var(--var-main-color);
+  border-radius: 3px;
+}
+
+.responseExport-section {
+  display: flex;
+}
+
+.export-btn {
+  background: none;
+  color: var(--var-main-color);
+  border: 1px solid var(--var-main-color);
+  margin: 0 5px;
+}
+
+.export-btn:hover{
+  background: var(--var-main-color);
+  color: #FFFFFF;
+  border: 1px solid var(--var-main-color);
+
+}
+
+@media (max-width:1024px) {
+  .form-response {
+    width: 90%;
+  }
+
+
+
+}
 </style>
