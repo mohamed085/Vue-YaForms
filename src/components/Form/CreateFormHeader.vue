@@ -57,6 +57,7 @@
       <div class="nav-2" v-if="showNav2">
         <router-link :to="'/form-view/' + id" exact>Questions</router-link>
         <router-link :to="'/form/response/' + id">Responses <span v-if="responseNum" class="responseNum">{{ responseNum }}</span></router-link>
+        <router-link :to="'/form/setting/' + id">Setting</router-link>
       </div>
 
       <div class="nav-2" v-if="showNav3">
@@ -120,6 +121,7 @@
       <div class="nav-2" v-if="showNav2">
         <router-link :to="'/form-view/' + id" exact>الاسئلة</router-link>
         <router-link :to="'/form/response/' + id">الردود <span v-if="responseNum" class="responseNum">{{ responseNum }}</span></router-link>
+        <router-link :to="'/form/setting/' + id">الاعدادات</router-link>
       </div>
 
       <div class="nav-2" v-if="showNav3">

@@ -1,107 +1,15 @@
 <template>
   <div :class="'home animate__animated animate__fadeIn ' + form.styleTheme + ' ' + form.fontFamily ">
-
-    <div class="select-form-type" v-if="form.formType === ''">
-
-      <div class="animate__animated animate__backInLeft" v-if="getLang === 'en'">
-
-        <main-header></main-header>
-
-        <div class="container ">
-          <div class="select-form-type-header">
-            <h1>Select your form layout</h1>
-            <p>Choose a layout according to your needs</p>
-          </div>
-
-          <div class="select-form-type-content">
-            <div @click="setFormType('classic form')" class="select-form-type-classic">
-              <div class="classic-form">
-                <div class="svg">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 121 125" class="jfWizard-list-item-icon-svg" width="187" height="204"><g fill="none" fill-rule="evenodd"><path d="M4.417 0h112a4 4 0 014 4v121h-120V4a4 4 0 014-4z" fill="#FFF" fill-rule="nonzero"></path><g transform="translate(10.417 13)"><path d="M17.001 31.122h79.14a2.858 2.858 0 010 5.716h-79.14a2.858 2.858 0 110-5.716z" fill="#DAE2ED" fill-rule="nonzero"></path><rect fill="#DAE2ED" fill-rule="nonzero" y="20.324" width="74.571" height="5.716" rx="2.858"></rect><rect fill="#DAE2ED" fill-rule="nonzero" width="99" height="8.257" rx="3"></rect><path d="M17.001 41.284h79.14a2.858 2.858 0 010 5.716h-79.14a2.858 2.858 0 110-5.716z" fill="#DAE2ED" fill-rule="nonzero"></path><g transform="translate(0 30.486)"><rect fill="#2F90FF" fill-rule="nonzero" width="6.429" height="6.351" rx="2"></rect><path d="M2.734 4.765a.33.33 0 01-.238-.103L1.304 3.424a.36.36 0 010-.495.328.328 0 01.477 0l.953.99L4.878 1.69a.328.328 0 01.477 0 .36.36 0 010 .496L2.972 4.662a.33.33 0 01-.238.103" fill="#FFF"></path></g><rect fill="#DAE2ED" fill-rule="nonzero" y="40.649" width="6.429" height="6.351" rx="2"></rect></g><g transform="translate(10.417 72)"><path d="M17.036 10.929h79.071a2.893 2.893 0 010 5.785H17.036a2.893 2.893 0 110-5.785zM2.893 0h68.786a2.893 2.893 0 110 5.786H2.893a2.893 2.893 0 010-5.786zm14.143 21.214h79.071a2.893 2.893 0 010 5.786H17.036a2.893 2.893 0 110-5.786z" fill="#DAE2ED" fill-rule="nonzero"></path><g transform="translate(0 10.286)"><rect fill="#2F90FF" fill-rule="nonzero" width="6.429" height="6.429" rx="2"></rect><path d="M2.734 4.823a.327.327 0 01-.238-.104L1.304 3.465a.367.367 0 010-.5.325.325 0 01.477 0l.953 1.002L4.878 1.71a.325.325 0 01.477 0 .367.367 0 010 .501L2.972 4.72a.328.328 0 01-.238.104" fill="#FFF"></path></g><rect fill="#DAE2ED" fill-rule="nonzero" y="20.571" width="6.429" height="6.429" rx="2"></rect><g transform="translate(0 20.571)"><rect fill="#2F90FF" fill-rule="nonzero" width="6.429" height="6.429" rx="2"></rect><path d="M2.734 4.823a.327.327 0 01-.238-.104L1.304 3.465a.367.367 0 010-.5.325.325 0 01.477 0l.953 1.002L4.878 1.71a.325.325 0 01.477 0 .367.367 0 010 .501L2.972 4.72a.328.328 0 01-.238.104" fill="#FFF"></path></g></g><rect fill="#2F90FF" fill-rule="nonzero" x="77.417" y="109" width="32" height="10" rx="4"></rect></g></svg>
-                </div>
-              </div>
-              <div class="classic-footer">
-                <h3>Classic form</h3>
-                <p>Show all question</p>
-              </div>
-            </div>
-            <div @click="setFormType('card form')" class="select-form-type-card">
-              <div class="card-form">
-                <div class="svg">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 121 92" class="jfWizard-list-item-icon-svg" width="166" height="146"><g fill="none" fill-rule="evenodd"><rect fill="#FFF" fill-rule="nonzero" x="7.934" width="105.131" height="62.153" rx="4"></rect><path d="M7.934 49.59h105.132v9.224a4 4 0 01-4 4H11.934a4 4 0 01-4-4V49.59z" fill="#2A5ACA" fill-rule="nonzero"></path><g transform="translate(15.208 11.24)"><rect fill="#DAE2ED" fill-rule="nonzero" x="10.579" y="11.24" width="80.667" height="5.951" rx="2.975"></rect><rect fill="#DAE2ED" fill-rule="nonzero" width="50.913" height="5.951" rx="2.975"></rect><path d="M13.555 21.82H88.27a2.975 2.975 0 010 5.95H13.555a2.975 2.975 0 010-5.95z" fill="#DAE2ED" fill-rule="nonzero"></path><g transform="translate(0 10.58)"><rect fill="#2F90FF" fill-rule="nonzero" width="6.612" height="6.612" rx="2"></rect><path d="M2.812 4.96a.337.337 0 01-.245-.107L1.34 3.564a.378.378 0 010-.515.334.334 0 01.49 0l.98 1.031 2.206-2.32a.334.334 0 01.49 0 .378.378 0 010 .515l-2.45 2.578a.337.337 0 01-.245.107" fill="#FFF"></path></g><rect fill="#DAE2ED" fill-rule="nonzero" y="21.158" width="6.612" height="6.612" rx="2"></rect></g><rect fill="#FFF" fill-rule="nonzero" width="121" height="62.153" rx="4"></rect><path d="M0 49.59h121v9.224a4 4 0 01-4 4H4a4 4 0 01-4-4V49.59z" fill="#51DCA9" fill-rule="nonzero"></path><g transform="translate(9.257 11.24)"><path d="M14.877 11.24H98.85a2.975 2.975 0 010 5.951H14.877a2.975 2.975 0 110-5.95zM2.975 0h50.913a2.975 2.975 0 110 5.95H2.975a2.975 2.975 0 110-5.95zm11.902 21.82H98.85a2.975 2.975 0 010 5.95H14.877a2.975 2.975 0 110-5.95z" fill="#DAE2ED" fill-rule="nonzero"></path><g transform="translate(0 10.58)"><rect fill="#2F90FF" fill-rule="nonzero" width="6.612" height="6.612" rx="2"></rect><path d="M2.812 4.96a.337.337 0 01-.245-.107L1.34 3.564a.378.378 0 010-.515.334.334 0 01.49 0l.98 1.031 2.206-2.32a.334.334 0 01.49 0 .378.378 0 010 .515l-2.45 2.578a.337.337 0 01-.245.107" fill="#FFF"></path></g><rect fill="#DAE2ED" fill-rule="nonzero" y="21.158" width="6.612" height="6.612" rx="2"></rect></g><path stroke="#319BF3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8.596 86.646h104.47"></path><circle stroke="#319BF3" stroke-width="1.5" fill="#51DCA9" fill-rule="nonzero" cx="60.831" cy="86.646" r="3.967"></circle><circle fill="#319BF3" fill-rule="nonzero" cx="9.918" cy="86.646" r="3.967"></circle><circle fill="#319BF3" fill-rule="nonzero" cx="111.743" cy="86.646" r="3.967"></circle></g></svg>
-                </div>
-              </div>
-              <div class="card-form-footer">
-                <h3>Card form</h3>
-                <p>Show all question</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <div class="ar animate__animated animate__backInRight" v-if="getLang === 'ar'">
-
-        <main-header></main-header>
-
-        <div class="container mt-4">
-          <div class="select-form-type-header">
-            <h1>حدد تخطيط النموذج الخاص بك</h1>
-            <p>اختر تخطيطًا وفقًا لاحتياجاتك</p>
-          </div>
-
-          <div class="select-form-type-content">
-            <div @click="setFormType('classic form')" class="select-form-type-classic">
-              <div class="classic-form">
-                <div class="svg">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 121 125" class="jfWizard-list-item-icon-svg" width="187" height="204"><g fill="none" fill-rule="evenodd"><path d="M4.417 0h112a4 4 0 014 4v121h-120V4a4 4 0 014-4z" fill="#FFF" fill-rule="nonzero"></path><g transform="translate(10.417 13)"><path d="M17.001 31.122h79.14a2.858 2.858 0 010 5.716h-79.14a2.858 2.858 0 110-5.716z" fill="#DAE2ED" fill-rule="nonzero"></path><rect fill="#DAE2ED" fill-rule="nonzero" y="20.324" width="74.571" height="5.716" rx="2.858"></rect><rect fill="#DAE2ED" fill-rule="nonzero" width="99" height="8.257" rx="3"></rect><path d="M17.001 41.284h79.14a2.858 2.858 0 010 5.716h-79.14a2.858 2.858 0 110-5.716z" fill="#DAE2ED" fill-rule="nonzero"></path><g transform="translate(0 30.486)"><rect fill="#2F90FF" fill-rule="nonzero" width="6.429" height="6.351" rx="2"></rect><path d="M2.734 4.765a.33.33 0 01-.238-.103L1.304 3.424a.36.36 0 010-.495.328.328 0 01.477 0l.953.99L4.878 1.69a.328.328 0 01.477 0 .36.36 0 010 .496L2.972 4.662a.33.33 0 01-.238.103" fill="#FFF"></path></g><rect fill="#DAE2ED" fill-rule="nonzero" y="40.649" width="6.429" height="6.351" rx="2"></rect></g><g transform="translate(10.417 72)"><path d="M17.036 10.929h79.071a2.893 2.893 0 010 5.785H17.036a2.893 2.893 0 110-5.785zM2.893 0h68.786a2.893 2.893 0 110 5.786H2.893a2.893 2.893 0 010-5.786zm14.143 21.214h79.071a2.893 2.893 0 010 5.786H17.036a2.893 2.893 0 110-5.786z" fill="#DAE2ED" fill-rule="nonzero"></path><g transform="translate(0 10.286)"><rect fill="#2F90FF" fill-rule="nonzero" width="6.429" height="6.429" rx="2"></rect><path d="M2.734 4.823a.327.327 0 01-.238-.104L1.304 3.465a.367.367 0 010-.5.325.325 0 01.477 0l.953 1.002L4.878 1.71a.325.325 0 01.477 0 .367.367 0 010 .501L2.972 4.72a.328.328 0 01-.238.104" fill="#FFF"></path></g><rect fill="#DAE2ED" fill-rule="nonzero" y="20.571" width="6.429" height="6.429" rx="2"></rect><g transform="translate(0 20.571)"><rect fill="#2F90FF" fill-rule="nonzero" width="6.429" height="6.429" rx="2"></rect><path d="M2.734 4.823a.327.327 0 01-.238-.104L1.304 3.465a.367.367 0 010-.5.325.325 0 01.477 0l.953 1.002L4.878 1.71a.325.325 0 01.477 0 .367.367 0 010 .501L2.972 4.72a.328.328 0 01-.238.104" fill="#FFF"></path></g></g><rect fill="#2F90FF" fill-rule="nonzero" x="77.417" y="109" width="32" height="10" rx="4"></rect></g></svg>
-                </div>
-              </div>
-              <div class="classic-footer">
-                <h3>شكل كلاسيكي</h3>
-                <p>عرض كل الأسئلة</p>
-              </div>
-            </div>
-            <div @click="setFormType('card form')" class="select-form-type-card">
-              <div class="card-form">
-                <div class="svg">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 121 92" class="jfWizard-list-item-icon-svg" width="166" height="146"><g fill="none" fill-rule="evenodd"><rect fill="#FFF" fill-rule="nonzero" x="7.934" width="105.131" height="62.153" rx="4"></rect><path d="M7.934 49.59h105.132v9.224a4 4 0 01-4 4H11.934a4 4 0 01-4-4V49.59z" fill="#2A5ACA" fill-rule="nonzero"></path><g transform="translate(15.208 11.24)"><rect fill="#DAE2ED" fill-rule="nonzero" x="10.579" y="11.24" width="80.667" height="5.951" rx="2.975"></rect><rect fill="#DAE2ED" fill-rule="nonzero" width="50.913" height="5.951" rx="2.975"></rect><path d="M13.555 21.82H88.27a2.975 2.975 0 010 5.95H13.555a2.975 2.975 0 010-5.95z" fill="#DAE2ED" fill-rule="nonzero"></path><g transform="translate(0 10.58)"><rect fill="#2F90FF" fill-rule="nonzero" width="6.612" height="6.612" rx="2"></rect><path d="M2.812 4.96a.337.337 0 01-.245-.107L1.34 3.564a.378.378 0 010-.515.334.334 0 01.49 0l.98 1.031 2.206-2.32a.334.334 0 01.49 0 .378.378 0 010 .515l-2.45 2.578a.337.337 0 01-.245.107" fill="#FFF"></path></g><rect fill="#DAE2ED" fill-rule="nonzero" y="21.158" width="6.612" height="6.612" rx="2"></rect></g><rect fill="#FFF" fill-rule="nonzero" width="121" height="62.153" rx="4"></rect><path d="M0 49.59h121v9.224a4 4 0 01-4 4H4a4 4 0 01-4-4V49.59z" fill="#51DCA9" fill-rule="nonzero"></path><g transform="translate(9.257 11.24)"><path d="M14.877 11.24H98.85a2.975 2.975 0 010 5.951H14.877a2.975 2.975 0 110-5.95zM2.975 0h50.913a2.975 2.975 0 110 5.95H2.975a2.975 2.975 0 110-5.95zm11.902 21.82H98.85a2.975 2.975 0 010 5.95H14.877a2.975 2.975 0 110-5.95z" fill="#DAE2ED" fill-rule="nonzero"></path><g transform="translate(0 10.58)"><rect fill="#2F90FF" fill-rule="nonzero" width="6.612" height="6.612" rx="2"></rect><path d="M2.812 4.96a.337.337 0 01-.245-.107L1.34 3.564a.378.378 0 010-.515.334.334 0 01.49 0l.98 1.031 2.206-2.32a.334.334 0 01.49 0 .378.378 0 010 .515l-2.45 2.578a.337.337 0 01-.245.107" fill="#FFF"></path></g><rect fill="#DAE2ED" fill-rule="nonzero" y="21.158" width="6.612" height="6.612" rx="2"></rect></g><path stroke="#319BF3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8.596 86.646h104.47"></path><circle stroke="#319BF3" stroke-width="1.5" fill="#51DCA9" fill-rule="nonzero" cx="60.831" cy="86.646" r="3.967"></circle><circle fill="#319BF3" fill-rule="nonzero" cx="9.918" cy="86.646" r="3.967"></circle><circle fill="#319BF3" fill-rule="nonzero" cx="111.743" cy="86.646" r="3.967"></circle></g></svg>
-                </div>
-              </div>
-              <div class="card-form-footer">
-                <h3>نموذج البطاقة</h3>
-                <p>عرض كل الأسئلة</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <div class="footer">
-        <main-footer></main-footer>
-      </div>
-
-    </div>
-
-    <div v-else>
+    <div>
       <create-form-header class="mb-4"
-          @show-theme="showTheme"
-          @show-send="showSend"
-          :theme="form.styleTheme"
-          :id=$store.getters.token
-          show=true
-          show-theme-icon=true
+                          @show-theme="showTheme"
+                          @show-send="showSend"
+                          :theme="form.styleTheme"
+                          :id=$store.getters.token
+                          show=true
+                          show-theme-icon=true
       >
       </create-form-header>
-
-      <send-form
-          @close-send="closeSend"
-          v-if="displaySend"
-          :formId="form.id"
-          :theme="form.styleTheme"
-      ></send-form>
 
       <div v-if="getLang === 'en'" class="main-content en animate__animated animate__backInLeft">
         <base-spinner v-if="isLoading"></base-spinner>
@@ -116,7 +24,7 @@
 
             <div class="form-header d-flex">
               <div class="form-title">
-                <b-form-input class="input-title" type="text" v-model="form.header" placeholder="Untitled form"></b-form-input>
+                <b-form-input class="input-title" type="text" v-model="form.header" placeholder="Untitled quiz"></b-form-input>
                 <b-form-input class="input-description" type="text" v-model="form.description" placeholder="Form description"></b-form-input>
               </div>
               <div class="form-logo">
@@ -132,14 +40,12 @@
                   <b-form-input class="input-question" type="text" v-model="question.question" placeholder="Question"></b-form-input>
                   <b-form-select class="select-answer" v-model="question.questionType">
                     <b-form-select-option :value="null">Please select a question type</b-form-select-option>
-                    <b-form-select-option value="Short answer">Short answer</b-form-select-option>
-                    <b-form-select-option value="Paragraph">Paragraph</b-form-select-option>
-                    <b-form-select-option value="Multiple choice">Multiple choice</b-form-select-option>
-                    <b-form-select-option value="Checkboxes">Checkboxes</b-form-select-option>
-                    <b-form-select-option value="Dropdown">Dropdown</b-form-select-option>
-                    <b-form-select-option value="Date">Date</b-form-select-option>
-                    <b-form-select-option value="Time">Time</b-form-select-option>
+                    <b-form-select-option value="Name">Name</b-form-select-option>
+                    <b-form-select-option value="Email">Email</b-form-select-option>
                     <b-form-select-option value="Phone number">Phone number</b-form-select-option>
+                    <b-form-select-option value="Number answer">Number answer</b-form-select-option>
+                    <b-form-select-option value="Multiple choice">Multiple choice</b-form-select-option>
+                    <b-form-select-option value="Dropdown">Dropdown</b-form-select-option>
                   </b-form-select>
                 </div>
 
@@ -154,22 +60,46 @@
                   ></b-form-input>
                 </div>
 
-                <div v-else-if="question.questionType == 'Phone number'" class="form-question-row-2 short-answer-row">
+                <div v-else-if="question.questionType == 'Name'" class="form-question-row-2 short-answer-row">
                   <b-form-input
                       type="text"
                       class="input-answer"
-                      placeholder="Short phone number"
+                      placeholder="Short answer text"
                       disabled
                   ></b-form-input>
                 </div>
 
-                <div v-else-if="question.questionType == 'Paragraph'" class="form-question-row-2 paragraph-row">
-                  <b-form-textarea
+                <div v-else-if="question.questionType == 'Email'" class="form-question-row-2 short-answer-row">
+                  <b-form-input
                       type="text"
-                      class="input-paragraph"
-                      placeholder="Paragraph text"
+                      class="input-answer"
+                      placeholder="Email text"
                       disabled
-                  ></b-form-textarea>
+                  ></b-form-input>
+                </div>
+
+                <div v-else-if="question.questionType == 'Phone number'" class="form-question-row-2 short-answer-row">
+                  <b-form-group
+                      id="input-group-1"
+                      description="If you add phone number you must add name question."
+                  >
+                    <b-form-input
+                        type="text"
+                        class="input-answer"
+                        placeholder="Short phone number"
+                        disabled
+                    ></b-form-input>
+                  </b-form-group>
+                </div>
+
+                <div v-else-if="question.questionType == 'Number answer'" class="form-question-row-2 short-answer-row">
+                  <b-form-input
+                      type="number"
+                      class="input-answer"
+                      placeholder="Number answer text"
+                      disabled
+                  ></b-form-input>
+                  <b-form-input class="multiple-choice-input" type="number" v-model="question.defaultAnswer" placeholder="Add answer"></b-form-input>
                 </div>
 
                 <div v-else-if="question.questionType == 'Multiple choice'" class="form-question-row-2 choice-row">
@@ -179,15 +109,7 @@
                     <i class="fas fa-times close" @click="removeChoice(option, question)"></i>
                   </div>
                   <h6 @click="addOtherOption(question)">Add other option</h6>
-                </div>
-
-                <div v-else-if="question.questionType == 'Checkboxes'" class="form-question-row-2 choice-row">
-                  <div class="multiple-choice-row" v-for="option in question.options" :key="option.id">
-                    <i class="far fa-square"></i>
-                    <b-form-input class="multiple-choice-input" type="text" v-model="option.value" @input="setSelectValue(option, question)"></b-form-input>
-                    <i class="fas fa-times close" @click="removeChoice(option, question)"></i>
-                  </div>
-                  <h6 @click="addOtherOption(question)">Add other option</h6>
+                  <b-form-input class="multiple-choice-input" type="text" v-model="question.defaultAnswer" placeholder="Add answer"></b-form-input>
                 </div>
 
                 <div v-else-if="question.questionType == 'Dropdown'" class="form-question-row-2 choice-row">
@@ -196,20 +118,7 @@
                     <i class="fas fa-times close" @click="removeChoice(option, question)"></i>
                   </div>
                   <h6 @click="addOtherOption(question)">Add other option</h6>
-                </div>
-
-                <div v-else-if="question.questionType == 'Date'" class="form-question-row-2 date-row">
-                  <b-form-input
-                      type="date"
-                      disabled
-                  ></b-form-input>
-                </div>
-
-                <div v-else-if="question.questionType == 'Time'" class="form-question-row-2 time-row">
-                  <b-form-input
-                      type="time"
-                      disabled
-                  ></b-form-input>
+                  <b-form-input class="multiple-choice-input" type="text" v-model="question.defaultAnswer" placeholder="Add answer"></b-form-input>
                 </div>
 
                 <div v-else class="form-question-row-2"></div>
@@ -277,38 +186,6 @@
 
             </div>
 
-            <div class="p-4">
-              <h5>Add your accounts</h5>
-              <div v-for="socialMedia in form.socialMedia" :key="socialMedia.id">
-                <div class="mt-1" v-if="socialMedia.type === 'Facebook'">
-                  <div class="col-sm-12">
-                    <div class="input-group">
-                      <div class="input-group-text"><i class="fab fa-facebook"></i></div>
-                      <input type="text" class="form-control"  v-model="socialMedia.url" placeholder="Your account">
-                      <i style="cursor: pointer" class="mt-auto mb-auto me-2 ms-2 fas fa-times close" @click="removeSocialMedia(socialMedia.id)"></i>
-                    </div>
-                  </div>
-                </div>
-                <div class="mt-1" v-else-if="socialMedia.type === 'Twitter'">
-                  <div class="col-sm-12">
-                    <div class="input-group">
-                      <div class="input-group-text"><i class="fab fa-twitter"></i></div>
-                      <input type="text" class="form-control" v-model="socialMedia.url" placeholder="Your account">
-                      <i style="cursor: pointer" class="mt-auto mb-auto me-2 ms-2 fas fa-times close" @click="removeSocialMedia(socialMedia.id)"></i>
-                    </div>
-                  </div>
-                </div>
-                <div class="mt-1" v-else-if="socialMedia.type === 'Instagram'">
-                  <div class="col-sm-12">
-                    <div class="input-group">
-                      <div class="input-group-text"><i class="fab fa-instagram"></i></div>
-                      <input type="text" class="form-control" v-model="socialMedia.url" placeholder="Your account">
-                      <i style="cursor: pointer" class="mt-auto mb-auto me-2 ms-2 fas fa-times close" @click="removeSocialMedia(socialMedia.id)"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
 
             <b-button class="btn mb-3" @click="addForm">Save Form</b-button>
           </div>
@@ -426,14 +303,11 @@
                   <b-form-input class="input-question" type="text" v-model="question.question" placeholder="السؤال"></b-form-input>
                   <b-form-select class="select-answer" v-model="question.questionType">
                     <b-form-select-option :value="null">الرجاء تحديد نوع السؤال</b-form-select-option>
-                    <b-form-select-option value="Short answer">اجابة قصيرة</b-form-select-option>
-                    <b-form-select-option value="Paragraph">فقرة</b-form-select-option>
-                    <b-form-select-option value="Multiple choice">متعدد الخيارات</b-form-select-option>
+                    <b-form-select-option value="Name">الاسم</b-form-select-option>
+                    <b-form-select-option value="Email">الايميل</b-form-select-option>
+                    <b-form-select-option value="Phone number">رقم الهاتف</b-form-select-option>
                     <b-form-select-option value="Checkboxes">مربعات الاختيار</b-form-select-option>
                     <b-form-select-option value="Dropdown">اسقاط</b-form-select-option>
-                    <b-form-select-option value="Date">تاريخ</b-form-select-option>
-                    <b-form-select-option value="Time">زمن</b-form-select-option>
-                    <b-form-select-option value="Phone number">رقم الهاتف</b-form-select-option>
                   </b-form-select>
                 </div>
 
@@ -448,22 +322,36 @@
                   ></b-form-input>
                 </div>
 
-                <div v-else-if="question.questionType == 'Phone number'" class="form-question-row-2 short-answer-row">
+                <div v-else-if="question.questionType == 'Name'" class="form-question-row-2 short-answer-row">
                   <b-form-input
                       type="text"
                       class="input-answer"
-                      placeholder="رقم هاتف قصير"
+                      placeholder="الاسم"
                       disabled
                   ></b-form-input>
                 </div>
 
-                <div v-else-if="question.questionType == 'Paragraph'" class="form-question-row-2 paragraph-row">
-                  <b-form-textarea
+                <div v-else-if="question.questionType == 'Email'" class="form-question-row-2 short-answer-row">
+                  <b-form-input
                       type="text"
-                      class="input-paragraph"
-                      placeholder="نص الفقرة"
+                      class="input-answer"
+                      placeholder="البريد الالكتروني"
                       disabled
-                  ></b-form-textarea>
+                  ></b-form-input>
+                </div>
+
+                <div v-else-if="question.questionType == 'Phone number'" class="form-question-row-2 short-answer-row">
+                  <b-form-group
+                      id="input-group-1"
+                      description="إذا قمت بإضافة رقم الهاتف ، يجب عليك إضافة سؤال الاسم."
+                  >
+                    <b-form-input
+                        type="text"
+                        class="input-answer"
+                        placeholder="رقم الهاتف"
+                        disabled
+                    ></b-form-input>
+                  </b-form-group>
                 </div>
 
                 <div v-else-if="question.questionType == 'Multiple choice'" class="form-question-row-2 choice-row">
@@ -473,15 +361,7 @@
                     <i class="fas fa-times close" @click="removeChoice(option, question)"></i>
                   </div>
                   <h6 @click="addOtherOption(question)">أضف خيارًا آخر</h6>
-                </div>
-
-                <div v-else-if="question.questionType == 'Checkboxes'" class="form-question-row-2 choice-row">
-                  <div class="multiple-choice-row" v-for="option in question.options" :key="option.id">
-                    <i class="far fa-square"></i>
-                    <b-form-input class="multiple-choice-input" type="text" v-model="option.value" @input="setSelectValue(option, question)"></b-form-input>
-                    <i class="fas fa-times close" @click="removeChoice(option, question)"></i>
-                  </div>
-                  <h6 @click="addOtherOption(question)">أضف خيارًا آخر</h6>
+                  <b-form-input class="multiple-choice-input" type="text" v-model="question.defaultAnswer" placeholder="أضف إجابة"></b-form-input>
                 </div>
 
                 <div v-else-if="question.questionType == 'Dropdown'" class="form-question-row-2 choice-row">
@@ -490,20 +370,7 @@
                     <i class="fas fa-times close" @click="removeChoice(option, question)"></i>
                   </div>
                   <h6 @click="addOtherOption(question)">أضف خيارًا آخر</h6>
-                </div>
-
-                <div v-else-if="question.questionType == 'Date'" class="form-question-row-2 date-row">
-                  <b-form-input
-                      type="date"
-                      disabled
-                  ></b-form-input>
-                </div>
-
-                <div v-else-if="question.questionType == 'Time'" class="form-question-row-2 time-row">
-                  <b-form-input
-                      type="time"
-                      disabled
-                  ></b-form-input>
+                  <b-form-input class="multiple-choice-input" type="text" v-model="question.defaultAnswer" placeholder="أضف إجابة"></b-form-input>
                 </div>
 
                 <div v-else class="form-question-row-2"></div>
@@ -680,19 +547,13 @@
 
 <script>
 import CreateFormHeader from "../../components/Form/CreateFormHeader";
-import SendForm from "./SendForm";
-import MainHeader from "../../components/Main/MainHeader";
-import MainFooter from "../../components/Main/MainFooter";
 import BaseSpinner from "@/components/Ui/BaseSpinner";
 import store from "@/store";
 import router from "@/router";
 export default {
-  name: "CreateForm",
+  name: "FormQuiz",
   components: {
-    MainFooter,
     BaseSpinner,
-    MainHeader,
-    SendForm,
     CreateFormHeader
   },
   computed: {
@@ -703,17 +564,40 @@ export default {
   data() {
     return {
       form: {
-        formType: '',
+        formType: 'classic form',
         imageHeader: '',
         header: '',
         isTemplate: false,
+        exam: true,
         description: '',
         logo: 'https://www.gstatic.com/images/branding/product/1x/forms_2020q4_48dp.png',
         styleTheme: 'default',
         fontFamily: 'default-font',
         questions: [
           {
-            id: Date.now(),
+            id: Date.now() + 216 ,
+            type: 'question',
+            question: 'Your name',
+            questionType: 'Name',
+            required: true,
+          },
+          {
+            id: Date.now() + 216516 ,
+            type: 'question',
+            question: 'Your email',
+            questionType: 'Email',
+            required: true,
+          },
+          {
+            id: Date.now() + 2189465 ,
+            type: 'question',
+            question: 'Your phone number',
+            description: '',
+            questionType: 'Phone number',
+            required: true,
+          },
+          {
+            id: Date.now() ,
             type: 'question',
             question: '',
             description: '',
@@ -721,6 +605,7 @@ export default {
             required: '',
             focus: false,
             displayVideo: false,
+            defaultAnswer: '',
             options: [
               {
                 id: Date.now() + 65132,
@@ -729,12 +614,7 @@ export default {
               }
             ],
           }
-        ],
-        socialMedia: [
-          {id : Date.now() + 46, type: 'Facebook', url:''},
-          {id : Date.now() + 50, type: 'Twitter', url:''},
-          {id : Date.now() + 60, type: 'Instagram', url:''},
-        ],
+        ]
       },
       displayTheme: false,
       displaySend: false,
@@ -792,6 +672,9 @@ export default {
               }
             ],
           });
+    },
+    addPhone() {
+      alert("addPhone")
     },
     addNewTitle() {
       this.form.questions.push(
@@ -857,10 +740,6 @@ export default {
     remove(question) {
       const removeIndex = this.form.questions.findIndex(value => value.id === question.id);
       this.form.questions.splice(removeIndex, 1);
-    },
-    removeSocialMedia(id) {
-      const removeIndex = this.form.socialMedia.findIndex(value => value.id === id);
-      this.form.socialMedia.splice(removeIndex, 1);
     },
     addOtherOption(question) {
       const questionId = question.id;
@@ -963,7 +842,7 @@ export default {
         "styleTheme": this.form.styleTheme,
         "fontFamily": this.form.fontFamily,
         "questions": this.form.questions,
-        "socialMedia": this.form.socialMedia
+        "exam" : this.form.exam
       });
 
       console.log(this.form.questions)

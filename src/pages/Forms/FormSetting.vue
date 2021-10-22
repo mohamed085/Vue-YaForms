@@ -1,0 +1,194 @@
+<template>
+  <base-spinner v-if="isLoading"></base-spinner>
+  <div v-else :class="'home animate__animated animate__backInRight ' + form.styleTheme + ' ' + form.fontFamily ">
+
+    <create-form-header
+        class="hidePdf"
+        :theme="form.styleTheme"
+        :id=$route.params.id
+        show=false
+        show-nav2=true
+        show-eye=true
+        show-send-icon=true
+    >
+    </create-form-header>
+
+
+    <base-spinner class="mt-4" v-if="isLoading"></base-spinner>
+
+    <div v-else>
+      <div class="main-content en animate__animated animate__backInLeft" v-if="getLang === 'en'">
+
+
+      </div>
+
+
+      <div class="main-content ar animate__animated animate__backInRight" v-if="getLang === 'ar'">
+
+      </div>
+      </div>
+
+
+
+  </div>
+</template>
+
+<script>
+import BaseSpinner from "@/components/Ui/BaseSpinner";
+import CreateFormHeader from "@/components/Form/CreateFormHeader";
+import store from "@/store";
+import router from "@/router";
+
+export default {
+  name: "FormSetting",
+  components: {
+    BaseSpinner,
+    CreateFormHeader
+  },
+  computed: {
+    getLang() {
+      return this.$store.getters['main/getLang']
+    }
+  },
+  created() {
+    if (!store.getters.isAuthenticated) {
+      router.push('/login')
+    }
+    this.loadForm(this.$route.params.id)
+
+  },
+  data() {
+    return {
+      form: '',
+      displaySummary: true,
+      displayTheme: false,
+      displaySend: false,
+      isLoading: false
+    }
+  },
+  methods: {
+    async loadForm(id) {
+
+      this.isLoading = true;
+
+      let token = this.$store.getters.token;
+
+      let myHeaders = new Headers();
+      myHeaders.append("Token", token);
+      myHeaders.append("Content-Type", "application/json");
+
+
+      let requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+      };
+
+      let url = `https://ya-forms-api.herokuapp.com/API/form/` + id ;
+
+      const response = await fetch(url, requestOptions);
+      const responseData = await response.json();
+
+      if (!response.ok) {
+        const error = new Error(responseData.message || 'Failed to fetch!');
+        throw error;
+      }
+
+      console.log(responseData)
+
+      this.form = responseData;
+
+      this.isLoading = false;
+
+    },
+
+  }
+
+}
+</script>
+
+<style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Style+Script&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
+
+.default {
+  --var-main-color: #9d55a0;
+  --var-second-color: #dddddd;
+}
+.theme-1 {
+  --var-main-color: #db4437;
+  --var-second-color: #fae3e1;
+}
+.theme-2 {
+  --var-main-color: #673ab7;
+  --var-second-color: #c2c0c6;
+}
+
+.theme-3 {
+  --var-main-color: #3f51b5;
+  --var-second-color: #c2c0c6;
+}
+
+.theme-4 {
+  --var-main-color: #4285f4;
+  --var-second-color: #c2c0c6;
+}
+
+.theme-5 {
+  --var-main-color: #03a9f4;
+  --var-second-color: #d5ebf5;
+}
+
+.theme-6 {
+  --var-main-color: #ff5722;
+  --var-second-color: #ffeee0;
+}
+
+.theme-7 {
+  --var-main-color: #ff9800;
+  --var-second-color: #ffdcab;
+}
+
+.theme-8 {
+  --var-main-color: #009688;
+  --var-second-color: #cefcf9;
+}
+
+.theme-9 {
+  --var-main-color: #4caf50;
+  --var-second-color: #9fb89f;
+}
+
+.theme-10 {
+  --var-main-color: #607d8b;
+  --var-second-color: #ddd;
+}
+
+.theme-11 {
+  --var-main-color: #9e9e9e;
+  --var-second-color: #ddd;
+}
+
+.default-font {
+  --var-font: 'Google Sans', Roboto, Helvetica, Arial, sans-serif;
+}
+
+.Playful {
+  --var-font: 'Style Script', cursive;
+}
+
+.Roboto-Mono {
+  --var-font: 'Roboto Mono', monospace;
+}
+
+.home {
+  background-color: var(--var-second-color);
+  min-height: 100vh;
+}
+
+.ar {
+  direction: rtl;
+  text-align: right;
+}
+
+</style>

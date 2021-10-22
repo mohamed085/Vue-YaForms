@@ -22,6 +22,18 @@
 
     </div>
   </router-link>
+  <router-link v-else-if="quizForm" class="form-content" to="/form-quiz">
+    <div class="form-content">
+      <div class="form-img">
+        <i class="fas fa-file"></i>
+      </div>
+      <div class="form-footer">
+        <p v-if="getLang === 'en'">Create new quiz</p>
+        <p v-if="getLang === 'ar'">إنشاء اختبار جديد</p>
+      </div>
+
+    </div>
+  </router-link>
   <router-link v-else-if="displayForm" class="form-content" :to="'/template/' + id">
     <div class="form-content">
       <div class="form-img">
@@ -48,6 +60,10 @@ export default {
       type: String,
     },
     addForm: {
+      type: String,
+      required: false,
+    },
+    quizForm: {
       type: String,
       required: false,
     },

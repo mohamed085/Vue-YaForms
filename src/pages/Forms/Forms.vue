@@ -18,6 +18,7 @@
           <div class="forms">
             <Form v-if="$store.getters.isAdmin === 'true'" add-template="true"></Form>
             <Form add-form="true"></Form>
+            <Form quiz-form="true"></Form>
             <div v-for="template in templates" :key="template._id">
               <Form display-form="true" :id="template._id" :title="template.header" :img-src="template.logo"></Form>
             </div>
@@ -101,6 +102,7 @@
           <div class="forms">
             <Form v-if="$store.getters.isAdmin === 'true'" add-template="true"></Form>
             <Form add-form="true"></Form>
+            <Form quiz-form="true"></Form>
             <div v-for="template in templates" :key="template._id">
               <Form display-form="true" :id="template._id" :title="template.header" :img-src="template.logo"></Form>
             </div>

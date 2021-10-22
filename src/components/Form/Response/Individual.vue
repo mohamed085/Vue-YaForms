@@ -9,7 +9,7 @@
 
       <div class="d-flex justify-content-between">
         <div class="csv">
-          <button @click="exportResponseAsCSV(form.responses[currentQuestion - 1]._id)" class="phone-btn">Export numbers as excel</button>
+          <button @click="exportResponseAsCSV(form.responses[currentQuestion - 1]._id)" class="phone-btn">Export response as excel</button>
         </div>
         <div>
           <b-button class="phone-btn" @click="deleteResponse(form.responses[currentQuestion - 1]._id)">Delete response</b-button>

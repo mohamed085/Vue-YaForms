@@ -196,7 +196,7 @@
 
             </div>
 
-            <b-button class="btn" @click="addForm">Add Form</b-button>
+            <b-button class="btn" @click="addForm">Save changes</b-button>
           </div>
 
           <div class="right-elements">
@@ -449,7 +449,7 @@
 
             </div>
 
-            <b-button class="btn" @click="addForm">أضف النموذج</b-button>
+            <b-button class="btn" @click="addForm">حفظ التعديلات</b-button>
           </div>
 
           <div class="right-elements">

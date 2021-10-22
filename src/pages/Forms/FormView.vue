@@ -2,7 +2,7 @@
   <base-spinner v-if="isLoading"></base-spinner>
   <div v-else :class="'home animate__animated animate__fadeIn ' + form.styleTheme + ' ' + form.fontFamily ">
 
-    <div >
+    <div>
       <create-form-header
           @show-send="showSend"
           :theme="form.styleTheme"

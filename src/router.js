@@ -20,6 +20,8 @@ import CreateTemplates from "@/pages/Forms/CreateTemplates";
 import FormEdit from "@/pages/Forms/FormEdit";
 import FormView from "@/pages/Forms/FormView";
 import Template from "@/pages/Forms/Template";
+import FormQuiz from "@/pages/Forms/FormQuiz";
+import FormSetting from "@/pages/Forms/FormSetting";
 
 Vue.use(VueRouter)
 
@@ -34,14 +36,13 @@ const routes = [
     { path: '/setting/:id', component: ProfileEdit },
     { path: '/forms', component: Forms },
     { path: '/create-form', component: CreateForm },
+    { path: '/form-quiz', component: FormQuiz },
     { path: '/form-edit/:id', component: FormEdit },
     { path: '/form-view/:id', component: FormView },
     { path: '/form/:id', component: Form },
     { path: '/template/:id', component: Template },
     { path: '/create-template', component: CreateTemplates },
-    { path: '/create-contact-form', component: null },
-    { path: '/create-hiring-form', component: null },
-    { path: '/create-order-form', component: null },
+    { path: '/form/setting/:id', component: FormSetting },
     { path: '/form/response/:id', component: Response, children: [
             { path: '/form/response/:id/', component: Summary },
             { path: '/form/response/:id/question', component: Question },
