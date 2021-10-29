@@ -24,6 +24,7 @@
           </div>
           <div class="mt-3 mb-3 p-3">
             <b-form @submit.prevent="updateMsg">
+              <h4>Send response message</h4>
               <b-form-input v-model="form.msg"></b-form-input>
               <b-button type="submit" class="btn mt-3">Save</b-button>
             </b-form>
