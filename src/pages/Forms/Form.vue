@@ -399,7 +399,7 @@
             Your score {{ sendMessage.score }} form {{ sendMessage.total }}
           </div>
           <div v-else>
-            This response send successfully
+            {{ form.msg }}
           </div>
         </div>
 

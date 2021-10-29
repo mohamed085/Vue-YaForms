@@ -584,7 +584,7 @@
               </div>
             </div>
             <div class="bottom">
-              <i @click="addNewQuestion" class="fas fa-plus-circle" v-b-popover.hover.right="'Add new question'"></i>
+              <i @click="addNewQuestion" class="fas fa-plus-circle" v-b-popover.hover.right="'اضف سؤال جديد'"></i>
               <i @click="addNewTitle" v-b-popover.hover.right="'أضف عنوانًا ووصفًا جديدين'" class="fas fa-heading"></i>
               <input type="file" accept="image/" class="hidden" ref="imageFile" @change="addImage">
               <i @click="addNewImage" v-b-popover.hover.right="'أضف صورة جديدة'" class="far fa-image"></i>
@@ -963,7 +963,8 @@ export default {
         "styleTheme": this.form.styleTheme,
         "fontFamily": this.form.fontFamily,
         "questions": this.form.questions,
-        "socialMedia": this.form.socialMedia
+        "socialMedia": this.form.socialMedia,
+        "msg": "This response send successfully"
       });
 
       console.log(this.form.questions)

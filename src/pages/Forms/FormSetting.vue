@@ -18,13 +18,14 @@
 
     <div class="container form-response" v-else>
       <div class="main-content en animate__animated animate__backInLeft" v-if="getLang === 'en'">
-        <div class="hidePdf section responseNum-section">
+        <div class="section responseNum-section">
           <div class="responseNum-section-row1 mb-3">
             <div class="responseCount">From settings</div>
           </div>
           <div class="mt-3 mb-3 p-3">
-            <b-form>
-              <b-form-input placeholder="Response send message"></b-form-input>
+            <b-form @submit.prevent="updateMsg">
+              <b-form-input v-model="form.msg"></b-form-input>
+              <b-button type="submit" class="btn mt-3">Save</b-button>
             </b-form>
           </div>
         </div>
@@ -33,6 +34,17 @@
 
 
       <div class="main-content ar animate__animated animate__backInRight" v-if="getLang === 'ar'">
+        <div class="section responseNum-section">
+          <div class="responseNum-section-row1 mb-3">
+            <div class="responseCount">اعدادات النموذج</div>
+          </div>
+          <div class="mt-3 mb-3 p-3">
+            <b-form @submit.prevent="updateMsg">
+              <b-form-input v-model="form.msg"></b-form-input>
+              <b-button type="submit" class="btn mt-3">حفظ</b-button>
+            </b-form>
+          </div>
+        </div>
 
       </div>
       </div>
@@ -103,13 +115,50 @@ export default {
         throw error;
       }
 
-      console.log(responseData)
-
       this.form = responseData;
 
       this.isLoading = false;
 
     },
+
+    async updateMsg() {
+      this.isLoading = true;
+
+      let id = this.$route.params.id;
+
+      let myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+
+      let raw = JSON.stringify({
+        "msg": this.form.msg
+      });
+
+      let requestOptions = {
+        method: 'PUT',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+      };
+
+      let url = `https://ya-forms-api.herokuapp.com/api/form/` + id;
+
+      const response = await fetch(url, requestOptions);
+      const responseData = await response.json();
+
+      console.log(responseData)
+
+      if (!response.ok) {
+        const error = new Error(responseData.message || 'Failed to fetch!');
+        console.log(error)
+        throw error;
+      }
+
+      this.form = responseData;
+
+      this.isLoading = false;
+
+      await this.$router.push(`/form-view/` + id)
+    }
 
   }
 
@@ -361,6 +410,23 @@ input:checked + .slider:before {
 
 }
 
+
+.btn {
+  color: var(--var-main-color);
+  background-color: #FFFFFF;
+  border: 1px solid var(--var-main-color);
+  padding: 8px 20px;
+}
+
+.btn:hover {
+  background-color: var(--var-main-color);
+  color: #FFFFFF;
+  border: 1px solid var(--var-main-color);
+}
+
+.ar {
+  direction: rtl;
+}
 @media (max-width:1024px) {
   .form-response {
     width: 90%;
